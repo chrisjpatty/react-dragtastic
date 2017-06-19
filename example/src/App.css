@@ -1,0 +1,31 @@
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.dropzone{
+  width: 300px;
+  height: 300px;
+  border: 2px dashed #000;
+  border-radius: 6px;
+  text-align: center;
+  margin: 10px;
+  padding: 60px;
+  box-sizing: border-box;
+}
+.over{
+  background: yellow;
+}
+.dragging{
+  display: inline-block;
+  position: relative;
+}
+.drag-square{
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  background: red;
+}
