@@ -17,6 +17,9 @@ class App extends Component {
   onDragOut = () => {
     this.setState({dropClass: ""})
   }
+  onDrag = (coords) => {
+    console.log(coords)
+  }
   render() {
     return (
       <div className="App">
@@ -35,6 +38,7 @@ class App extends Component {
           placeholderClass="dragging"
           draggableData={"The drag data"}
           className="dragging"
+          onDrag={this.onDrag}
           >
           <div className="drag-square"></div>
         </Draggable>

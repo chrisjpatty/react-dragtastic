@@ -161,7 +161,7 @@ var Draggable = exports.Draggable = function (_Component) {
         }
       });
       if (_this.props.onDrag) {
-        _this.props.onDrag();
+        _this.props.onDrag([x - _this.state.positionInDraggable.x, y - _this.state.positionInDraggable.y]);
       }
     };
 

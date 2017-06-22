@@ -122,7 +122,7 @@ export class Draggable extends Component{
       }
     })
     if(this.props.onDrag){
-      this.props.onDrag();
+      this.props.onDrag([x - this.state.positionInDraggable.x, y - this.state.positionInDraggable.y]);
     }
   }
   render(){
