@@ -1,6 +1,6 @@
 {
   "name": "example",
-  "version": "0.1.01",
+  "version": "0.1.02",
   "private": true,
   "dependencies": {
     "gulp": "^3.9.1",
