@@ -131,11 +131,11 @@ export class Draggable extends Component{
   render(){
     const { dragging } = store.getState();
     let isDragging = dragging === this.props.dragId;
-    const { className="", draggingClass="", dragPlaceholder=false } = this.props;
+    const { className="", draggingClass="", dragPlaceholder=false, hideWhileDragging=true, wrapperClassName="" } = this.props;
     return(
       <div className={className} onMouseDown={this.startDragDelay} onTouchStart={this.startDragDelay} ref="draggable">
         {
-          this.props.hideWhileDragging ?
+          hideWhileDragging ?
             !isDragging ?
               this.props.children
               :
@@ -150,7 +150,7 @@ export class Draggable extends Component{
           this.props.children
         }
         <Portal isOpened={isDragging}>
-          <div>
+          <div className={wrapperClassName}>
           {
             React.Children.map(this.props.children, (child) => (
               React.cloneElement(child, {

@@ -1,7 +1,7 @@
 {
   "name": "example",
   "version": "0.1.2",
-  "private": true,
+  "private": false,
   "dependencies": {
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
