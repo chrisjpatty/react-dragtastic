@@ -122,7 +122,10 @@ export class Draggable extends Component{
       }
     })
     if(this.props.onDrag){
-      this.props.onDrag([x - this.state.positionInDraggable.x, y - this.state.positionInDraggable.y]);
+      this.props.onDrag({
+        element: {x: x - this.state.positionInDraggable.x, y: y - this.state.positionInDraggable.y},
+        mouse: {x, y}
+      });
     }
   }
   render(){
@@ -160,7 +163,7 @@ export class Draggable extends Component{
                   pointerEvents: "none",
                   ...child.props.style
                 },
-                className: child.props.className + " " + draggingClass
+                className: (child.props.className ? child.props.className : "") + " " + draggingClass
               })
             ))
           }
