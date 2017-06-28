@@ -189,7 +189,8 @@ export class Droppable extends Component{
     }
   }
   onDragOut = (e) => {
-    if(this.props.onDragOut){
+    const { dragging } = store.getState();
+    if(this.props.onDragOut && dragging){
       this.props.onDragOut(e);
     }
   }

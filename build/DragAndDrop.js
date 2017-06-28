@@ -263,13 +263,16 @@ var Droppable = exports.Droppable = function (_Component2) {
         _this3.props.onDragIn(e);
       }
     }, _this3.onDragOut = function (e) {
-      if (_this3.props.onDragOut) {
+      var _store$getState3 = _dndReducer2.default.getState(),
+          dragging = _store$getState3.dragging;
+
+      if (_this3.props.onDragOut && dragging) {
         _this3.props.onDragOut(e);
       }
     }, _this3.onDrop = function (e) {
-      var _store$getState3 = _dndReducer2.default.getState(),
-          dragging = _store$getState3.dragging,
-          dragData = _store$getState3.dragData;
+      var _store$getState4 = _dndReducer2.default.getState(),
+          dragging = _store$getState4.dragging,
+          dragData = _store$getState4.dragData;
 
       if (_this3.props.onDrop && dragging && _this3.props.accepts === dragData.type) {
         _this3.props.onDrop(dragData, e);
