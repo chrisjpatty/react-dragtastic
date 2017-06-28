@@ -122,17 +122,20 @@ export class Draggable extends Component{
       }
     })
     if(this.props.onDrag){
-      this.props.onDrag([x - this.state.positionInDraggable.x, y - this.state.positionInDraggable.y]);
+      this.props.onDrag({
+        element: {x: x - this.state.positionInDraggable.x, y: y - this.state.positionInDraggable.y},
+        mouse: {x, y}
+      });
     }
   }
   render(){
     const { dragging } = store.getState();
     let isDragging = dragging === this.props.dragId;
-    const { className="", draggingClass="", dragPlaceholder=false } = this.props;
+    const { className="", draggingClass="", dragPlaceholder=false, hideWhileDragging=true, wrapperClassName="" } = this.props;
     return(
       <div className={className} onMouseDown={this.startDragDelay} onTouchStart={this.startDragDelay} ref="draggable">
         {
-          this.props.hideWhileDragging ?
+          hideWhileDragging ?
             !isDragging ?
               this.props.children
               :
@@ -147,7 +150,7 @@ export class Draggable extends Component{
           this.props.children
         }
         <Portal isOpened={isDragging}>
-          <div>
+          <div className={wrapperClassName}>
           {
             React.Children.map(this.props.children, (child) => (
               React.cloneElement(child, {
@@ -160,7 +163,7 @@ export class Draggable extends Component{
                   pointerEvents: "none",
                   ...child.props.style
                 },
-                className: child.props.className + " " + draggingClass
+                className: (child.props.className ? child.props.className : "") + " " + draggingClass
               })
             ))
           }

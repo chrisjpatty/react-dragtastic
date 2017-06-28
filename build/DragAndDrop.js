@@ -161,7 +161,10 @@ var Draggable = exports.Draggable = function (_Component) {
         }
       });
       if (_this.props.onDrag) {
-        _this.props.onDrag([x - _this.state.positionInDraggable.x, y - _this.state.positionInDraggable.y]);
+        _this.props.onDrag({
+          element: { x: x - _this.state.positionInDraggable.x, y: y - _this.state.positionInDraggable.y },
+          mouse: { x: x, y: y }
+        });
       }
     };
 
@@ -189,12 +192,16 @@ var Draggable = exports.Draggable = function (_Component) {
           _props$draggingClass = _props.draggingClass,
           draggingClass = _props$draggingClass === undefined ? "" : _props$draggingClass,
           _props$dragPlaceholde = _props.dragPlaceholder,
-          dragPlaceholder = _props$dragPlaceholde === undefined ? false : _props$dragPlaceholde;
+          dragPlaceholder = _props$dragPlaceholde === undefined ? false : _props$dragPlaceholde,
+          _props$hideWhileDragg = _props.hideWhileDragging,
+          hideWhileDragging = _props$hideWhileDragg === undefined ? true : _props$hideWhileDragg,
+          _props$wrapperClassNa = _props.wrapperClassName,
+          wrapperClassName = _props$wrapperClassNa === undefined ? "" : _props$wrapperClassNa;
 
       return _react2.default.createElement(
         'div',
         { className: className, onMouseDown: this.startDragDelay, onTouchStart: this.startDragDelay, ref: 'draggable' },
-        this.props.hideWhileDragging ? !isDragging ? this.props.children : dragPlaceholder ? _react2.default.createElement('div', { className: "drag-placeholder " + this.props.placeholderClass, style: {
+        hideWhileDragging ? !isDragging ? this.props.children : dragPlaceholder ? _react2.default.createElement('div', { className: "drag-placeholder " + this.props.placeholderClass, style: {
             width: this.state.initialDimensions.width,
             height: this.state.initialDimensions.height
           } }) : null : this.props.children,
@@ -203,7 +210,7 @@ var Draggable = exports.Draggable = function (_Component) {
           { isOpened: isDragging },
           _react2.default.createElement(
             'div',
-            null,
+            { className: wrapperClassName },
             _react2.default.Children.map(this.props.children, function (child) {
               return _react2.default.cloneElement(child, {
                 style: _extends({
@@ -214,7 +221,7 @@ var Draggable = exports.Draggable = function (_Component) {
                   position: "fixed",
                   pointerEvents: "none"
                 }, child.props.style),
-                className: child.props.className + " " + draggingClass
+                className: (child.props.className ? child.props.className : "") + " " + draggingClass
               });
             })
           )
