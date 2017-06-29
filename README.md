@@ -4,9 +4,9 @@ A simple drag and drop library for React which uses the more stable mouseDown/mo
 ## Installation
 
 ```shell
-npm install --save react-drag-and-drop
+npm install --save react-dragtastic
 or
-yarn add react-drag-and-drop
+yarn add react-dragtastic
 ```
 
 ## Usage
@@ -22,3 +22,5 @@ var dnd = require("react-dragtastic");
 var Draggable = dnd.Draggable;
 var Droppable = dnd.Droppable;
 ```
+
+###### More Documentation Coming Soon
