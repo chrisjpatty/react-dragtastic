@@ -186,9 +186,11 @@ export class Draggable extends Component{
               this.props.children
               :
               placeholder && !customPlaceholder ?
-                <div className={"drag-placeholder " + this.props.placeholderClass} style={{
+                <div className={this.props.placeholderClass} style={{
                   width: this.state.initialDimensions.width,
-                  height: this.state.initialDimensions.height
+                  height: this.state.initialDimensions.height,
+                  display: 'inline-block',
+                  verticalAlign: 'top'
                 }}>
                 </div>
                 :
