@@ -18,7 +18,7 @@ class App extends Component {
     this.setState({dropClass: ""})
   }
   onDrag = (coords) => {
-    console.log(coords)
+    //console.log(coords)
   }
   render() {
     return (
@@ -27,21 +27,53 @@ class App extends Component {
           onDrop={this.onDrop}
           onDragIn={this.onDragIn}
           onDragOut={this.onDragOut}
+          className={"dropzone " + this.state.dropClass}
+          accepts="giraffes"
           >
-          <div className={"dropzone " + this.state.dropClass}>
-            Drop here
-          </div>
+          Drop Here
         </Droppable>
-        <Draggable
-          dragId={1}
-          hideWhileDragging={true}
-          placeholderClass="dragging"
-          draggableData={"The drag data"}
-          className="dragging"
-          onDrag={this.onDrag}
-          >
-          <div className="drag-square"></div>
-        </Draggable>
+        <div style={{display: 'block'}}>
+          <Draggable
+            dragStyle="move"
+            placeholderClass="dragging"
+            data={"The drag data"}
+            type="giraffes"
+            className="drag-wrapper"
+            onDrag={this.onDrag}
+            >
+            <div className="drag-square">Drag Me</div>
+          </Draggable>
+          <Draggable
+            dragStyle="move"
+            placeholderClass="dragging"
+            data={"The drag data"}
+            type="giraffes"
+            className="drag-wrapper"
+            onDrag={this.onDrag}
+            >
+            <div className="drag-square">Drag Me</div>
+          </Draggable>
+          <Draggable
+            dragStyle="move"
+            placeholderClass="dragging"
+            data={"The drag data"}
+            type="giraffes"
+            className="drag-wrapper"
+            onDrag={this.onDrag}
+            >
+            <div className="drag-square">Drag Me</div>
+          </Draggable>
+          <Draggable
+            dragStyle="move"
+            placeholderClass="dragging"
+            data={"The drag data"}
+            type="giraffes"
+            className="drag-wrapper"
+            onDrag={this.onDrag}
+            >
+            <div className="drag-square">Drag Me</div>
+          </Draggable>
+        </div>
       </div>
     );
   }

@@ -15,17 +15,23 @@
   margin: 10px;
   padding: 60px;
   box-sizing: border-box;
+  display: inline-block;
+  vertical-align: top;
 }
 .over{
   background: yellow;
 }
-.dragging{
+.drag-wrapper{
   display: inline-block;
   position: relative;
+  margin: 10px;
 }
 .drag-square{
   width: 100px;
   height: 100px;
   display: inline-block;
   background: red;
+  text-align: center;
+  padding-top: 40px;
+  box-sizing: border-box;
 }

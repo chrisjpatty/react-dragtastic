@@ -1,13 +1,36 @@
 import React, { Component } from 'react';
+import shortid from 'shortid';
 import Portal from 'react-portal';
-import './DragAndDrop.css';
-import store from './dnd-reducer';
 
-const setDrag = ({dragging, dragData}) => ({
-  type: "SET_DRAG",
-  dragging,
-  dragData
-})
+class storeClass {
+  constructor(){
+    this.state = {
+      data: null,
+      dragging: null,
+      type: null
+    }
+    this.onUpdate = {};
+  }
+  update(payload){
+    this.state = {...this.state, ...payload}
+    Object.keys(this.onUpdate).map((funcId)=>{
+      this.onUpdate[funcId]()
+    })
+  }
+  subscribe(id, func){
+    this.onUpdate = { ...this.onUpdate, [id]: func}
+    return ()=>{this.unsubscribe(id)}
+  }
+  unsubscribe(id){
+    let {[id]: deleted, ...remainder} = this.onUpdate
+    this.onUpdate = remainder;
+  }
+  getState(){
+    return {...this.state};
+  }
+}
+
+const store = new storeClass();
 
 export class Draggable extends Component{
   constructor(){
@@ -18,9 +41,13 @@ export class Draggable extends Component{
       positionInDraggable: {x: "", y: ""},
       startCoordinate: null
     }
+    this.dragId = shortid.generate()
   }
   componentDidMount = () => {
-    this.unsubscribe = store.subscribe(()=>{this.forceUpdate()})
+    console.log(this.dragId)
+    this.unsubscribe = store.subscribe(this.dragId, ()=>{
+      this.forceUpdate()
+    })
   }
   componentWillUnmount = () => {
     this.unsubscribe()
@@ -55,7 +82,6 @@ export class Draggable extends Component{
     let b = Math.abs(this.state.startCoordinate.y - y)
     let distance = Math.round(Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)))
     let dragDistance = this.props.dragDistance ? this.props.dragDistance : 8;
-    //console.log("distance", a, b, distance)
     if(distance >= dragDistance){
       this.onDragStart()
     }
@@ -83,7 +109,11 @@ export class Draggable extends Component{
       draggablePosition: {x: x - (x - offset.left) , y: y - (y - offset.top)},
       positionInDraggable: {x: x - offset.left, y: y - offset.top}
     })
-    store.dispatch(setDrag({dragging: this.props.dragId, dragData: this.props.draggableData}));
+    store.update({
+      dragging: this.dragId,
+      data: this.props.data,
+      type: this.props.type
+    })
     document.addEventListener("mouseup", this.endDrag);
     document.addEventListener("mousemove", this.drag);
     document.addEventListener("touchend", this.endDrag)
@@ -94,14 +124,18 @@ export class Draggable extends Component{
   }
   endDrag = (e) => {
     e.preventDefault();
-    let data = store.getState().dragData;
-    store.dispatch(setDrag({dragging: null, dragData: null}));
-    document.removeEventListener("mouseup", this.endDrag);
-    document.removeEventListener("mousemove", this.drag);
-    document.removeEventListener("touchend", this.endDrag);
-    document.removeEventListener("touchmove", this.drag);
+    const { data } = store.getState()
+    store.update({
+      dragging: null,
+      data: null,
+      type: null
+    })
+    document.removeEventListener("mouseup", this.endDrag)
+    document.removeEventListener("mousemove", this.drag)
+    document.removeEventListener("touchend", this.endDrag)
+    document.removeEventListener("touchmove", this.drag)
     if(this.props.onDragEnd){
-      this.props.onDragEnd(data);
+      this.props.onDragEnd(data)
     }
   }
   drag = (e) => {
@@ -130,43 +164,56 @@ export class Draggable extends Component{
   }
   render(){
     const { dragging } = store.getState();
-    let isDragging = dragging === this.props.dragId;
-    const { className="", draggingClass="", dragPlaceholder=false, hideWhileDragging=true, wrapperClassName="" } = this.props;
+    const isDragging = dragging === this.dragId;
+    const {
+      children,
+      className="",
+      draggingClassName="",
+      placeholder=true,
+      dragStyle="move",
+      customPlaceholder
+    } = this.props;
     return(
-      <div className={className} onMouseDown={this.startDragDelay} onTouchStart={this.startDragDelay} ref="draggable">
+      <div
+        className={className}
+        onMouseDown={this.startDragDelay}
+        onTouchStart={this.startDragDelay}
+        ref="draggable"
+      >
         {
-          hideWhileDragging ?
+          dragStyle === "move" ?
             !isDragging ?
               this.props.children
               :
-              dragPlaceholder ?
+              placeholder && !customPlaceholder ?
                 <div className={"drag-placeholder " + this.props.placeholderClass} style={{
                   width: this.state.initialDimensions.width,
                   height: this.state.initialDimensions.height
                 }}>
                 </div>
-                : null
+                :
+                customPlaceholder
           :
           this.props.children
         }
         <Portal isOpened={isDragging}>
-          <div className={wrapperClassName}>
-          {
-            React.Children.map(this.props.children, (child) => (
-              React.cloneElement(child, {
-                style: {
-                  width: this.state.initialDimensions.width,
-                  height: this.state.initialDimensions.height,
-                  left: this.state.draggablePosition.x,
-                  top: this.state.draggablePosition.y,
-                  position: "fixed",
-                  pointerEvents: "none",
-                  ...child.props.style
-                },
-                className: (child.props.className ? child.props.className : "") + " " + draggingClass
-              })
-            ))
-          }
+          <div>
+            {
+              React.Children.map(children, (child) => (
+                React.cloneElement(child, {
+                  style: {
+                    width: this.state.initialDimensions.width,
+                    height: this.state.initialDimensions.height,
+                    left: this.state.draggablePosition.x,
+                    top: this.state.draggablePosition.y,
+                    position: "fixed",
+                    pointerEvents: "none",
+                    ...child.props.style
+                  },
+                  className: (child.props.className ? child.props.className : "") + " " + draggingClassName
+                })
+              ))
+            }
           </div>
         </Portal>
       </div>
@@ -175,8 +222,12 @@ export class Draggable extends Component{
 }
 
 export class Droppable extends Component{
+  constructor(){
+    super()
+    this.dropId = shortid.generate()
+  }
   componentDidMount = () => {
-    this.unsubscribe = store.subscribe(()=>{this.forceUpdate()})
+    this.unsubscribe = store.subscribe(this.dropId, ()=>{this.forceUpdate()})
   }
   componentWillUnmount = () => {
     this.unsubscribe()
@@ -195,9 +246,9 @@ export class Droppable extends Component{
     }
   }
   onDrop = (e) => {
-    const { dragging, dragData } = store.getState();
-    if(this.props.onDrop && dragging && this.props.accepts === dragData.type){
-      this.props.onDrop(dragData, e);
+    const { dragging, type, data } = store.getState();
+    if(this.props.onDrop && dragging && this.props.accepts === type){
+      this.props.onDrop(data, e);
     }
   }
   render(){
@@ -206,7 +257,7 @@ export class Droppable extends Component{
         onMouseEnter={this.onDragIn}
         onMouseLeave={this.onDragOut}
         onMouseUp={this.onDrop}
-        className={this.props.draggableClassName}
+        className={this.props.className}
       >
         {this.props.children}
       </div>
