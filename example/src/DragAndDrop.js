@@ -13,6 +13,7 @@ class storeClass {
   }
   update(payload){
     this.state = {...this.state, ...payload}
+    console.log(this.state)
     Object.keys(this.onUpdate).map((funcId)=>{
       this.onUpdate[funcId]()
     })

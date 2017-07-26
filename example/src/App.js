@@ -73,6 +73,60 @@ class App extends Component {
             >
             <div className="drag-square">Drag Me</div>
           </Draggable>
+          <Droppable
+            onDrop={this.onDrop}
+            onDragIn={this.onDragIn}
+            onDragOut={this.onDragOut}
+            className={"dropzone " + this.state.dropClass}
+            accepts="giraffes"
+          >
+            <Draggable
+              dragStyle="move"
+              placeholderClass="dragging"
+              data={"The drag data"}
+              type="giraffes"
+              className="drag-wrapper"
+              onDrag={this.onDrag}
+              >
+              <div className="drag-square">Drag Me</div>
+            </Draggable>
+          </Droppable>
+          <Droppable
+            onDrop={this.onDrop}
+            onDragIn={this.onDragIn}
+            onDragOut={this.onDragOut}
+            className={"dropzone " + this.state.dropClass}
+            accepts="giraffes"
+          >
+            <Draggable
+              dragStyle="move"
+              placeholderClass="dragging"
+              data={"The drag data"}
+              type="giraffes"
+              className="drag-wrapper"
+              onDrag={this.onDrag}
+              >
+              <div className="drag-square">Drag Me</div>
+            </Draggable>
+          </Droppable>
+          <Droppable
+            onDrop={this.onDrop}
+            onDragIn={this.onDragIn}
+            onDragOut={this.onDragOut}
+            className={"dropzone " + this.state.dropClass}
+            accepts="giraffes"
+          >
+            <Draggable
+              dragStyle="move"
+              placeholderClass="dragging"
+              data={"The drag data"}
+              type="giraffes"
+              className="drag-wrapper"
+              onDrag={this.onDrag}
+              >
+              <div className="drag-square">Drag Me</div>
+            </Draggable>
+          </Droppable>
         </div>
       </div>
     );
