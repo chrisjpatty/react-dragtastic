@@ -51,6 +51,7 @@ var storeClass = function () {
       var _this = this;
 
       this.state = _extends({}, this.state, payload);
+      console.log(this.state);
       Object.keys(this.onUpdate).map(function (funcId) {
         _this.onUpdate[funcId]();
       });
@@ -263,9 +264,11 @@ var Draggable = exports.Draggable = function (_Component) {
           onTouchStart: this.startDragDelay,
           ref: 'draggable'
         },
-        dragStyle === "move" ? !isDragging ? this.props.children : placeholder && !customPlaceholder ? _react2.default.createElement('div', { className: "drag-placeholder " + this.props.placeholderClass, style: {
+        dragStyle === "move" ? !isDragging ? this.props.children : placeholder && !customPlaceholder ? _react2.default.createElement('div', { className: this.props.placeholderClass, style: {
             width: this.state.initialDimensions.width,
-            height: this.state.initialDimensions.height
+            height: this.state.initialDimensions.height,
+            display: 'inline-block',
+            verticalAlign: 'top'
           } }) : customPlaceholder : this.props.children,
         _react2.default.createElement(
           _reactPortal2.default,
