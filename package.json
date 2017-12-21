@@ -10,7 +10,7 @@
     "shortid": "^2.2.8"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "webpack --watch",
     "build": "webpack"
   },
@@ -28,6 +28,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.5.1",
+    "jest": "^22.0.3",
     "np": "^2.18.3"
   }
 }
