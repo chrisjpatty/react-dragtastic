@@ -2,21 +2,32 @@
   "name": "react-dragtastic",
   "version": "1.0.1",
   "description": "A simple drag and drop library for React which uses the more stable mouseDown mouseUp architecture instead of the problematic HTML5 drag and drop API. Works in IE9+",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "main": "build/index.js",
+  "peerDependencies": {
+    "react": "^15.5.4"
   },
-  "repository" :{
-    "type" : "git",
-    "url" : "https://github.com/chrisjpatty/react-dragtastic"
+  "dependencies": {
+    "shortid": "^2.2.8"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --watch",
+    "build": "webpack"
   },
   "author": "@chrisjpatty",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chrisjpatty/react-dragtastic"
+  },
   "license": "MIT",
-  "dependencies": {
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2"
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.5.1",
+    "np": "^2.18.3"
   }
 }
