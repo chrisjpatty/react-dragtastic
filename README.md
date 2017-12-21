@@ -3,7 +3,7 @@ A simple drag and drop library for React which uses the more stable mouseDown/mo
 
 Drag and drop interfaces are complicated and difficult to properly program, this package attempts to alleviate some of the common hangups with drag and drop libraries. It should be noted that there are more mature solutions available such as the excellent [react-dnd](https://github.com/react-dnd/react-dnd) package, however for many simple drag and drop applications, the implementation of such packages can quickly become arduous.
 
-* _Warning, version 2 represents a significant rewrite of version 1 of_ `react-dragtastic`. _The API is completely different, but with the changes come several stability improvements, primitive mobile support, and significantly increased render flexibility. Be sure you're ready to rewrite your drag-and-drop implementation before upgrading from version 1._
+* _Warning, version 2 represents a significant rewrite of version 1 of_  `react-dragtastic`. _The API is completely different, but with the changes come several stability improvements, primitive mobile support, and significantly increased render flexibility. Be sure you're ready to rewrite your drag-and-drop implementation before upgrading from version 1._
 
 ## Installation
 
@@ -46,21 +46,21 @@ This defines a draggable zone. At a minimum, spread the events over the element 
 
 ```jsx
 class DraggableZone extends React.Component{
-	render(){
-		return(
-    	<Draggable
-				id="unique-id"
-				type="apple"
-			>
-      	{
-        	dragState => (
-          	<div {...dragState.events}>
-            	I'm a draggable zone
-            </div>
-          )
-        }
+  render(){
+    return(
+      <Draggable
+        id="unique-id"
+	type="apple"
+      >
+        {
+	  dragState => (
+	    <div {...dragState.events}>
+	      I'm a draggable zone
+	    </div>
+	  )
+	}
       </Draggable>
-	   )
+    )
   }
 }
 ```
@@ -78,20 +78,20 @@ Properties available from `dragState`:
 
 ```jsx
 class DroppableZone extends React.Component{
-	render(){
-		return(
-    	<Droppable
-				accepts='apple'
-			>
-      	{
-        	dragState => (
-          	<div {...dragState.events}>
-            	I'm a droppable zone
+  render(){
+    return(
+      <Droppable
+        accepts='apple'
+      >
+        {
+          dragState => (
+            <div {...dragState.events}>
+              I'm a droppable zone
             </div>
           )
         }
       </Droppable>
-	   )
+    )
   }
 }
 ```
@@ -105,26 +105,26 @@ By default, children passed to this component will only render if the user is cu
 
 ```jsx
 class DragComponent extends React.Component{
-	render(){
-		return(
-    	<DragComponent
-				for='unique-id'
-			>
-      	{
-        	dragState => (
-          	<div
-							style={{
-								position: 'fixed',
-								left: dragState.x,
-								top: dragState.y
-							}}
-						>
-            	I will render when my Draggable zone is activated
-            </div>
+  render(){
+    return(
+      <DragComponent
+        for='unique-id'
+      >
+        {
+          dragState => (
+            <div
+	      style={{
+	        position: 'fixed',
+	        left: dragState.x,
+	        top: dragState.y
+	      }}
+	    >
+	      I will render when my Draggable zone is activated
+	    </div>
           )
         }
       </DragComponent>
-	   )
+    )
   }
 }
 ```
