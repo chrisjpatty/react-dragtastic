@@ -17,6 +17,7 @@ export default class DragComponent extends React.Component{
   }
   render(){
     const state = store.getState()
+    console.log(state.currentlyDraggingId, this.props.for)
     return(
       state.isDragging && state.currentlyDraggingId === this.props.for &&
       this.props.children({
