@@ -18,7 +18,9 @@ class store {
   update(payload){
     this.state = {...this.state, ...payload}
     Object.keys(this.onUpdate).forEach(funcId=>{
-      this.onUpdate[funcId]()
+      if(this.onUpdate[funcId]){
+        this.onUpdate[funcId]()
+      }
     })
   }
   subscribe(id, func){
