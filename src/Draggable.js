@@ -1,7 +1,6 @@
 import React from 'react'
 import store from './store'
 import shortid from 'shortid'
-import throttle from 'lodash/throttle'
 
 export default class Draggable extends React.Component{
   dragId = shortid.generate()
