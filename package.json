@@ -1,7 +1,7 @@
 {
   "name": "react-dragtastic",
-  "version": "2.0.3",
-  "description": "A simple drag and drop library for React which uses the more stable mouseDown mouseUp architecture instead of the problematic HTML5 drag and drop API. Works in IE9+",
+  "version": "2.0.4",
+  "description": "A simple drag and drop library for React which uses the more stable mouseDown mouseUp architecture instead of the problematic HTML5 drag and drop API.",
   "main": "build/index.js",
   "peerDependencies": {
     "react": "^15.5.4"
