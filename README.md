@@ -46,7 +46,7 @@ var DragComponent = dnd.DragComponent;
 This defines a draggable zone. At a minimum, spread the events over the element that should be draggable (usually the root element).
 
 - `id`: An id which will be used in the draggable zone's target `<DragComponent/>`
-- `type`: A string type used to limit which droppable zones will accept `<DragComponent/>`'s attached to this draggable.
+- `type`: A string, or array of strings, used to limit which droppable zones will accept `<DragComponent/>`'s attached to this draggable.
 - `data`: Data of any type which will be passed to the `onDrop` function of any `<Droppable/>` which accepts this `<Draggable/>`'s type.
 - `onDragStart`: A function which will be called when the `<Draggable/>` zone is activated (The user started dragging).
 - `onDragEnd`: A function which will be called when the `<Draggable/>` zone is deactivated (The user stopped dragging).
@@ -57,15 +57,15 @@ class DraggableZone extends React.Component{
     return(
       <Draggable
         id="unique-id"
-	type="apple"
+        type="apple"
       >
         {
-	  dragState => (
-	    <div {...dragState.events}>
-	      I'm a draggable zone
-	    </div>
-	  )
-	}
+          dragState => (
+            <div {...dragState.events}>
+              I'm a draggable zone
+            </div>
+          )
+        }
       </Draggable>
     )
   }
@@ -110,6 +110,10 @@ By default, children passed to this component will only render if the user is cu
 - `for`: A string corresponding to the `id` property of the `<Draggable/>` zone that should trigger this component to start rendering.
 - `onDrag`: A function which will be called every time a user drags.
 
+Properties available from `dragState`:
+- All the properties listed in the dragState section.
+- `isOverAccepted`: a boolean representing whether the user is currently hovering a `<Droppable/>` that accepts the `type` of the currently active `<Draggable/>`
+
 ```jsx
 class DragComponent extends React.Component{
   render(){
@@ -120,14 +124,14 @@ class DragComponent extends React.Component{
         {
           dragState => (
             <div
-	      style={{
-	        position: 'fixed',
-	        left: dragState.x,
-	        top: dragState.y
-	      }}
-	    >
-	      I will render when my Draggable zone is activated
-	    </div>
+              style={{
+                position: 'fixed',
+                left: dragState.x,
+                top: dragState.y
+              }}
+            >
+              I will render when my Draggable zone is activated
+            </div>
           )
         }
       </DragComponent>
@@ -146,6 +150,7 @@ All components imported from `react-dragtastic` have access the global dragState
 - `isDragging`: A boolean representing whether the user is currently dragging.
 - `currentlyDraggingId`: The id of the currently dragging element.
 - `currentlyHoveredDroppableId`: The id of the `<Droppable/>` currently being hovered.
+- `currentlyHoveredDroppableAccepts`: The `accepts` property of the `<Droppable/>` currently being hovered.
 - `data`: Data from the `data` property of the `<Draggable/>` which is currently active. `null` if not dragging.
 - `type`: The type of the component being currently dragged. `null` if not dragging.
 
@@ -154,6 +159,7 @@ All components imported from `react-dragtastic` have access the global dragState
 - A project website with live examples.
 - Screencast showing basic implementation examples.
 - Improved mobile support.
+- Additional event hooks
 
 ## Contributing
 

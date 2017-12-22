@@ -5,7 +5,8 @@ import shortid from 'shortid'
 export default class Droppable extends React.Component {
 	dragId = shortid.generate()
   static defaultProps = {
-    onDrop: () => {}
+    onDrop: () => {},
+		accepts: null
   }
 	componentDidMount = () => {
 		this.unsubscribe = store.subscribe(this.dragId, () => {
@@ -18,22 +19,30 @@ export default class Droppable extends React.Component {
 	setOver = () => {
 		if (store.getState().isDragging) {
 			store.update({
-				currentlyHoveredDroppableId: this.dragId
+				currentlyHoveredDroppableId: this.dragId,
+				currentlyHoveredDroppableAccepts: this.accepts
 			})
 		}
 	}
 	setOut = () => {
 		if (store.getState().isDragging) {
 			store.update({
-				currentlyHoveredDroppableId: null
+				currentlyHoveredDroppableId: null,
+				currentlyHoveredDroppableAccepts: null
 			})
 		}
 	}
   onDrop = () => {
     const{ data, type, isDragging } = store.getState()
-    if(isDragging && type === this.props.accepts){
-      this.props.onDrop(data)
-    }
+		if(isDragging){
+			if(Array.isArray(this.props.accepts)){
+				if(this.props.accepts.find(type))
+			}else{
+				if(type === this.props.accepts){
+		      this.props.onDrop(data)
+		    }
+			}
+		}
   }
 	render() {
 		const state = store.getState()
