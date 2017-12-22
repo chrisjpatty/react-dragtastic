@@ -366,7 +366,6 @@ var DragComponent = function (_React$Component) {
 		key: 'render',
 		value: function render() {
 			var state = _store2.default.getState();
-			console.log(state.currentlyDraggingId, this.props.for);
 			return state.isDragging && state.currentlyDraggingId === this.props.for && this.props.children(_extends({}, state, {
 				isOverAccepted: Array.isArray(this.currentlyHoveredDroppableAccepts) ? this.currentlyHoveredDroppableAccepts.find(state.type) : state.type === this.currentlyHoveredDroppableAccepts
 			}));
