@@ -50,6 +50,7 @@ This defines a draggable zone. At a minimum, spread the events over the element 
 - `data`: Data of any type which will be passed to the `onDrop` function of any `<Droppable/>` which accepts this `<Draggable/>`'s type.
 - `onDragStart`: A function which will be called when the `<Draggable/>` zone is activated (The user started dragging).
 - `onDragEnd`: A function which will be called when the `<Draggable/>` zone is deactivated (The user stopped dragging).
+- `delay`: An optional int representing the distance in pixels the user's pointer must travel to activate the draggable. Defaults to `8`
 
 ```jsx
 class DraggableZone extends React.Component{

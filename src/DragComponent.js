@@ -1,8 +1,9 @@
 import React from 'react'
 import store from './store'
 import shortid from 'shortid'
+import PropTypes from 'prop-types'
 
-export default class DragComponent extends React.Component {
+class DragComponent extends React.Component {
 	dragId = shortid.generate()
 	static defaultProps = {
 		for: ''
@@ -29,3 +30,11 @@ export default class DragComponent extends React.Component {
 		)
 	}
 }
+DragComponent.propTypes = {
+	children: PropTypes.func.isRequired,
+	for: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number
+	]).isRequired
+}
+export default DragComponent

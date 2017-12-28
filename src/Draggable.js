@@ -1,14 +1,17 @@
 import React from 'react'
 import store from './store'
 import shortid from 'shortid'
+import PropTypes from 'prop-types'
 
-export default class Draggable extends React.Component{
+class Draggable extends React.Component{
   dragId = shortid.generate()
+  state = {startCoordinate: null}
   static defaultProps = {
     onDragEnd: () => {},
     onDragStart: () => {},
     data: null,
-    type: null
+    type: null,
+    delay: 8
   }
   componentDidMount = () => {
     this.unsubscribe = store.subscribe(this.dragId, ()=>{
@@ -18,8 +21,56 @@ export default class Draggable extends React.Component{
   componentWillUnmount = () => {
     this.unsubscribe()
   }
+  startDragDelay = e => {
+    let x; let y;
+    if ('ontouchstart' in window && e.touches) {
+      x = e.touches[0].clientX;
+      y = e.touches[0].clientY;
+    }else{
+      e.preventDefault();
+      x = e.clientX;
+      y = e.clientY;
+    }
+    store.update({
+      startingX: x,
+      startingY: y
+    })
+    this.setState({startCoordinate: {x,y}})
+    document.addEventListener("mouseup", this.endDragDelay)
+    document.addEventListener("mousemove", this.checkDragDelay)
+    document.addEventListener("touchend", this.endDragDelay)
+    document.addEventListener("touchmove", this.checkDragDelay)
+  }
+  checkDragDelay = e => {
+    let x; let y;
+    if ('ontouchstart' in window && e.touches) {
+      x = e.touches[0].clientX;
+      y = e.touches[0].clientY;
+    }else{
+      e.preventDefault();
+      x = e.clientX;
+      y = e.clientY;
+    }
+    let a = Math.abs(this.state.startCoordinate.x - x)
+    let b = Math.abs(this.state.startCoordinate.y - y)
+    let distance = Math.round(Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)))
+    let dragDistance = this.props.delay;
+    if(distance >= dragDistance){
+      if ('ontouchstart' in window && e.touches){
+        this.startMobileDrag(e)
+      }else{
+        this.startDrag(e)
+      }
+    }
+  }
+  endDragDelay = () => {
+    document.removeEventListener("mouseup", this.endDragDelay)
+    document.removeEventListener("mousemove", this.checkDragDelay)
+    document.removeEventListener("touchend", this.endDragDelay)
+    document.removeEventListener("touchmove", this.checkDragDelay)
+    this.setState({startCoordinate: null})
+  }
   startDrag = e => {
-    this.props.onDragStart(store.getState().data)
     store.update({
       isDragging: true,
       startingX: e.clientX,
@@ -30,6 +81,7 @@ export default class Draggable extends React.Component{
       data: this.props.data,
       type: this.props.type
     })
+    this.props.onDragStart(store.getState().data)
     window.addEventListener('mouseup', this.stopDrag)
     window.addEventListener('mousemove', this.updateCoordinates)
   }
@@ -76,10 +128,25 @@ export default class Draggable extends React.Component{
       this.props.children({
         ...state,
         events: {
-          onMouseDown: this.startDrag,
-          onTouchStart: this.startMobileDrag
+          onMouseDown: this.startDragDelay,
+          onTouchStart: this.startDragDelay
         }
       })
     )
   }
 }
+Draggable.propTypes = {
+  children: PropTypes.func.isRequired,
+  delay: PropTypes.number,
+  id: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]).isRequired,
+  type: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]),
+  onDragEnd: PropTypes.func,
+  onDragStart: PropTypes.func
+}
+export default Draggable

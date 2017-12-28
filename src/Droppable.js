@@ -1,8 +1,9 @@
 import React from 'react'
 import store from './store'
 import shortid from 'shortid'
+import PropTypes from 'prop-types'
 
-export default class Droppable extends React.Component {
+class Droppable extends React.Component {
 	dragId = shortid.generate()
   static defaultProps = {
     onDrop: () => {},
@@ -59,3 +60,12 @@ export default class Droppable extends React.Component {
 		})
 	}
 }
+Droppable.propTypes = {
+	children: PropTypes.func.isRequired,
+	accepts: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.array
+	]),
+	onDrop: PropTypes.func
+}
+export default Droppable
