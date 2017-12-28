@@ -586,7 +586,7 @@ var Droppable = function (_React$Component) {
 
 			if (isDragging) {
 				if (Array.isArray(_this.props.accepts)) {
-					if (_this.props.accepts.find(type)) {
+					if (_this.props.accepts.includes(type)) {
 						_this.props.onDrop(data);
 					}
 				} else {
