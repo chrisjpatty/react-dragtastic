@@ -56,6 +56,7 @@ class Draggable extends React.Component{
     let distance = Math.round(Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)))
     let dragDistance = this.props.delay;
     if(distance >= dragDistance){
+      this.endDragDelay()
       if ('ontouchstart' in window && e.touches){
         this.startMobileDrag(e)
       }else{
