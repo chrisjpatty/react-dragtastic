@@ -893,6 +893,7 @@ var Draggable = function (_React$Component) {
       var distance = Math.round(Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)));
       var dragDistance = _this.props.delay;
       if (distance >= dragDistance) {
+        _this.endDragDelay();
         if ('ontouchstart' in window && e.touches) {
           _this.startMobileDrag(e);
         } else {
