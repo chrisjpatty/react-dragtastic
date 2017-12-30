@@ -1,6 +1,10 @@
 ![react-dragtastic](https://raw.githubusercontent.com/chrisjpatty/react-dragtastic/master/logo.png)
 
 # react-dragtastic
+[![npm version](https://badge.fury.io/js/react-dragtastic.svg)](https://badge.fury.io/js/react-dragtastic)
+[![npm version](https://img.shields.io/npm/dt/react-dragtastic.svg)](https://badge.fury.io/js/react-dragtastic)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
 A simple drag and drop library for React which uses the more stable mouseDown/mouseUp pattern instead of the problematic HTML5 drag and drop API.
 
 Drag and drop interfaces are complicated and difficult to properly program, this package attempts to alleviate some of the common hangups with drag and drop libraries. It should be noted that there are more mature solutions available such as the excellent [react-dnd](https://github.com/react-dnd/react-dnd) package, however for many simple drag and drop applications, the implementation of such packages can quickly become arduous.
