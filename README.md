@@ -132,7 +132,8 @@ class DragComponent extends React.Component{
               style={{
                 position: 'fixed',
                 left: dragState.x,
-                top: dragState.y
+                top: dragState.y,
+                pointerEvents: 'none'
               }}
             >
               I will render when my Draggable zone is activated
