@@ -159,6 +159,12 @@ All components imported from `react-dragtastic` have access the global dragState
 - `data`: Data from the `data` property of the `<Draggable/>` which is currently active. `null` if not dragging.
 - `type`: The type of the component being currently dragged. `null` if not dragging.
 
+## Troubleshooting
+
+#### My Droppables aren't working!
+
+- You most likely need to set `pointer-events: none` in the css of your `DragComponent`. This allows droppables to receive drop events when the user's pointer is directly on top of the DragComponent as it is being dragged. This property is [well supported](https://caniuse.com/#feat=pointer-events).
+
 ## Coming Soon
 
 - A project website with live examples.
