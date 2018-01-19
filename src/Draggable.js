@@ -9,6 +9,7 @@ class Draggable extends React.Component{
   static defaultProps = {
     onDragEnd: () => {},
     onDragStart: () => {},
+    onDrag: () => {},
     data: null,
     type: null,
     delay: 8
@@ -115,6 +116,7 @@ class Draggable extends React.Component{
       x: e.clientX,
       y: e.clientY
     })
+    this.props.onDrag()
   }
   updateMobileCoordinates = e => {
     const touch = e.touches[0]
@@ -122,6 +124,7 @@ class Draggable extends React.Component{
       x: touch.clientX,
       y: touch.clientY
     })
+    this.props.onDrag()
   }
   render(){
     const state = store.getState()

@@ -7,6 +7,8 @@ class Droppable extends React.Component {
 	dragId = shortid.generate()
   static defaultProps = {
     onDrop: () => {},
+		onDragEnter: () => {},
+		onDragLeave: () => {},
 		accepts: null
   }
 	componentDidMount = () => {
@@ -23,6 +25,7 @@ class Droppable extends React.Component {
 				currentlyHoveredDroppableId: this.dragId,
 				currentlyHoveredDroppableAccepts: this.props.accepts
 			})
+			this.props.onDragEnter()
 		}
 	}
 	setOut = () => {
@@ -31,6 +34,7 @@ class Droppable extends React.Component {
 				currentlyHoveredDroppableId: null,
 				currentlyHoveredDroppableAccepts: null
 			})
+			this.props.onDragLeave()
 		}
 	}
   onDrop = () => {

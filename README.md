@@ -28,7 +28,7 @@ yarn add react-dragtastic
 
 ###### For ES6 and up
 ```javascript
-import { Draggable, Droppable, DragComponent } from 'react-dragtastic';
+import { Draggable, Droppable, DragComponent, DragState } from 'react-dragtastic';
 ```
 
 ###### For ES5
@@ -54,6 +54,7 @@ This defines a draggable zone. At a minimum, spread the events over the element 
 - `data`: Data of any type which will be passed to the `onDrop` function of any `<Droppable/>` which accepts this `<Draggable/>`'s type.
 - `onDragStart`: A function which will be called when the `<Draggable/>` zone is activated (The user started dragging).
 - `onDragEnd`: A function which will be called when the `<Draggable/>` zone is deactivated (The user stopped dragging).
+- `onDrag`: A function which will be called every time the user's cursor moves while dragging.
 - `delay`: An optional int representing the distance in pixels the user's pointer must travel to activate the draggable. Defaults to `8`
 
 ```jsx
@@ -83,6 +84,8 @@ This defines a droppable zone. At a minimum, spread the events over the element 
 
 - `accepts`: A string type corresponding to the `type` property of the `<Draggable/>` zone for which this `<Droppable/>` should accept drop events.
 - `onDrop`: A function which will be called when a user drops a `<DragComponent/>` on this `<Droppable/>` with an accepted type.
+- `onDragEnter`: A function which will be called when the user's cursor enters the `<Droppable/>` while dragging. This function will be called regardless of whether the droppable accepts the draggable currently being dragged.
+- `onDragLeave`: A function which will be called when the user's cursor leaves the `<Droppable/>` while dragging. This function will be called regardless of whether the droppable accepts the draggable currently being dragged.
 
 Properties available from `dragState`:
 - All the properties listed in the dragState section.
@@ -120,7 +123,7 @@ Properties available from `dragState`:
 - `isOverAccepted`: a boolean representing whether the user is currently hovering a `<Droppable/>` that accepts the `type` of the currently active `<Draggable/>`
 
 ```jsx
-class DragComponent extends React.Component{
+class DragComponentWrapper extends React.Component{
   render(){
     return(
       <DragComponent
@@ -146,7 +149,7 @@ class DragComponent extends React.Component{
 }
 ```
 
-### dragState
+### DragState
 
 All components imported from `react-dragtastic` have access the global dragState with the following properties:
 - `x`: The user's current horizontal position on the page.
@@ -159,6 +162,30 @@ All components imported from `react-dragtastic` have access the global dragState
 - `currentlyHoveredDroppableAccepts`: The `accepts` property of the `<Droppable/>` currently being hovered.
 - `data`: Data from the `data` property of the `<Draggable/>` which is currently active. `null` if not dragging.
 - `type`: The type of the component being currently dragged. `null` if not dragging.
+
+Occasionally you may need to notify a component about changes in the dragging state without making that component a draggable or droppable zone. For these cases there is a fourth component available called `<DragState/>`. This component is used just like a draggable or droppable, but does not accept or trigger any drag events.
+
+```jsx
+class CompWithDragState extends React.Component{
+  render(){
+    return(
+      <DragState>
+        {
+          dragState => (
+            <div
+              style={{
+                background: dragState.isDragging ? 'red' : 'blue'
+              }}
+            >
+              I always render, and have access to the global dragState.
+            </div>
+          )
+        }
+      </DragState>
+    )
+  }
+}
+```
 
 ## Troubleshooting
 
