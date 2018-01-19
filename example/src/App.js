@@ -1,85 +1,73 @@
 import React, { Component } from 'react';
-import { Draggable, Droppable } from './DragAndDrop';
+import { Draggable, Droppable, DragComponent, DragState } from 'react-dragtastic';
 import './App.css';
 
 class App extends Component {
-  constructor(){
-    super();
-    this.state = {dropClass: ""}
-  }
-  onDrop = (dropData) => {
-    console.log("Dropped", dropData)
-  }
-  onDragIn = () => {
-    this.setState({dropClass: "over"})
-  }
-  onDragOut = () => {
-    this.setState({dropClass: ""})
-  }
-  onDrag = (coords) => {
-    //console.log(coords)
-  }
-  onDragEnd = () => {
-    this.setState({dropClass: ""})
-  }
   render() {
     return (
-      <div className="App">
-        <Droppable
-          onDrop={this.onDrop}
-          onDragIn={this.onDragIn}
-          onDragOut={this.onDragOut}
-          className={"dropzone " + this.state.dropClass}
-          accepts="giraffes"
-          >
-          Drop Here
+      <div className='App'>
+        <DragState>
+          {
+            dragState => (
+              <div style={{
+                background: 'yellow',
+                padding: 10
+              }}>
+                {
+                  Object.keys(dragState).map(key => (
+                    <span style={{
+                      display: 'block'
+                    }} key={key}>{key}: {dragState[key]}</span>
+                  ))
+                }
+              </div>
+            )
+          }
+        </DragState>
+        <Draggable id='red' data='Some Data' type='red'>
+          {
+            dragState => (
+              <div {...dragState.events} style={{
+                width: 300,
+                height: 300,
+                background: 'red'
+              }}>
+
+              </div>
+            )
+          }
+        </Draggable>
+        <DragComponent for='red'>
+          {
+            dragState => (
+              <div style={{
+                position: 'fixed',
+                left: dragState.x - 25,
+                top: dragState.y - 25,
+                width: 50,
+                height: 50,
+                background: 'lime',
+                pointerEvents: 'none'
+              }}></div>
+            )
+          }
+        </DragComponent>
+        <Droppable accepts={['red', 'blue']}>
+          {
+            dragState => (
+              <div {...dragState.events} style={{
+                background: dragState.type === 'red' && dragState.isOver ? 'red' : 'blue',
+                width: 300,
+                height: 300
+              }}>
+              isOver: {dragState.isOver ? 'true' : 'false'}<br/>
+              accepts: {dragState.type === 'red' && dragState.isOver ? 'true' : 'false'}
+              </div>
+            )
+          }
         </Droppable>
-        <Droppable
-          onDrop={this.onDrop}
-          onDragIn={this.onDragIn}
-          onDragOut={this.onDragOut}
-          className={"dropzone " + this.state.dropClass}
-          accepts="elephants"
-          >
-          Drop Here
-        </Droppable>
-        <div style={{display: 'block'}}>
-          <Draggable
-            dragStyle="move"
-            placeholderClass="dragging"
-            data={"The drag data"}
-            type="giraffes"
-            className="drag-wrapper"
-            onDrag={this.onDrag}
-            onDragEnd={this.onDragEnd}
-            >
-            <div className="drag-square">Drag Me</div>
-          </Draggable>
-          <Draggable
-            dragStyle="move"
-            placeholderClass="dragging"
-            data={"The drag data"}
-            type="giraffes"
-            className="drag-wrapper"
-            onDrag={this.onDrag}
-            onDragEnd={this.onDragEnd}
-            >
-            <div className="drag-square">Drag Me</div>
-          </Draggable>
-          <Draggable
-            dragStyle="move"
-            placeholderClass="dragging"
-            data={"The drag data"}
-            type="giraffes"
-            className="drag-wrapper"
-            onDrag={this.onDrag}
-            onDragEnd={this.onDragEnd}
-            >
-            <div className="drag-square">Drag Me</div>
-          </Draggable>
-        </div>
       </div>
-    );
+    )
   }
 }
 

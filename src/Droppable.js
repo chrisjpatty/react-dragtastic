@@ -21,7 +21,7 @@ class Droppable extends React.Component {
 		if (store.getState().isDragging) {
 			store.update({
 				currentlyHoveredDroppableId: this.dragId,
-				currentlyHoveredDroppableAccepts: this.accepts
+				currentlyHoveredDroppableAccepts: this.props.accepts
 			})
 		}
 	}

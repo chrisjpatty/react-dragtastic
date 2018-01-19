@@ -2,41 +2,38 @@ module.exports =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
 /******/ 			l: false,
 /******/ 			exports: {}
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
-/******/ 	// identity function for calling harmony imports with the correct context
-/******/ 	__webpack_require__.i = function(value) { return value; };
-
+/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -47,7 +44,7 @@ module.exports =
 /******/ 			});
 /******/ 		}
 /******/ 	};
-
+/******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -56,15 +53,15 @@ module.exports =
 /******/ 		__webpack_require__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
-
+/******/
 /******/ 	// Object.prototype.hasOwnProperty.call
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 25);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -241,6 +238,10 @@ process.off = noop;
 process.removeListener = noop;
 process.removeAllListeners = noop;
 process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
 
 process.binding = function (name) {
     throw new Error('process.binding is not supported');
@@ -255,12 +256,119 @@ process.umask = function() { return 0; };
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+module.exports = require("react");
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var randomFromSeed = __webpack_require__(23);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var initialState = {
+  x: 0,
+  y: 0,
+  isDragging: false,
+  startingX: 0,
+  startingY: 0,
+  currentlyDraggingId: null,
+  currentlyHoveredDroppableId: null,
+  currentlyHoveredDroppableAccepts: null,
+  data: null,
+  type: null
+};
+
+var store = function () {
+  function store() {
+    _classCallCheck(this, store);
+
+    this.state = initialState;
+    this.onUpdate = {};
+  }
+
+  _createClass(store, [{
+    key: "update",
+    value: function update(payload) {
+      var _this = this;
+
+      this.state = _extends({}, this.state, payload);
+      Object.keys(this.onUpdate).forEach(function (funcId) {
+        if (_this.onUpdate[funcId]) {
+          _this.onUpdate[funcId]();
+        }
+      });
+    }
+  }, {
+    key: "subscribe",
+    value: function subscribe(id, func) {
+      var _this2 = this;
+
+      this.onUpdate = _extends({}, this.onUpdate, _defineProperty({}, id, func));
+      return function () {
+        _this2.unsubscribe(id);
+      };
+    }
+  }, {
+    key: "unsubscribe",
+    value: function unsubscribe(id) {
+      var _onUpdate = this.onUpdate,
+          deleted = _onUpdate[id],
+          remainder = _objectWithoutProperties(_onUpdate, [id]);
+
+      this.onUpdate = remainder;
+    }
+  }, {
+    key: "getState",
+    value: function getState() {
+      return _extends({}, this.state);
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      this.update(initialState);
+    }
+  }]);
+
+  return store;
+}();
+
+var dndStore = new store();
+
+exports.default = dndStore;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+module.exports = __webpack_require__(13);
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var randomFromSeed = __webpack_require__(14);
 
 var ORIGINAL = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-';
 var alphabet;
@@ -359,98 +467,44 @@ module.exports = {
 
 
 /***/ }),
-/* 2 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
 
+if (process.env.NODE_ENV !== 'production') {
+  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+    Symbol.for &&
+    Symbol.for('react.element')) ||
+    0xeac7;
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+  var isValidElement = function(object) {
+    return typeof object === 'object' &&
+      object !== null &&
+      object.$$typeof === REACT_ELEMENT_TYPE;
+  };
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(20)(isValidElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = __webpack_require__(22)();
+}
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var initialState = {
-  x: 0,
-  y: 0,
-  isDragging: false,
-  startingX: 0,
-  startingy: 0,
-  currentlyDraggingId: null,
-  currentlyHoveredDroppableId: null,
-  data: null,
-  type: null
-};
-
-var store = function () {
-  function store() {
-    _classCallCheck(this, store);
-
-    this.state = initialState;
-    this.onUpdate = {};
-  }
-
-  _createClass(store, [{
-    key: "update",
-    value: function update(payload) {
-      var _this = this;
-
-      this.state = _extends({}, this.state, payload);
-      Object.keys(this.onUpdate).forEach(function (funcId) {
-        if (_this.onUpdate[funcId]) {
-          _this.onUpdate[funcId]();
-        }
-      });
-    }
-  }, {
-    key: "subscribe",
-    value: function subscribe(id, func) {
-      var _this2 = this;
-
-      this.onUpdate = _extends({}, this.onUpdate, _defineProperty({}, id, func));
-      return function () {
-        _this2.unsubscribe(id);
-      };
-    }
-  }, {
-    key: "unsubscribe",
-    value: function unsubscribe(id) {
-      var _onUpdate = this.onUpdate,
-          deleted = _onUpdate[id],
-          remainder = _objectWithoutProperties(_onUpdate, [id]);
-
-      this.onUpdate = remainder;
-    }
-  }, {
-    key: "getState",
-    value: function getState() {
-      return _extends({}, this.state);
-    }
-  }, {
-    key: "reset",
-    value: function reset() {
-      this.update(initialState);
-    }
-  }]);
-
-  return store;
-}();
-
-var dndStore = new store();
-
-exports.default = dndStore;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 3 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -458,9 +512,11 @@ exports.default = dndStore;
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
  *
  * 
  */
@@ -492,15 +548,17 @@ emptyFunction.thatReturnsArgument = function (arg) {
 module.exports = emptyFunction;
 
 /***/ }),
-/* 4 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
  *
  */
 
@@ -552,50 +610,17 @@ module.exports = invariant;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-if (process.env.NODE_ENV !== 'production') {
-  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
-    Symbol.for &&
-    Symbol.for('react.element')) ||
-    0xeac7;
-
-  var isValidElement = function(object) {
-    return typeof object === 'object' &&
-      object !== null &&
-      object.$$typeof === REACT_ELEMENT_TYPE;
-  };
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(17)(isValidElement, throwOnDirectAccess);
-} else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(16)();
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /**
- * Copyright (c) 2013-present, Facebook, Inc.
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
  */
 
 
@@ -606,36 +631,49 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-module.exports = __webpack_require__(20);
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-module.exports = require("react");
-
-/***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+var randomByte = __webpack_require__(15);
+
+function encode(lookup, number) {
+    var loopCounter = 0;
+    var done;
+
+    var str = '';
+
+    while (!done) {
+        str = str + lookup( ( (number >> (4 * loopCounter)) & 0x0f ) | randomByte() );
+        done = number < (Math.pow(16, loopCounter + 1 ) );
+        loopCounter++;
+    }
+    return str;
+}
+
+module.exports = encode;
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2014-present, Facebook, Inc.
+ * Copyright 2014-2015, Facebook, Inc.
+ * All rights reserved.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
  *
  */
 
 
 
-var emptyFunction = __webpack_require__(3);
+var emptyFunction = __webpack_require__(6);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -690,33 +728,42 @@ module.exports = warning;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var randomByte = __webpack_require__(22);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DragState = exports.Droppable = exports.Draggable = exports.DragComponent = undefined;
 
-function encode(lookup, number) {
-    var loopCounter = 0;
-    var done;
+var _DragComponent = __webpack_require__(12);
 
-    var str = '';
+var _DragComponent2 = _interopRequireDefault(_DragComponent);
 
-    while (!done) {
-        str = str + lookup( ( (number >> (4 * loopCounter)) & 0x0f ) | randomByte() );
-        done = number < (Math.pow(16, loopCounter + 1 ) );
-        loopCounter++;
-    }
-    return str;
-}
+var _Draggable = __webpack_require__(23);
 
-module.exports = encode;
+var _Draggable2 = _interopRequireDefault(_Draggable);
 
+var _Droppable = __webpack_require__(24);
+
+var _Droppable2 = _interopRequireDefault(_Droppable);
+
+var _DragState = __webpack_require__(25);
+
+var _DragState2 = _interopRequireDefault(_DragState);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var DragComponent = exports.DragComponent = _DragComponent2.default;
+var Draggable = exports.Draggable = _Draggable2.default;
+var Droppable = exports.Droppable = _Droppable2.default;
+var DragState = exports.DragState = _DragState2.default;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -730,7 +777,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(8);
+var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -738,7 +785,7 @@ var _store = __webpack_require__(2);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _shortid = __webpack_require__(7);
+var _shortid = __webpack_require__(3);
 
 var _shortid2 = _interopRequireDefault(_shortid);
 
@@ -801,412 +848,106 @@ DragComponent.propTypes = {
 exports.default = DragComponent;
 
 /***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(8);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _store = __webpack_require__(2);
-
-var _store2 = _interopRequireDefault(_store);
-
-var _shortid = __webpack_require__(7);
-
-var _shortid2 = _interopRequireDefault(_shortid);
-
-var _propTypes = __webpack_require__(5);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Draggable = function (_React$Component) {
-  _inherits(Draggable, _React$Component);
-
-  function Draggable() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
-    _classCallCheck(this, Draggable);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Draggable.__proto__ || Object.getPrototypeOf(Draggable)).call.apply(_ref, [this].concat(args))), _this), _this.dragId = _shortid2.default.generate(), _this.state = { startCoordinate: null }, _this.componentDidMount = function () {
-      _this.unsubscribe = _store2.default.subscribe(_this.dragId, function () {
-        _this.forceUpdate();
-      });
-    }, _this.componentWillUnmount = function () {
-      _this.unsubscribe();
-    }, _this.startDragDelay = function (e) {
-      var x = void 0;var y = void 0;
-      if ('ontouchstart' in window && e.touches) {
-        x = e.touches[0].clientX;
-        y = e.touches[0].clientY;
-      } else {
-        e.preventDefault();
-        x = e.clientX;
-        y = e.clientY;
-      }
-      _store2.default.update({
-        startingX: x,
-        startingY: y
-      });
-      _this.setState({ startCoordinate: { x: x, y: y } });
-      document.addEventListener("mouseup", _this.endDragDelay);
-      document.addEventListener("mousemove", _this.checkDragDelay);
-      document.addEventListener("touchend", _this.endDragDelay);
-      document.addEventListener("touchmove", _this.checkDragDelay);
-    }, _this.checkDragDelay = function (e) {
-      var x = void 0;var y = void 0;
-      if ('ontouchstart' in window && e.touches) {
-        x = e.touches[0].clientX;
-        y = e.touches[0].clientY;
-      } else {
-        e.preventDefault();
-        x = e.clientX;
-        y = e.clientY;
-      }
-      var a = Math.abs(_this.state.startCoordinate.x - x);
-      var b = Math.abs(_this.state.startCoordinate.y - y);
-      var distance = Math.round(Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)));
-      var dragDistance = _this.props.delay;
-      if (distance >= dragDistance) {
-        _this.endDragDelay();
-        if ('ontouchstart' in window && e.touches) {
-          _this.startMobileDrag(e);
-        } else {
-          _this.startDrag(e);
-        }
-      }
-    }, _this.endDragDelay = function () {
-      document.removeEventListener("mouseup", _this.endDragDelay);
-      document.removeEventListener("mousemove", _this.checkDragDelay);
-      document.removeEventListener("touchend", _this.endDragDelay);
-      document.removeEventListener("touchmove", _this.checkDragDelay);
-      _this.setState({ startCoordinate: null });
-    }, _this.startDrag = function (e) {
-      _store2.default.update({
-        isDragging: true,
-        startingX: e.clientX,
-        startingY: e.clientY,
-        x: e.clientX,
-        y: e.clientY,
-        currentlyDraggingId: _this.props.id || _this.dragId,
-        data: _this.props.data,
-        type: _this.props.type
-      });
-      _this.props.onDragStart(_store2.default.getState().data);
-      window.addEventListener('mouseup', _this.stopDrag);
-      window.addEventListener('mousemove', _this.updateCoordinates);
-    }, _this.startMobileDrag = function (e) {
-      _this.props.onDragStart(_store2.default.getState().data);
-      var touch = e.touches[0];
-      _store2.default.update({
-        isDragging: true,
-        startingX: touch.clientX,
-        startingY: touch.clientY,
-        x: touch.clientX,
-        y: touch.clientY,
-        currentlyDraggingId: _this.props.id || _this.dragId,
-        data: _this.props.data,
-        type: _this.props.type
-      });
-      window.addEventListener('touchend', _this.stopDrag);
-      window.addEventListener('touchmove', _this.updateMobileCoordinates);
-    }, _this.stopDrag = function (e) {
-      _this.props.onDragEnd(_store2.default.getState().data);
-      _store2.default.reset();
-      window.removeEventListener('mouseup', _this.stopDrag);
-      window.removeEventListener('mousemove', _this.updateCoordinates);
-      window.removeEventListener('touchend', _this.stopDrag);
-      window.removeEventListener('touchmove', _this.updateMobileCoordinates);
-    }, _this.updateCoordinates = function (e) {
-      _store2.default.update({
-        x: e.clientX,
-        y: e.clientY
-      });
-    }, _this.updateMobileCoordinates = function (e) {
-      var touch = e.touches[0];
-      _store2.default.update({
-        x: touch.clientX,
-        y: touch.clientY
-      });
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
-  _createClass(Draggable, [{
-    key: 'render',
-    value: function render() {
-      var state = _store2.default.getState();
-      return this.props.children(_extends({}, state, {
-        events: {
-          onMouseDown: this.startDragDelay,
-          onTouchStart: this.startDragDelay
-        }
-      }));
-    }
-  }]);
-
-  return Draggable;
-}(_react2.default.Component);
-
-Draggable.defaultProps = {
-  onDragEnd: function onDragEnd() {},
-  onDragStart: function onDragStart() {},
-  data: null,
-  type: null,
-  delay: 8
-};
-
-Draggable.propTypes = {
-  children: _propTypes2.default.func.isRequired,
-  delay: _propTypes2.default.number,
-  id: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]).isRequired,
-  type: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
-  onDragEnd: _propTypes2.default.func,
-  onDragStart: _propTypes2.default.func
-};
-exports.default = Draggable;
-
-/***/ }),
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
+var alphabet = __webpack_require__(4);
+var encode = __webpack_require__(9);
+var decode = __webpack_require__(16);
+var build = __webpack_require__(17);
+var isValid = __webpack_require__(18);
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+// if you are using cluster or multiple servers use this to make each instance
+// has a unique value for worker
+// Note: I don't know if this is automatically set when using third
+// party cluster solutions such as pm2.
+var clusterWorkerId = __webpack_require__(19) || 0;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+/**
+ * Set the seed.
+ * Highly recommended if you don't want people to try to figure out your id schema.
+ * exposed as shortid.seed(int)
+ * @param seed Integer value to seed the random alphabet.  ALWAYS USE THE SAME SEED or you might get overlaps.
+ */
+function seed(seedValue) {
+    alphabet.seed(seedValue);
+    return module.exports;
+}
 
-var _react = __webpack_require__(8);
+/**
+ * Set the cluster worker or machine id
+ * exposed as shortid.worker(int)
+ * @param workerId worker must be positive integer.  Number less than 16 is recommended.
+ * returns shortid module so it can be chained.
+ */
+function worker(workerId) {
+    clusterWorkerId = workerId;
+    return module.exports;
+}
 
-var _react2 = _interopRequireDefault(_react);
+/**
+ *
+ * sets new characters to use in the alphabet
+ * returns the shuffled alphabet
+ */
+function characters(newCharacters) {
+    if (newCharacters !== undefined) {
+        alphabet.characters(newCharacters);
+    }
 
-var _store = __webpack_require__(2);
+    return alphabet.shuffled();
+}
 
-var _store2 = _interopRequireDefault(_store);
+/**
+ * Generate unique id
+ * Returns string id
+ */
+function generate() {
+  return build(clusterWorkerId);
+}
 
-var _shortid = __webpack_require__(7);
+// Export all other functions as properties of the generate function
+module.exports = generate;
+module.exports.generate = generate;
+module.exports.seed = seed;
+module.exports.worker = worker;
+module.exports.characters = characters;
+module.exports.decode = decode;
+module.exports.isValid = isValid;
 
-var _shortid2 = _interopRequireDefault(_shortid);
-
-var _propTypes = __webpack_require__(5);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Droppable = function (_React$Component) {
-	_inherits(Droppable, _React$Component);
-
-	function Droppable() {
-		var _ref;
-
-		var _temp, _this, _ret;
-
-		_classCallCheck(this, Droppable);
-
-		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-			args[_key] = arguments[_key];
-		}
-
-		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Droppable.__proto__ || Object.getPrototypeOf(Droppable)).call.apply(_ref, [this].concat(args))), _this), _this.dragId = _shortid2.default.generate(), _this.componentDidMount = function () {
-			_this.unsubscribe = _store2.default.subscribe(_this.dragId, function () {
-				_this.forceUpdate();
-			});
-		}, _this.componentWillUnmount = function () {
-			_this.unsubscribe();
-		}, _this.setOver = function () {
-			if (_store2.default.getState().isDragging) {
-				_store2.default.update({
-					currentlyHoveredDroppableId: _this.dragId,
-					currentlyHoveredDroppableAccepts: _this.accepts
-				});
-			}
-		}, _this.setOut = function () {
-			if (_store2.default.getState().isDragging) {
-				_store2.default.update({
-					currentlyHoveredDroppableId: null,
-					currentlyHoveredDroppableAccepts: null
-				});
-			}
-		}, _this.onDrop = function () {
-			var _store$getState = _store2.default.getState(),
-			    data = _store$getState.data,
-			    type = _store$getState.type,
-			    isDragging = _store$getState.isDragging;
-
-			if (isDragging) {
-				if (Array.isArray(_this.props.accepts)) {
-					if (_this.props.accepts.includes(type)) {
-						_this.props.onDrop(data);
-					}
-				} else {
-					if (type === _this.props.accepts) {
-						_this.props.onDrop(data);
-					}
-				}
-			}
-		}, _temp), _possibleConstructorReturn(_this, _ret);
-	}
-
-	_createClass(Droppable, [{
-		key: 'render',
-		value: function render() {
-			var state = _store2.default.getState();
-			return this.props.children(_extends({}, state, {
-				isOver: state.currentlyHoveredDroppableId === this.dragId,
-				events: {
-					onMouseEnter: this.setOver,
-					onMouseLeave: this.setOut,
-					onMouseUp: this.onDrop
-				}
-			}));
-		}
-	}]);
-
-	return Droppable;
-}(_react2.default.Component);
-
-Droppable.defaultProps = {
-	onDrop: function onDrop() {},
-	accepts: null
-};
-
-Droppable.propTypes = {
-	children: _propTypes2.default.func.isRequired,
-	accepts: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.array]),
-	onDrop: _propTypes2.default.func
-};
-exports.default = Droppable;
 
 /***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
 
 
-/* eslint-disable no-unused-vars */
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+// Found this seed-based random generator somewhere
+// Based on The Central Randomizer 1.3 (C) 1997 by Paul Houle (houle@msc.cornell.edu)
 
-function toObject(val) {
-	if (val === null || val === undefined) {
-		throw new TypeError('Object.assign cannot be called with null or undefined');
-	}
+var seed = 1;
 
-	return Object(val);
+/**
+ * return a random number based on a seed
+ * @param seed
+ * @returns {number}
+ */
+function getNextValue() {
+    seed = (seed * 9301 + 49297) % 233280;
+    return seed/(233280.0);
 }
 
-function shouldUseNative() {
-	try {
-		if (!Object.assign) {
-			return false;
-		}
-
-		// Detect buggy property enumeration order in older V8 versions.
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
-		test1[5] = 'de';
-		if (Object.getOwnPropertyNames(test1)[0] === '5') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test2 = {};
-		for (var i = 0; i < 10; i++) {
-			test2['_' + String.fromCharCode(i)] = i;
-		}
-		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-			return test2[n];
-		});
-		if (order2.join('') !== '0123456789') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test3 = {};
-		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-			test3[letter] = letter;
-		});
-		if (Object.keys(Object.assign({}, test3)).join('') !==
-				'abcdefghijklmnopqrst') {
-			return false;
-		}
-
-		return true;
-	} catch (err) {
-		// We don't expect any of the above to throw, but better to be safe.
-		return false;
-	}
+function setSeed(_seed_) {
+    seed = _seed_;
 }
 
-module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-	var from;
-	var to = toObject(target);
-	var symbols;
-
-	for (var s = 1; s < arguments.length; s++) {
-		from = Object(arguments[s]);
-
-		for (var key in from) {
-			if (hasOwnProperty.call(from, key)) {
-				to[key] = from[key];
-			}
-		}
-
-		if (getOwnPropertySymbols) {
-			symbols = getOwnPropertySymbols(from);
-			for (var i = 0; i < symbols.length; i++) {
-				if (propIsEnumerable.call(from, symbols[i])) {
-					to[symbols[i]] = from[symbols[i]];
-				}
-			}
-		}
-	}
-
-	return to;
+module.exports = {
+    nextValue: getNextValue,
+    seed: setSeed
 };
 
 
@@ -1215,131 +956,44 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
 
 
+var crypto = typeof window === 'object' && (window.crypto || window.msCrypto); // IE 11 uses window.msCrypto
 
-if (process.env.NODE_ENV !== 'production') {
-  var invariant = __webpack_require__(4);
-  var warning = __webpack_require__(9);
-  var ReactPropTypesSecret = __webpack_require__(6);
-  var loggedTypeFailures = {};
-}
-
-/**
- * Assert that the values match with the type specs.
- * Error messages are memorized and will only be shown once.
- *
- * @param {object} typeSpecs Map of name to a ReactPropType
- * @param {object} values Runtime values that need to be type-checked
- * @param {string} location e.g. "prop", "context", "child context"
- * @param {string} componentName Name of the component for error messages.
- * @param {?Function} getStack Returns the component stack.
- * @private
- */
-function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
-  if (process.env.NODE_ENV !== 'production') {
-    for (var typeSpecName in typeSpecs) {
-      if (typeSpecs.hasOwnProperty(typeSpecName)) {
-        var error;
-        // Prop type validation may throw. In case they do, we don't want to
-        // fail the render phase where it didn't fail before. So we log it.
-        // After these have been cleaned up, we'll let them throw.
-        try {
-          // This is intentionally an invariant that gets caught. It's the same
-          // behavior as without this statement except with a better message.
-          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, typeof typeSpecs[typeSpecName]);
-          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
-        } catch (ex) {
-          error = ex;
-        }
-        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
-        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
-          // Only monitor this failure once because there tends to be a lot of the
-          // same error.
-          loggedTypeFailures[error.message] = true;
-
-          var stack = getStack ? getStack() : '';
-
-          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
-        }
-      }
+function randomByte() {
+    if (!crypto || !crypto.getRandomValues) {
+        return Math.floor(Math.random() * 256) & 0x30;
     }
-  }
+    var dest = new Uint8Array(1);
+    crypto.getRandomValues(dest);
+    return dest[0] & 0x30;
 }
 
-module.exports = checkPropTypes;
+module.exports = randomByte;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+var alphabet = __webpack_require__(4);
+
 /**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * Decode the id to get the version and worker
+ * Mainly for debugging and testing.
+ * @param id - the shortid-generated id.
  */
+function decode(id) {
+    var characters = alphabet.shuffled();
+    return {
+        version: characters.indexOf(id.substr(0, 1)) & 0x0f,
+        worker: characters.indexOf(id.substr(1, 1)) & 0x0f
+    };
+}
 
-
-
-var emptyFunction = __webpack_require__(3);
-var invariant = __webpack_require__(4);
-var ReactPropTypesSecret = __webpack_require__(6);
-
-module.exports = function() {
-  function shim(props, propName, componentName, location, propFullName, secret) {
-    if (secret === ReactPropTypesSecret) {
-      // It is still safe when called from React.
-      return;
-    }
-    invariant(
-      false,
-      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
-      'Use PropTypes.checkPropTypes() to call them. ' +
-      'Read more at http://fb.me/use-check-prop-types'
-    );
-  };
-  shim.isRequired = shim;
-  function getShim() {
-    return shim;
-  };
-  // Important!
-  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
-  var ReactPropTypes = {
-    array: shim,
-    bool: shim,
-    func: shim,
-    number: shim,
-    object: shim,
-    string: shim,
-    symbol: shim,
-
-    any: shim,
-    arrayOf: getShim,
-    element: shim,
-    instanceOf: getShim,
-    node: shim,
-    objectOf: getShim,
-    oneOf: getShim,
-    oneOfType: getShim,
-    shape: getShim,
-    exact: getShim
-  };
-
-  ReactPropTypes.checkPropTypes = emptyFunction;
-  ReactPropTypes.PropTypes = ReactPropTypes;
-
-  return ReactPropTypes;
-};
+module.exports = decode;
 
 
 /***/ }),
@@ -1347,22 +1001,114 @@ module.exports = function() {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+var encode = __webpack_require__(9);
+var alphabet = __webpack_require__(4);
+
+// Ignore all milliseconds before a certain time to reduce the size of the date entropy without sacrificing uniqueness.
+// This number should be updated every year or so to keep the generated id short.
+// To regenerate `new Date() - 0` and bump the version. Always bump the version!
+var REDUCE_TIME = 1459707606518;
+
+// don't change unless we change the algos or REDUCE_TIME
+// must be an integer and less than 16
+var version = 6;
+
+// Counter is used when shortid is called multiple times in one second.
+var counter;
+
+// Remember the last time shortid was called in case counter is needed.
+var previousSeconds;
+
+/**
+ * Generate unique id
+ * Returns string id
+ */
+function build(clusterWorkerId) {
+
+    var str = '';
+
+    var seconds = Math.floor((Date.now() - REDUCE_TIME) * 0.001);
+
+    if (seconds === previousSeconds) {
+        counter++;
+    } else {
+        counter = 0;
+        previousSeconds = seconds;
+    }
+
+    str = str + encode(alphabet.lookup, version);
+    str = str + encode(alphabet.lookup, clusterWorkerId);
+    if (counter > 0) {
+        str = str + encode(alphabet.lookup, counter);
+    }
+    str = str + encode(alphabet.lookup, seconds);
+
+    return str;
+}
+
+module.exports = build;
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var alphabet = __webpack_require__(4);
+
+function isShortId(id) {
+    if (!id || typeof id !== 'string' || id.length < 6 ) {
+        return false;
+    }
+
+    var characters = alphabet.characters();
+    var len = id.length;
+    for(var i = 0; i < len;i++) {
+        if (characters.indexOf(id[i]) === -1) {
+            return false;
+        }
+    }
+    return true;
+}
+
+module.exports = isShortId;
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = 0;
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2013-present, Facebook, Inc.
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
  */
 
 
 
-var emptyFunction = __webpack_require__(3);
-var invariant = __webpack_require__(4);
-var warning = __webpack_require__(9);
-var assign = __webpack_require__(14);
+var emptyFunction = __webpack_require__(6);
+var invariant = __webpack_require__(7);
+var warning = __webpack_require__(10);
 
-var ReactPropTypesSecret = __webpack_require__(6);
-var checkPropTypes = __webpack_require__(15);
+var ReactPropTypesSecret = __webpack_require__(8);
+var checkPropTypes = __webpack_require__(21);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -1458,8 +1204,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
     objectOf: createObjectOfTypeChecker,
     oneOf: createEnumTypeChecker,
     oneOfType: createUnionTypeChecker,
-    shape: createShapeTypeChecker,
-    exact: createStrictShapeTypeChecker,
+    shape: createShapeTypeChecker
   };
 
   /**
@@ -1674,7 +1419,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
       if (typeof checker !== 'function') {
         warning(
           false,
-          'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' +
+          'Invalid argument supplid to oneOfType. Expected an array of check functions, but ' +
           'received %s at index %s.',
           getPostfixForTypeWarning(checker),
           i
@@ -1725,36 +1470,6 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
       }
       return null;
     }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createStrictShapeTypeChecker(shapeTypes) {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
-      }
-      // We need to check all keys in case some are required but missing from
-      // props.
-      var allKeys = assign({}, props[propName], shapeTypes);
-      for (var key in allKeys) {
-        var checker = shapeTypes[key];
-        if (!checker) {
-          return new PropTypeError(
-            'Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' +
-            '\nBad object: ' + JSON.stringify(props[propName], null, '  ') +
-            '\nValid keys: ' +  JSON.stringify(Object.keys(shapeTypes), null, '  ')
-          );
-        }
-        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-        if (error) {
-          return error;
-        }
-      }
-      return null;
-    }
-
     return createChainableTypeChecker(validate);
   }
 
@@ -1893,201 +1608,138 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var encode = __webpack_require__(10);
-var alphabet = __webpack_require__(1);
-
-// Ignore all milliseconds before a certain time to reduce the size of the date entropy without sacrificing uniqueness.
-// This number should be updated every year or so to keep the generated id short.
-// To regenerate `new Date() - 0` and bump the version. Always bump the version!
-var REDUCE_TIME = 1459707606518;
-
-// don't change unless we change the algos or REDUCE_TIME
-// must be an integer and less than 16
-var version = 6;
-
-// Counter is used when shortid is called multiple times in one second.
-var counter;
-
-// Remember the last time shortid was called in case counter is needed.
-var previousSeconds;
-
-/**
- * Generate unique id
- * Returns string id
- */
-function build(clusterWorkerId) {
-
-    var str = '';
-
-    var seconds = Math.floor((Date.now() - REDUCE_TIME) * 0.001);
-
-    if (seconds === previousSeconds) {
-        counter++;
-    } else {
-        counter = 0;
-        previousSeconds = seconds;
-    }
-
-    str = str + encode(alphabet.lookup, version);
-    str = str + encode(alphabet.lookup, clusterWorkerId);
-    if (counter > 0) {
-        str = str + encode(alphabet.lookup, counter);
-    }
-    str = str + encode(alphabet.lookup, seconds);
-
-    return str;
-}
-
-module.exports = build;
-
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var alphabet = __webpack_require__(1);
-
-/**
- * Decode the id to get the version and worker
- * Mainly for debugging and testing.
- * @param id - the shortid-generated id.
- */
-function decode(id) {
-    var characters = alphabet.shuffled();
-    return {
-        version: characters.indexOf(id.substr(0, 1)) & 0x0f,
-        worker: characters.indexOf(id.substr(1, 1)) & 0x0f
-    };
-}
-
-module.exports = decode;
-
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var alphabet = __webpack_require__(1);
-var encode = __webpack_require__(10);
-var decode = __webpack_require__(19);
-var build = __webpack_require__(18);
-var isValid = __webpack_require__(21);
-
-// if you are using cluster or multiple servers use this to make each instance
-// has a unique value for worker
-// Note: I don't know if this is automatically set when using third
-// party cluster solutions such as pm2.
-var clusterWorkerId = __webpack_require__(24) || 0;
-
-/**
- * Set the seed.
- * Highly recommended if you don't want people to try to figure out your id schema.
- * exposed as shortid.seed(int)
- * @param seed Integer value to seed the random alphabet.  ALWAYS USE THE SAME SEED or you might get overlaps.
- */
-function seed(seedValue) {
-    alphabet.seed(seedValue);
-    return module.exports;
-}
-
-/**
- * Set the cluster worker or machine id
- * exposed as shortid.worker(int)
- * @param workerId worker must be positive integer.  Number less than 16 is recommended.
- * returns shortid module so it can be chained.
- */
-function worker(workerId) {
-    clusterWorkerId = workerId;
-    return module.exports;
-}
-
-/**
- *
- * sets new characters to use in the alphabet
- * returns the shuffled alphabet
- */
-function characters(newCharacters) {
-    if (newCharacters !== undefined) {
-        alphabet.characters(newCharacters);
-    }
-
-    return alphabet.shuffled();
-}
-
-/**
- * Generate unique id
- * Returns string id
- */
-function generate() {
-  return build(clusterWorkerId);
-}
-
-// Export all other functions as properties of the generate function
-module.exports = generate;
-module.exports.generate = generate;
-module.exports.seed = seed;
-module.exports.worker = worker;
-module.exports.characters = characters;
-module.exports.decode = decode;
-module.exports.isValid = isValid;
-
-
-/***/ }),
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
 
-var alphabet = __webpack_require__(1);
 
-function isShortId(id) {
-    if (!id || typeof id !== 'string' || id.length < 6 ) {
-        return false;
-    }
 
-    var characters = alphabet.characters();
-    var len = id.length;
-    for(var i = 0; i < len;i++) {
-        if (characters.indexOf(id[i]) === -1) {
-            return false;
-        }
-    }
-    return true;
+if (process.env.NODE_ENV !== 'production') {
+  var invariant = __webpack_require__(7);
+  var warning = __webpack_require__(10);
+  var ReactPropTypesSecret = __webpack_require__(8);
+  var loggedTypeFailures = {};
 }
 
-module.exports = isShortId;
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?Function} getStack Returns the component stack.
+ * @private
+ */
+function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+  if (process.env.NODE_ENV !== 'production') {
+    for (var typeSpecName in typeSpecs) {
+      if (typeSpecs.hasOwnProperty(typeSpecName)) {
+        var error;
+        // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', componentName || 'React class', location, typeSpecName);
+          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+        } catch (ex) {
+          error = ex;
+        }
+        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
+        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures[error.message] = true;
 
+          var stack = getStack ? getStack() : '';
+
+          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
+        }
+      }
+    }
+  }
+}
+
+module.exports = checkPropTypes;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
 
 
-var crypto = typeof window === 'object' && (window.crypto || window.msCrypto); // IE 11 uses window.msCrypto
 
-function randomByte() {
-    if (!crypto || !crypto.getRandomValues) {
-        return Math.floor(Math.random() * 256) & 0x30;
+var emptyFunction = __webpack_require__(6);
+var invariant = __webpack_require__(7);
+var ReactPropTypesSecret = __webpack_require__(8);
+
+module.exports = function() {
+  function shim(props, propName, componentName, location, propFullName, secret) {
+    if (secret === ReactPropTypesSecret) {
+      // It is still safe when called from React.
+      return;
     }
-    var dest = new Uint8Array(1);
-    crypto.getRandomValues(dest);
-    return dest[0] & 0x30;
-}
+    invariant(
+      false,
+      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+      'Use PropTypes.checkPropTypes() to call them. ' +
+      'Read more at http://fb.me/use-check-prop-types'
+    );
+  };
+  shim.isRequired = shim;
+  function getShim() {
+    return shim;
+  };
+  // Important!
+  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
+  var ReactPropTypes = {
+    array: shim,
+    bool: shim,
+    func: shim,
+    number: shim,
+    object: shim,
+    string: shim,
+    symbol: shim,
 
-module.exports = randomByte;
+    any: shim,
+    arrayOf: getShim,
+    element: shim,
+    instanceOf: getShim,
+    node: shim,
+    objectOf: getShim,
+    oneOf: getShim,
+    oneOfType: getShim,
+    shape: getShim
+  };
+
+  ReactPropTypes.checkPropTypes = emptyFunction;
+  ReactPropTypes.PropTypes = ReactPropTypes;
+
+  return ReactPropTypes;
+};
 
 
 /***/ }),
@@ -2097,30 +1749,188 @@ module.exports = randomByte;
 "use strict";
 
 
-// Found this seed-based random generator somewhere
-// Based on The Central Randomizer 1.3 (C) 1997 by Paul Houle (houle@msc.cornell.edu)
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var seed = 1;
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-/**
- * return a random number based on a seed
- * @param seed
- * @returns {number}
- */
-function getNextValue() {
-    seed = (seed * 9301 + 49297) % 233280;
-    return seed/(233280.0);
-}
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function setSeed(_seed_) {
-    seed = _seed_;
-}
+var _react = __webpack_require__(1);
 
-module.exports = {
-    nextValue: getNextValue,
-    seed: setSeed
+var _react2 = _interopRequireDefault(_react);
+
+var _store = __webpack_require__(2);
+
+var _store2 = _interopRequireDefault(_store);
+
+var _shortid = __webpack_require__(3);
+
+var _shortid2 = _interopRequireDefault(_shortid);
+
+var _propTypes = __webpack_require__(5);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Draggable = function (_React$Component) {
+  _inherits(Draggable, _React$Component);
+
+  function Draggable() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, Draggable);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Draggable.__proto__ || Object.getPrototypeOf(Draggable)).call.apply(_ref, [this].concat(args))), _this), _this.dragId = _shortid2.default.generate(), _this.state = { startCoordinate: null }, _this.componentDidMount = function () {
+      _this.unsubscribe = _store2.default.subscribe(_this.dragId, function () {
+        _this.forceUpdate();
+      });
+    }, _this.componentWillUnmount = function () {
+      _this.unsubscribe();
+    }, _this.startDragDelay = function (e) {
+      var x = void 0;var y = void 0;
+      if ('ontouchstart' in window && e.touches) {
+        x = e.touches[0].clientX;
+        y = e.touches[0].clientY;
+      } else {
+        e.preventDefault();
+        x = e.clientX;
+        y = e.clientY;
+      }
+      _store2.default.update({
+        startingX: x,
+        startingY: y
+      });
+      _this.setState({ startCoordinate: { x: x, y: y } });
+      document.addEventListener("mouseup", _this.endDragDelay);
+      document.addEventListener("mousemove", _this.checkDragDelay);
+      document.addEventListener("touchend", _this.endDragDelay);
+      document.addEventListener("touchmove", _this.checkDragDelay);
+    }, _this.checkDragDelay = function (e) {
+      var x = void 0;var y = void 0;
+      if ('ontouchstart' in window && e.touches) {
+        x = e.touches[0].clientX;
+        y = e.touches[0].clientY;
+      } else {
+        e.preventDefault();
+        x = e.clientX;
+        y = e.clientY;
+      }
+      var a = Math.abs(_this.state.startCoordinate.x - x);
+      var b = Math.abs(_this.state.startCoordinate.y - y);
+      var distance = Math.round(Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)));
+      var dragDistance = _this.props.delay;
+      if (distance >= dragDistance) {
+        _this.endDragDelay();
+        if ('ontouchstart' in window && e.touches) {
+          _this.startMobileDrag(e);
+        } else {
+          _this.startDrag(e);
+        }
+      }
+    }, _this.endDragDelay = function () {
+      document.removeEventListener("mouseup", _this.endDragDelay);
+      document.removeEventListener("mousemove", _this.checkDragDelay);
+      document.removeEventListener("touchend", _this.endDragDelay);
+      document.removeEventListener("touchmove", _this.checkDragDelay);
+      _this.setState({ startCoordinate: null });
+    }, _this.startDrag = function (e) {
+      _store2.default.update({
+        isDragging: true,
+        startingX: e.clientX,
+        startingY: e.clientY,
+        x: e.clientX,
+        y: e.clientY,
+        currentlyDraggingId: _this.props.id || _this.dragId,
+        data: _this.props.data,
+        type: _this.props.type
+      });
+      _this.props.onDragStart(_store2.default.getState().data);
+      window.addEventListener('mouseup', _this.stopDrag);
+      window.addEventListener('mousemove', _this.updateCoordinates);
+    }, _this.startMobileDrag = function (e) {
+      _this.props.onDragStart(_store2.default.getState().data);
+      var touch = e.touches[0];
+      _store2.default.update({
+        isDragging: true,
+        startingX: touch.clientX,
+        startingY: touch.clientY,
+        x: touch.clientX,
+        y: touch.clientY,
+        currentlyDraggingId: _this.props.id || _this.dragId,
+        data: _this.props.data,
+        type: _this.props.type
+      });
+      window.addEventListener('touchend', _this.stopDrag);
+      window.addEventListener('touchmove', _this.updateMobileCoordinates);
+    }, _this.stopDrag = function (e) {
+      _this.props.onDragEnd(_store2.default.getState().data);
+      _store2.default.reset();
+      window.removeEventListener('mouseup', _this.stopDrag);
+      window.removeEventListener('mousemove', _this.updateCoordinates);
+      window.removeEventListener('touchend', _this.stopDrag);
+      window.removeEventListener('touchmove', _this.updateMobileCoordinates);
+    }, _this.updateCoordinates = function (e) {
+      _store2.default.update({
+        x: e.clientX,
+        y: e.clientY
+      });
+    }, _this.updateMobileCoordinates = function (e) {
+      var touch = e.touches[0];
+      _store2.default.update({
+        x: touch.clientX,
+        y: touch.clientY
+      });
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(Draggable, [{
+    key: 'render',
+    value: function render() {
+      var state = _store2.default.getState();
+      return this.props.children(_extends({}, state, {
+        events: {
+          onMouseDown: this.startDragDelay,
+          onTouchStart: this.startDragDelay
+        }
+      }));
+    }
+  }]);
+
+  return Draggable;
+}(_react2.default.Component);
+
+Draggable.defaultProps = {
+  onDragEnd: function onDragEnd() {},
+  onDragStart: function onDragStart() {},
+  data: null,
+  type: null,
+  delay: 8
 };
 
+Draggable.propTypes = {
+  children: _propTypes2.default.func.isRequired,
+  delay: _propTypes2.default.number,
+  id: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]).isRequired,
+  type: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
+  onDragEnd: _propTypes2.default.func,
+  onDragStart: _propTypes2.default.func
+};
+exports.default = Draggable;
 
 /***/ }),
 /* 24 */
@@ -2129,8 +1939,121 @@ module.exports = {
 "use strict";
 
 
-module.exports = 0;
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _store = __webpack_require__(2);
+
+var _store2 = _interopRequireDefault(_store);
+
+var _shortid = __webpack_require__(3);
+
+var _shortid2 = _interopRequireDefault(_shortid);
+
+var _propTypes = __webpack_require__(5);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Droppable = function (_React$Component) {
+	_inherits(Droppable, _React$Component);
+
+	function Droppable() {
+		var _ref;
+
+		var _temp, _this, _ret;
+
+		_classCallCheck(this, Droppable);
+
+		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+			args[_key] = arguments[_key];
+		}
+
+		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Droppable.__proto__ || Object.getPrototypeOf(Droppable)).call.apply(_ref, [this].concat(args))), _this), _this.dragId = _shortid2.default.generate(), _this.componentDidMount = function () {
+			_this.unsubscribe = _store2.default.subscribe(_this.dragId, function () {
+				_this.forceUpdate();
+			});
+		}, _this.componentWillUnmount = function () {
+			_this.unsubscribe();
+		}, _this.setOver = function () {
+			if (_store2.default.getState().isDragging) {
+				_store2.default.update({
+					currentlyHoveredDroppableId: _this.dragId,
+					currentlyHoveredDroppableAccepts: _this.props.accepts
+				});
+			}
+		}, _this.setOut = function () {
+			if (_store2.default.getState().isDragging) {
+				_store2.default.update({
+					currentlyHoveredDroppableId: null,
+					currentlyHoveredDroppableAccepts: null
+				});
+			}
+		}, _this.onDrop = function () {
+			var _store$getState = _store2.default.getState(),
+			    data = _store$getState.data,
+			    type = _store$getState.type,
+			    isDragging = _store$getState.isDragging;
+
+			if (isDragging) {
+				if (Array.isArray(_this.props.accepts)) {
+					if (_this.props.accepts.includes(type)) {
+						_this.props.onDrop(data);
+					}
+				} else {
+					if (type === _this.props.accepts) {
+						_this.props.onDrop(data);
+					}
+				}
+			}
+		}, _temp), _possibleConstructorReturn(_this, _ret);
+	}
+
+	_createClass(Droppable, [{
+		key: 'render',
+		value: function render() {
+			var state = _store2.default.getState();
+			return this.props.children(_extends({}, state, {
+				isOver: state.currentlyHoveredDroppableId === this.dragId,
+				events: {
+					onMouseEnter: this.setOver,
+					onMouseLeave: this.setOut,
+					onMouseUp: this.onDrop
+				}
+			}));
+		}
+	}]);
+
+	return Droppable;
+}(_react2.default.Component);
+
+Droppable.defaultProps = {
+	onDrop: function onDrop() {},
+	accepts: null
+};
+
+Droppable.propTypes = {
+	children: _propTypes2.default.func.isRequired,
+	accepts: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.array]),
+	onDrop: _propTypes2.default.func
+};
+exports.default = Droppable;
 
 /***/ }),
 /* 25 */
@@ -2142,25 +2065,67 @@ module.exports = 0;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Droppable = exports.Draggable = exports.DragComponent = undefined;
 
-var _DragComponent = __webpack_require__(11);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _DragComponent2 = _interopRequireDefault(_DragComponent);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Draggable = __webpack_require__(12);
+var _react = __webpack_require__(1);
 
-var _Draggable2 = _interopRequireDefault(_Draggable);
+var _react2 = _interopRequireDefault(_react);
 
-var _Droppable = __webpack_require__(13);
+var _store = __webpack_require__(2);
 
-var _Droppable2 = _interopRequireDefault(_Droppable);
+var _store2 = _interopRequireDefault(_store);
+
+var _shortid = __webpack_require__(3);
+
+var _shortid2 = _interopRequireDefault(_shortid);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var DragComponent = exports.DragComponent = _DragComponent2.default;
-var Draggable = exports.Draggable = _Draggable2.default;
-var Droppable = exports.Droppable = _Droppable2.default;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DragState = function (_React$Component) {
+  _inherits(DragState, _React$Component);
+
+  function DragState() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, DragState);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DragState.__proto__ || Object.getPrototypeOf(DragState)).call.apply(_ref, [this].concat(args))), _this), _this.dragId = _shortid2.default.generate(), _this.componentDidMount = function () {
+      _this.unsubscribe = _store2.default.subscribe(_this.dragId, function () {
+        _this.forceUpdate();
+      });
+    }, _this.componentWillUnmount = function () {
+      _this.unsubscribe();
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(DragState, [{
+    key: 'render',
+    value: function render() {
+      var children = this.props.children;
+
+      return children(_extends({}, _store2.default.getState()));
+    }
+  }]);
+
+  return DragState;
+}(_react2.default.Component);
+
+exports.default = DragState;
 
 /***/ })
 /******/ ]);

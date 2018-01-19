@@ -3,9 +3,10 @@ const initialState = {
   y: 0,
   isDragging: false,
   startingX: 0,
-  startingy: 0,
+  startingY: 0,
   currentlyDraggingId: null,
   currentlyHoveredDroppableId: null,
+  currentlyHoveredDroppableAccepts: null,
   data: null,
   type: null
 }
