@@ -1889,12 +1889,14 @@ var Draggable = function (_React$Component) {
         x: e.clientX,
         y: e.clientY
       });
+      _this.props.onDrag();
     }, _this.updateMobileCoordinates = function (e) {
       var touch = e.touches[0];
       _store2.default.update({
         x: touch.clientX,
         y: touch.clientY
       });
+      _this.props.onDrag();
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -1917,6 +1919,7 @@ var Draggable = function (_React$Component) {
 Draggable.defaultProps = {
   onDragEnd: function onDragEnd() {},
   onDragStart: function onDragStart() {},
+  onDrag: function onDrag() {},
   data: null,
   type: null,
   delay: 8
@@ -1997,6 +2000,7 @@ var Droppable = function (_React$Component) {
 					currentlyHoveredDroppableId: _this.dragId,
 					currentlyHoveredDroppableAccepts: _this.props.accepts
 				});
+				_this.props.onDragEnter();
 			}
 		}, _this.setOut = function () {
 			if (_store2.default.getState().isDragging) {
@@ -2004,6 +2008,7 @@ var Droppable = function (_React$Component) {
 					currentlyHoveredDroppableId: null,
 					currentlyHoveredDroppableAccepts: null
 				});
+				_this.props.onDragLeave();
 			}
 		}, _this.onDrop = function () {
 			var _store$getState = _store2.default.getState(),
@@ -2045,6 +2050,8 @@ var Droppable = function (_React$Component) {
 
 Droppable.defaultProps = {
 	onDrop: function onDrop() {},
+	onDragEnter: function onDragEnter() {},
+	onDragLeave: function onDragLeave() {},
 	accepts: null
 };
 
