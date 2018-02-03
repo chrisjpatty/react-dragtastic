@@ -8,9 +8,20 @@
     "build"
   ],
   "scripts": {
-    "test": "jest",
+    "test": "jest && prettier --list-different \"**/*.js\"",
     "start": "rollup --config --watch",
-    "build": "rollup --config"
+    "build": "rollup --config",
+    "precommit": "lint-staged"
+  },
+  "prettier": {
+    "single-quote": true,
+    "semi": false
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "author": "@chrisjpatty",
   "repository": {
@@ -32,8 +43,11 @@
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.5.1",
+    "husky": "^0.14.3",
     "jest": "^22.0.3",
+    "lint-staged": "^6.1.0",
     "np": "^2.18.3",
+    "prettier": "^1.10.2",
     "rollup": "^0.55.3",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-watch": "^4.3.1"

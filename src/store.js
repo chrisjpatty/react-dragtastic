@@ -12,34 +12,36 @@ const initialState = {
 }
 
 class store {
-  constructor(){
+  constructor() {
     this.state = initialState
-    this.onUpdate = {};
+    this.onUpdate = {}
   }
-  update(payload){
-    this.state = {...this.state, ...payload}
-    Object.keys(this.onUpdate).forEach(funcId=>{
-      if(this.onUpdate[funcId]){
+  update(payload) {
+    this.state = { ...this.state, ...payload }
+    Object.keys(this.onUpdate).forEach(funcId => {
+      if (this.onUpdate[funcId]) {
         this.onUpdate[funcId]()
       }
     })
   }
-  subscribe(id, func){
-    this.onUpdate = { ...this.onUpdate, [id]: func}
-    return ()=>{this.unsubscribe(id)}
+  subscribe(id, func) {
+    this.onUpdate = { ...this.onUpdate, [id]: func }
+    return () => {
+      this.unsubscribe(id)
+    }
   }
-  unsubscribe(id){
-    let {[id]: deleted, ...remainder} = this.onUpdate
-    this.onUpdate = remainder;
+  unsubscribe(id) {
+    let { [id]: deleted, ...remainder } = this.onUpdate
+    this.onUpdate = remainder
   }
-  getState(){
-    return {...this.state};
+  getState() {
+    return { ...this.state }
   }
-  reset(){
+  reset() {
     this.update(initialState)
   }
 }
 
-const dndStore = new store();
+const dndStore = new store()
 
 export default dndStore
