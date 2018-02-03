@@ -3,17 +3,14 @@
   "version": "2.1.0",
   "description": "A simple drag and drop library for React which uses the more stable mouseDown mouseUp architecture instead of the problematic HTML5 drag and drop API.",
   "main": "build/index.js",
-  "peerDependencies": {
-    "react": "^15.5.4"
-  },
-  "dependencies": {
-    "prop-types": "^15.6.0",
-    "shortid": "^2.2.8"
-  },
+  "module": "build/index.es.js",
+  "files": [
+    "build"
+  ],
   "scripts": {
     "test": "jest",
-    "start": "webpack --watch",
-    "build": "webpack"
+    "start": "rollup --config --watch",
+    "build": "rollup --config"
   },
   "author": "@chrisjpatty",
   "repository": {
@@ -21,15 +18,24 @@
     "url": "https://github.com/chrisjpatty/react-dragtastic"
   },
   "license": "MIT",
+  "peerDependencies": {
+    "react": "^15.5.4 || ^16.0.0"
+  },
+  "dependencies": {
+    "prop-types": "^15.6.0",
+    "shortid": "^2.2.8"
+  },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.24.1",
-    "babel-loader": "^7.0.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.5.1",
     "jest": "^22.0.3",
-    "np": "^2.18.3"
+    "np": "^2.18.3",
+    "rollup": "^0.55.3",
+    "rollup-plugin-babel": "^3.0.3",
+    "rollup-watch": "^4.3.1"
   }
 }
