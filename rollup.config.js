@@ -7,7 +7,7 @@ export default {
     { file: pkg.main, format: 'cjs' },
     { file: pkg.module, format: 'es' }
   ],
-  external: ['react', 'prop-types', 'shortid'],
+  external: ['react', 'prop-types'],
   plugins: [
     babel({
       include: 'src/**'

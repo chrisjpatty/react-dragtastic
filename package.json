@@ -33,8 +33,7 @@
     "react": "^15.5.4 || ^16.0.0"
   },
   "dependencies": {
-    "prop-types": "^15.6.0",
-    "shortid": "^2.2.8"
+    "prop-types": "^15.6.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

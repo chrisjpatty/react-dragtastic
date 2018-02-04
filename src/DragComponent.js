@@ -1,10 +1,9 @@
 import React from 'react'
 import store from './store'
-import shortid from 'shortid'
 import PropTypes from 'prop-types'
 
 class DragComponent extends React.Component {
-  dragId = shortid.generate()
+  dragId = store.getId()
   static defaultProps = {
     for: ''
   }

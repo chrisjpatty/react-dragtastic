@@ -1,9 +1,8 @@
 import React from 'react'
 import store from './store'
-import shortid from 'shortid'
 
 export default class DragState extends React.Component {
-  dragId = shortid.generate()
+  dragId = store.getId()
   componentDidMount = () => {
     this.unsubscribe = store.subscribe(this.dragId, () => {
       this.forceUpdate()
