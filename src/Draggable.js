@@ -1,5 +1,5 @@
 import React from 'react'
-import store from './store'
+import store, { defaultAccepts } from './store'
 import PropTypes from 'prop-types'
 
 class Draggable extends React.Component {
@@ -10,7 +10,7 @@ class Draggable extends React.Component {
     onDragStart: () => {},
     onDrag: () => {},
     data: null,
-    type: null,
+    type: defaultAccepts,
     delay: 8
   }
   componentDidMount = () => {

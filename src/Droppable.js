@@ -1,6 +1,6 @@
 import React from 'react'
-import store from './store'
 import PropTypes from 'prop-types'
+import store, { defaultAccepts } from './store'
 
 class Droppable extends React.Component {
   dragId = store.getId()
@@ -8,7 +8,7 @@ class Droppable extends React.Component {
     onDrop: () => {},
     onDragEnter: () => {},
     onDragLeave: () => {},
-    accepts: []
+    accepts: defaultAccepts
   }
   componentDidMount = () => {
     this.unsubscribe = store.subscribe(this.dragId, () => {
@@ -31,7 +31,7 @@ class Droppable extends React.Component {
     if (store.getState().isDragging) {
       store.update({
         currentlyHoveredDroppableId: null,
-        currentlyHoveredDroppableAccepts: []
+        currentlyHoveredDroppableAccepts: null
       })
       this.props.onDragLeave()
     }
