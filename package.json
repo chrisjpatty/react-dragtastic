@@ -11,7 +11,7 @@
     "build:flow": "cpy src/index.js.flow build",
     "typecheck:flow": "flow check && [[ $(flow check) == 'Found 0 errors' ]]",
     "pretest": "yarn build",
-    "test": "jest && prettier --list-different \"**/*.js\"",
+    "test": "jest && prettier --list-different \"**/*.js\" --ignore-path .gitignore",
     "start": "cross-env NODE_ENV=build rollup --config --watch",
     "build": "cross-env NODE_ENV=build rollup --config",
     "precommit": "lint-staged"
