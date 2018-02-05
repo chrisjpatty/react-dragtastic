@@ -1,6 +1,6 @@
 const { bootstrap } = require('./test-helpers.js')
 
-test('not rendered if draggable id is not equal drag component for', async () => {
+test('not rendered if draggable id does not equal drag component for', async () => {
   const page = await bootstrap()
 
   const renderFn = jest.fn()
@@ -75,7 +75,7 @@ test('rendered on dragging', async () => {
   )
 })
 
-test('accepts isOverAccepted when hovered droppable', async () => {
+test('accepts isOverAccepted when hovering droppable', async () => {
   const page = await bootstrap()
   const renderFn = jest.fn()
 
@@ -128,7 +128,7 @@ test('accepts isOverAccepted when hovered droppable', async () => {
   )
 })
 
-test('droppable `accepts` array work with DragComponent', async () => {
+test('droppable `accepts` array works with DragComponent', async () => {
   const page = await bootstrap()
   const renderFn = jest.fn()
 
