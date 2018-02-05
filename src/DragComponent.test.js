@@ -107,9 +107,6 @@ test('accepts isOverAccepted when hovered droppable', async () => {
   })
 
   await page.mouse.down(50, 50)
-
-  expect(renderFn).toHaveBeenCalledTimes(0)
-
   await page.mouse.move(50, 75)
 
   expect(renderFn).lastCalledWith(
