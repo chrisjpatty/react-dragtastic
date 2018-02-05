@@ -54,6 +54,9 @@ body{
 .light-blue{
   background: #33A1FD;
 }
+.extra-light-blue{
+  background: #5cb5ff;
+}
 .text-dark-orange{
   color: #d07200;
 }
@@ -124,6 +127,9 @@ body{
 .orbit.light-blue:before{
   background: #33A1FD;
 }
+.orbit.extra-light-blue:before{
+  background: #5cb5ff;
+}
 @keyframes orbit {
   0%{
     transform: rotate(0deg);
@@ -153,7 +159,7 @@ body{
   font-size: 0.8rem;
 }
 .title-wrapper{
-  
+
 }
 h3.title{
   font-size: 3rem;
