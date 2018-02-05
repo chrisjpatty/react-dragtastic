@@ -6,7 +6,7 @@ const initialState = {
   startingY: 0,
   currentlyDraggingId: null,
   currentlyHoveredDroppableId: null,
-  currentlyHoveredDroppableAccepts: null,
+  currentlyHoveredDroppableAccepts: [],
   data: null,
   type: null
 }

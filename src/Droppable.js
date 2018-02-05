@@ -8,7 +8,7 @@ class Droppable extends React.Component {
     onDrop: () => {},
     onDragEnter: () => {},
     onDragLeave: () => {},
-    accepts: null
+    accepts: []
   }
   componentDidMount = () => {
     this.unsubscribe = store.subscribe(this.dragId, () => {
@@ -31,7 +31,7 @@ class Droppable extends React.Component {
     if (store.getState().isDragging) {
       store.update({
         currentlyHoveredDroppableId: null,
-        currentlyHoveredDroppableAccepts: null
+        currentlyHoveredDroppableAccepts: []
       })
       this.props.onDragLeave()
     }

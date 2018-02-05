@@ -69,7 +69,7 @@ test('rendered on dragging', async () => {
     expect.objectContaining({
       currentlyDraggingId: 'draggable',
       currentlyHoveredDroppableId: null,
-      currentlyHoveredDroppableAccepts: null,
+      currentlyHoveredDroppableAccepts: [],
       isOverAccepted: false
     })
   )
@@ -112,7 +112,7 @@ test('accepts isOverAccepted when hovering droppable', async () => {
   expect(renderFn).lastCalledWith(
     expect.objectContaining({
       currentlyDraggingId: 'draggable',
-      currentlyHoveredDroppableAccepts: null,
+      currentlyHoveredDroppableAccepts: [],
       isOverAccepted: false
     })
   )
