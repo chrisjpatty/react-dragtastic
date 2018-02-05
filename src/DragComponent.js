@@ -17,14 +17,15 @@ class DragComponent extends React.Component {
   }
   render() {
     const state = store.getState()
+    const accepts = state.currentlyHoveredDroppableAccepts
     return (
       state.isDragging &&
       state.currentlyDraggingId === this.props.for &&
       this.props.children({
         ...state,
-        isOverAccepted: Array.isArray(this.currentlyHoveredDroppableAccepts)
-          ? this.currentlyHoveredDroppableAccepts.find(state.type)
-          : state.type === this.currentlyHoveredDroppableAccepts
+        isOverAccepted: Array.isArray(accepts)
+          ? accepts.find(state.type)
+          : state.type === accepts
       })
     )
   }

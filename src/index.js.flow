@@ -20,7 +20,7 @@ type State = {|
 |}
 
 type DragComponentProps = {
-  for?: Type,
+  for?: Id,
   children: ({
     ...State,
     isOverAccepted: boolean

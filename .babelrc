@@ -1,11 +1,23 @@
 {
-  "presets": [
-    ["env", { "modules": false }]
-  ],
-  "plugins": [
-    "transform-class-properties",
-    "transform-object-rest-spread",
-    "transform-react-jsx",
-    "external-helpers"
-  ]
+  "env": {
+    "test": {
+      "plugins": [
+        "transform-es2015-modules-commonjs",
+        "transform-class-properties",
+        ["transform-object-rest-spread", { "useBuiltIns": true }],
+        ["transform-react-jsx", { "useBuiltIns": true }]
+      ]
+    },
+    "build": {
+      "presets": [
+        ["env", { "modules": false }]
+      ],
+      plugins: [
+        "transform-class-properties",
+        "transform-object-rest-spread",
+        "transform-react-jsx",
+        "external-helpers"
+      ]
+    }
+  }
 }

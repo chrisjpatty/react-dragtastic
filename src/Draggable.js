@@ -10,7 +10,7 @@ class Draggable extends React.Component {
     onDragStart: () => {},
     onDrag: () => {},
     data: null,
-    type: null,
+    type: '',
     delay: 8
   }
   componentDidMount = () => {
