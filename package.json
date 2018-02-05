@@ -8,6 +8,8 @@
     "build"
   ],
   "scripts": {
+    "build:flow": "cpy src/index.js.flow build",
+    "typecheck:flow": "flow check && [[ $(flow check) == 'Found 0 errors' ]]",
     "test": "jest && prettier --list-different \"**/*.js\"",
     "start": "rollup --config --watch",
     "build": "rollup --config",
@@ -42,6 +44,8 @@
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.5.1",
+    "cpy-cli": "^1.0.1",
+    "flow-bin": "^0.64.0",
     "husky": "^0.14.3",
     "jest": "^22.0.3",
     "lint-staged": "^6.1.0",

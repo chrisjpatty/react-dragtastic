@@ -1,0 +1,73 @@
+// @flow
+
+import * as React from 'react'
+
+type Id = string
+type Type = string | number
+type Accepts = string | $ReadOnlyArray<string>
+
+type State = {|
+  x: number,
+  y: number,
+  isDragging: boolean,
+  startingX: number,
+  startingY: number,
+  currentlyDraggingId: ?Id,
+  currentlyHoveredDroppableId: ?Id,
+  currentlyHoveredDroppableAccepts: ?Accepts,
+  data: any,
+  type: ?Type
+|}
+
+type DragComponentProps = {
+  for?: Type,
+  children: ({
+    ...State,
+    isOverAccepted: boolean
+  }) => React.Node
+}
+
+type DraggableProps = {
+  id: Id,
+  type?: Type,
+  data?: any,
+  delay?: number,
+  onDragStart?: (data: any) => void,
+  onDrag?: () => void,
+  onDragEnd?: (data: any) => void,
+  children: ({
+    ...State,
+    events: {
+      onMouseDown: (SyntheticMouseEvent<*>) => void,
+      onTouchStart: (SyntheticTouchEvent<*>) => void
+    }
+  }) => React.Node
+}
+
+type DroppableProps = {
+  accepts?: Accepts,
+  onDragEnter?: () => void,
+  onDrop?: (data: any) => void,
+  onDragLeave?: () => void,
+  children: ({
+    ...State,
+    isOver: boolean,
+    events: {
+      onMouseEnter: () => void,
+      onMouseLeave: () => void,
+      onMouseUp: () => void
+    }
+  }) => React.Node
+}
+
+type DragStateProps = {
+  children: State => React.Node
+}
+
+declare export var DragComponent: React.ComponentType<DragComponentProps>
+
+declare export var Draggable: React.ComponentType<DraggableProps>
+
+declare export var Droppable: React.ComponentType<DroppableProps>
+
+declare export var DragState: React.ComponentType<DragStateProps>
