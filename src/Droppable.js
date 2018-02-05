@@ -1,6 +1,6 @@
 import React from 'react'
-import store from './store'
 import PropTypes from 'prop-types'
+import store from './store'
 
 class Droppable extends React.Component {
   dragId = store.getId()
