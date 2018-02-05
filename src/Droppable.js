@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import store, { defaultAccepts } from './store'
+import store from './store'
 
 class Droppable extends React.Component {
   dragId = store.getId()
@@ -8,7 +8,7 @@ class Droppable extends React.Component {
     onDrop: () => {},
     onDragEnter: () => {},
     onDragLeave: () => {},
-    accepts: defaultAccepts
+    accepts: null
   }
   componentDidMount = () => {
     this.unsubscribe = store.subscribe(this.dragId, () => {

@@ -1,5 +1,3 @@
-export const defaultAccepts = '__dragtastic_accepts_default__'
-
 const initialState = {
   x: 0,
   y: 0,

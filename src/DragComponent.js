@@ -18,14 +18,20 @@ class DragComponent extends React.Component {
   render() {
     const state = store.getState()
     const accepts = state.currentlyHoveredDroppableAccepts
+    const isOverDroppable =
+      typeof state.currentlyHoveredDroppableId === 'string'
     return (
       state.isDragging &&
       state.currentlyDraggingId === this.props.for &&
       this.props.children({
         ...state,
-        isOverAccepted: Array.isArray(accepts)
-          ? accepts.includes(state.type)
-          : state.type === accepts
+        isOverAccepted: isOverDroppable
+          ? accepts !== null
+            ? Array.isArray(accepts)
+              ? accepts.includes(state.type)
+              : state.type === accepts
+            : true
+          : false
       })
     )
   }
