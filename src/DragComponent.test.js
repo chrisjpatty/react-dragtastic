@@ -127,3 +127,47 @@ test('accepts isOverAccepted when hovered droppable', async () => {
     })
   )
 })
+
+test('droppable `accepts` array work with DragComponent', async () => {
+  const page = await bootstrap()
+  const renderFn = jest.fn()
+
+  await page.exposeFunction('renderFn', renderFn)
+
+  await page.evaluate(() => {
+    const React = window.React
+    const { DragComponent, Draggable, Droppable } = window.ReactDragtastic
+
+    const App = () => (
+      <React.Fragment>
+        <Draggable id="draggable" type="type1">
+          {({ events }) => (
+            <div style={{ width: 100, height: 100 }} {...events} />
+          )}
+        </Draggable>>
+        <Droppable accepts={['type1']}>
+          {({ events }) => (
+            <div style={{ width: 100, height: 100 }} {...events} />
+          )}
+        </Droppable>
+        <DragComponent for="draggable">
+          {d => renderFn(d) && null}
+        </DragComponent>
+      </React.Fragment>
+    )
+
+    window.render(<App />)
+  })
+
+  await page.mouse.down(50, 50)
+  await page.mouse.move(50, 51)
+  await page.mouse.move(50, 150)
+
+  expect(renderFn).lastCalledWith(
+    expect.objectContaining({
+      currentlyDraggingId: 'draggable',
+      currentlyHoveredDroppableAccepts: ['type1'],
+      isOverAccepted: true
+    })
+  )
+})

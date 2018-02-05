@@ -24,7 +24,7 @@ class DragComponent extends React.Component {
       this.props.children({
         ...state,
         isOverAccepted: Array.isArray(accepts)
-          ? accepts.find(state.type)
+          ? accepts.includes(state.type)
           : state.type === accepts
       })
     )
