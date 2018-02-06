@@ -3,24 +3,19 @@ import store from './store'
 import PropTypes from 'prop-types'
 
 class Draggable extends React.Component {
-  dragId = store.getId()
-  state = { startCoordinate: null }
   static defaultProps = {
-    onDragEnd: () => {},
-    onDragStart: () => {},
-    onDrag: () => {},
     data: null,
     type: null,
-    delay: 8
+    delay: 8,
+    onDragStart: () => {},
+    onDrag: () => {},
+    onDragEnd: () => {}
   }
-  componentDidMount = () => {
-    this.unsubscribe = store.subscribe(this.dragId, () => {
-      this.forceUpdate()
-    })
-  }
-  componentWillUnmount = () => {
-    this.unsubscribe()
-  }
+
+  dragId = store.getId()
+
+  state = { startCoordinate: null }
+
   startDragDelay = e => {
     let x
     let y
@@ -42,6 +37,7 @@ class Draggable extends React.Component {
     document.addEventListener('touchend', this.endDragDelay)
     document.addEventListener('touchmove', this.checkDragDelay)
   }
+
   checkDragDelay = e => {
     let x
     let y
@@ -66,6 +62,7 @@ class Draggable extends React.Component {
       }
     }
   }
+
   endDragDelay = () => {
     document.removeEventListener('mouseup', this.endDragDelay)
     document.removeEventListener('mousemove', this.checkDragDelay)
@@ -73,6 +70,7 @@ class Draggable extends React.Component {
     document.removeEventListener('touchmove', this.checkDragDelay)
     this.setState({ startCoordinate: null })
   }
+
   startDrag = e => {
     store.update({
       isDragging: true,
@@ -88,6 +86,7 @@ class Draggable extends React.Component {
     window.addEventListener('mouseup', this.stopDrag)
     window.addEventListener('mousemove', this.updateCoordinates)
   }
+
   startMobileDrag = e => {
     this.props.onDragStart(store.getState().data)
     const touch = e.touches[0]
@@ -104,6 +103,7 @@ class Draggable extends React.Component {
     window.addEventListener('touchend', this.stopDrag)
     window.addEventListener('touchmove', this.updateMobileCoordinates)
   }
+
   stopDrag = e => {
     this.props.onDragEnd(store.getState().data)
     store.reset()
@@ -112,6 +112,7 @@ class Draggable extends React.Component {
     window.removeEventListener('touchend', this.stopDrag)
     window.removeEventListener('touchmove', this.updateMobileCoordinates)
   }
+
   updateCoordinates = e => {
     store.update({
       x: e.clientX,
@@ -119,6 +120,7 @@ class Draggable extends React.Component {
     })
     this.props.onDrag()
   }
+
   updateMobileCoordinates = e => {
     const touch = e.touches[0]
     store.update({
@@ -127,6 +129,17 @@ class Draggable extends React.Component {
     })
     this.props.onDrag()
   }
+
+  componentDidMount() {
+    this.unsubscribe = store.subscribe(this.dragId, () => {
+      this.forceUpdate()
+    })
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe()
+  }
+
   render() {
     const state = store.getState()
     return this.props.children({
@@ -138,12 +151,15 @@ class Draggable extends React.Component {
     })
   }
 }
+
 Draggable.propTypes = {
   children: PropTypes.func.isRequired,
   delay: PropTypes.number,
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   type: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  onDragEnd: PropTypes.func,
-  onDragStart: PropTypes.func
+  onDragStart: PropTypes.func,
+  onDrag: PropTypes.func,
+  onDragEnd: PropTypes.func
 }
+
 export default Draggable
