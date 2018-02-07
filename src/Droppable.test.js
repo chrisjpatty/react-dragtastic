@@ -1,4 +1,4 @@
-const { bootstrap } = require('./test-helpers.js')
+const { bootstrap, delay } = require('./test-helpers.js')
 
 test('call onDragEnter, onDragLeave callbacks', async () => {
   const page = await bootstrap()
@@ -111,6 +111,8 @@ test('pass isOver: true when drag is over droppable', async () => {
   expect(renderFn).lastCalledWith(expect.objectContaining({ isOver: true }))
 
   await page.mouse.up()
+
+  await delay(50)
 
   expect(renderFn).lastCalledWith(expect.objectContaining({ isOver: false }))
 })
