@@ -33,11 +33,13 @@ test('call onDragEnter, onDragLeave callbacks', async () => {
   expect(onDragEnterFn).toHaveBeenCalledTimes(0)
 
   await page.mouse.move(50, 150, { steps: 2 })
+  await delay(50)
 
   expect(onDragEnterFn).toHaveBeenCalledTimes(1)
   expect(onDragLeaveFn).toHaveBeenCalledTimes(0)
 
   await page.mouse.move(150, 150)
+  await delay(50)
 
   expect(onDragEnterFn).toHaveBeenCalledTimes(1)
   expect(onDragLeaveFn).toHaveBeenCalledTimes(1)

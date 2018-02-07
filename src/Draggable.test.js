@@ -1,4 +1,4 @@
-const { bootstrap } = require('./test-helpers.js')
+const { bootstrap, delay } = require('./test-helpers.js')
 
 test('call onDragStart, onDrag and onDragEnd callbacks', async () => {
   const page = await bootstrap()
@@ -34,6 +34,7 @@ test('call onDragStart, onDrag and onDragEnd callbacks', async () => {
   await page.mouse.move(60, 60)
   await page.mouse.move(60, 150)
   await page.mouse.up()
+  await delay(50)
 
   expect(onDragStartFn).toHaveBeenCalledTimes(1)
   expect(onDragFn).toHaveBeenCalledTimes(2)
