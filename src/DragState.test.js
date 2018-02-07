@@ -63,6 +63,7 @@ test('listen drag state', async () => {
   })
 
   await page.mouse.move(60, 150)
+  await delay(50)
 
   expect(renderFn).lastCalledWith({
     currentlyDraggingId: 'draggable',
