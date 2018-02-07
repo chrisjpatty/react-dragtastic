@@ -38,4 +38,8 @@ const bootstrap = async () => {
   return page
 }
 
+const delay = async timeout =>
+  new Promise(resolve => setTimeout(resolve, timeout))
+
+exports.delay = delay
 exports.bootstrap = bootstrap

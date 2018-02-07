@@ -1,4 +1,4 @@
-const { bootstrap } = require('./test-helpers.js')
+const { bootstrap, delay } = require('./test-helpers.js')
 
 test('listen drag state', async () => {
   const page = await bootstrap()
@@ -78,6 +78,8 @@ test('listen drag state', async () => {
   })
 
   await page.mouse.up()
+
+  await delay(50)
 
   expect(renderFn).lastCalledWith({
     currentlyDraggingId: null,
