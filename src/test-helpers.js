@@ -22,6 +22,10 @@ const bootstrap = async () => {
       body.style.margin = '0px'
     }
 
+    window.div100 = events => (
+      <div style={{ width: 100, height: 100 }} {...events} />
+    )
+
     window.render = component => {
       window.ReactDOM.render(component, container)
     }
@@ -34,4 +38,8 @@ const bootstrap = async () => {
   return page
 }
 
+const delay = async timeout =>
+  new Promise(resolve => setTimeout(resolve, timeout))
+
+exports.delay = delay
 exports.bootstrap = bootstrap
