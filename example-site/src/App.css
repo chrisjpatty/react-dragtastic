@@ -25,6 +25,7 @@ body{
   cursor: pointer;
   position: relative;
   box-shadow: inset 0 3px 6px rgba(0,0,0,0.16), inset 0 3px 6px rgba(0,0,0,0.23);
+  transition: transform 300ms;
 }
 .circle{
   width: 100px;
@@ -82,8 +83,11 @@ body{
   pointer-events: none;
   z-index: 99;
 }
+.draggable-dragging{
+  transform: scale(.7);
+}
 .droppable{
-  transition: box-shadow 200ms;
+  transition: box-shadow 200ms, border-width 200ms;
   display: flex;
   position: relative;
   border: 10px solid rgba(255,255,255,.2);
@@ -169,4 +173,55 @@ h3.title{
   color: #ffffff;
   padding: 5px;
   display: inline-block;
+}
+.accept{
+  border-width: 0px;
+}
+.reject{
+  border-width: 40px;
+}
+.implode{
+  animation: slurp 500ms;
+}
+@keyframes slurp {
+  0%{
+    border-width: 0px;
+  }
+  10%{
+    border-width: 30px;
+  }
+  40%{
+    border-width: 5px;
+  }
+  70%{
+    border-width: 15px;
+  }
+  100%{
+    border-width: 10px;
+  }
+}
+@keyframes implode {
+  0%{
+    /* transform: scale(1); */
+    border-width: 10px;
+  }
+  10%{
+    /* transform: scale(.7) */
+    border-width: 19px;
+  }
+  20%{
+    /* transform:  scale(.9) */
+    border-width: 21px;
+  }
+  60%{
+    /* transform: scale(1.1) */
+    border-width: 9px;
+  }
+  100%{
+    /* transform: scale(1) */
+    border-width: 10px;
+  }
+}
+.example-wrapper{
+  margin-bottom: 30px;
 }
