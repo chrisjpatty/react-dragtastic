@@ -3,18 +3,22 @@ import store from './store'
 import PropTypes from 'prop-types'
 
 class DragComponent extends React.Component {
-  dragId = store.getId()
   static defaultProps = {
     for: ''
   }
-  componentDidMount = () => {
+
+  dragId = store.getId()
+
+  componentDidMount() {
     this.unsubscribe = store.subscribe(this.dragId, () => {
       this.forceUpdate()
     })
   }
-  componentWillUnmount = () => {
+
+  componentWillUnmount() {
     this.unsubscribe()
   }
+
   render() {
     const state = store.getState()
     const accepts = state.currentlyHoveredDroppableAccepts
@@ -36,8 +40,10 @@ class DragComponent extends React.Component {
     )
   }
 }
+
 DragComponent.propTypes = {
   children: PropTypes.func.isRequired,
   for: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
 }
+
 export default DragComponent

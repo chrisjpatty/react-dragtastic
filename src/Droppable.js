@@ -3,21 +3,15 @@ import PropTypes from 'prop-types'
 import store from './store'
 
 class Droppable extends React.Component {
-  dragId = store.getId()
   static defaultProps = {
-    onDrop: () => {},
+    accepts: null,
     onDragEnter: () => {},
     onDragLeave: () => {},
-    accepts: null
+    onDrop: () => {}
   }
-  componentDidMount = () => {
-    this.unsubscribe = store.subscribe(this.dragId, () => {
-      this.forceUpdate()
-    })
-  }
-  componentWillUnmount = () => {
-    this.unsubscribe()
-  }
+
+  dragId = store.getId()
+
   setOver = () => {
     if (store.getState().isDragging) {
       store.update({
@@ -27,6 +21,7 @@ class Droppable extends React.Component {
       this.props.onDragEnter()
     }
   }
+
   setOut = () => {
     if (store.getState().isDragging) {
       store.update({
@@ -36,6 +31,7 @@ class Droppable extends React.Component {
       this.props.onDragLeave()
     }
   }
+
   onDrop = () => {
     const { data, type, isDragging } = store.getState()
     if (isDragging) {
@@ -50,6 +46,17 @@ class Droppable extends React.Component {
       }
     }
   }
+
+  componentDidMount() {
+    this.unsubscribe = store.subscribe(this.dragId, () => {
+      this.forceUpdate()
+    })
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe()
+  }
+
   render() {
     const state = store.getState()
     return this.props.children({
@@ -63,9 +70,13 @@ class Droppable extends React.Component {
     })
   }
 }
+
 Droppable.propTypes = {
   children: PropTypes.func.isRequired,
   accepts: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-  onDrop: PropTypes.func
+  onDrop: PropTypes.func,
+  onDragEnter: PropTypes.func,
+  onDragLeave: PropTypes.func
 }
+
 export default Droppable

@@ -1,16 +1,19 @@
 import React from 'react'
 import store from './store'
 
-export default class DragState extends React.Component {
+class DragState extends React.Component {
   dragId = store.getId()
-  componentDidMount = () => {
+
+  componentDidMount() {
     this.unsubscribe = store.subscribe(this.dragId, () => {
       this.forceUpdate()
     })
   }
-  componentWillUnmount = () => {
+
+  componentWillUnmount() {
     this.unsubscribe()
   }
+
   render() {
     const { children } = this.props
     return children({
@@ -18,3 +21,9 @@ export default class DragState extends React.Component {
     })
   }
 }
+
+DragState.propTypes = {
+  children: PropTypes.func.isRequired
+}
+
+export default DragState
