@@ -14,8 +14,10 @@ Drag and drop interfaces are complicated and difficult to properly program, this
 
 ## Example
 
-[Code Sandbox Example](https://codesandbox.io/s/5z32yqk7l4)
+[Demo Site](https://react-dragtastic.netlify.com/)
 _More examples coming soon_
+
+[Code Sandbox Example](https://codesandbox.io/s/5z32yqk7l4)
 
 ## Installation
 
