@@ -166,13 +166,15 @@ body{
 
 }
 h3.title{
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin: 0px;
   font-family: 'Assistant', sans-serif;
   font-weight: 800;
   color: #ffffff;
-  padding: 5px;
+  padding: 5px 15px;
+  padding-top: 0px;
   display: inline-block;
+  border-radius: 6px;
 }
 .accept{
   border-width: 0px;
@@ -224,4 +226,49 @@ h3.title{
 }
 .example-wrapper{
   margin-bottom: 30px;
+}
+
+.demos{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+.demo-link{
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+  text-decoration: none;
+}
+.demo-img{
+  width: 100%;
+  height: 200px;
+  transition: transform 300ms;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.demo-link:hover .demo-img{
+  transform: scale(1.05);
+}
+.demo-link:hover .title{
+  background: #f7a924;
+}
+.demo-link .title{
+  color: #fff;
+  font-size: 24px;
+  text-align: center;
+  font-weight: 600;
+  font-family: 'Assistant', sans-serif;
+  background: #F79824;
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  z-index: 3;
+  transition: background 300ms;
 }

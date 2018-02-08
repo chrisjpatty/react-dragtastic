@@ -1,10 +1,12 @@
 import Basic from './pages/Basic'
+import basicImg from './common/img/basic-demo.svg'
 
 const demos = [
   {
-    title: 'Basic Drag and Drop',
+    title: 'Basic Examples',
     page: Basic,
-    path: 'basic'
+    path: 'basic',
+    img: basicImg
   }
 ]
 export default demos

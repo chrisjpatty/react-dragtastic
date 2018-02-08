@@ -1,11 +1,20 @@
 header{
   display: flex;
   width: 100%;
-  padding: 10px;
-  background: #2176FF;
+  padding: 30px;
+  /* background: #2176FF; */
   color: #31393C;
 }
 header img{
   width: 100%;
-  max-width: 150px;
+  max-width: 250px;
+}
+.page-gradient{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(to bottom, rgba(252, 236, 86, 1), rgba(252, 236, 86, 0));
+  z-index: -1;
 }

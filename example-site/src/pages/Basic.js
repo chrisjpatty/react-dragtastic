@@ -71,7 +71,7 @@ class BasicDND extends React.Component {
               <div
                 {...events}
                 className={`droppable circle blue shadow-inner ${
-                  isOver ? 'depth-2 accepts' : ''
+                  isOver ? 'depth-2 accept' : ''
                 } ${this.state.dropped ? 'implode' : ''}`}
                 onAnimationEnd={this.onAnimationEnd}
               >
@@ -141,7 +141,7 @@ class BasicMoveDrag extends React.Component {
               <div
                 {...events}
                 className={`droppable circle blue shadow-inner ${
-                  isOver ? 'depth-2 accepts' : ''
+                  isOver ? 'depth-2 accept' : ''
                 } ${this.state.dropped ? 'implode' : ''}`}
                 onAnimationEnd={this.onAnimationEnd}
               >

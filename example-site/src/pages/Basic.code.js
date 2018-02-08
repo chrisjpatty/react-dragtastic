@@ -18,7 +18,7 @@ export const simple = `<Draggable id="blue" type="circle">
   )}
 </DragComponent>
 
-<Droppable accepts="circle">
+<Droppable accepts="circle" onDrop={this.animateDrop}>
   {({ events, isOver }) => (
     <div
       {...events}
@@ -52,7 +52,7 @@ export const moving = `<Draggable id="blue" type="circle">
   )}
 </DragComponent>
 
-<Droppable accepts="circle">
+<Droppable accepts="circle" onDrop={this.animateDrop}>
   {({ events, isOver }) => (
     <div
       {...events}
@@ -86,7 +86,7 @@ export const multi = `<Draggable id="blue" type="blue">
   )}
 </DragComponent>
 
-<Droppable accepts="blue">
+<Droppable accepts="blue" onDrop={this.animateDrop}>
   {({ events, isOver }) => (
     <div
       {...events}
@@ -99,7 +99,7 @@ export const multi = `<Draggable id="blue" type="blue">
   {({ isDragging, events }) => (
     <div
       {...events}
-      className="circle blue draggable"
+      className="circle orange draggable"
       style={{opacity: isDragging ? 0 : 1}}
     />
   )}
@@ -108,7 +108,7 @@ export const multi = `<Draggable id="blue" type="blue">
 <DragComponent for="orange">
   {({ x, y, currentlyHoveredDroppableId }) => (
     <div
-      className="circle blue small shadow"
+      className="circle orange small shadow"
       style={{
         position: 'fixed',
         pointerEvents: 'none',
@@ -119,11 +119,11 @@ export const multi = `<Draggable id="blue" type="blue">
   )}
 </DragComponent>
 
-<Droppable accepts="orange">
+<Droppable accepts="orange" onDrop={this.animateDrop}>
   {({ events, isOver }) => (
     <div
       {...events}
-      className={\`droppable circle blue shadow-inner \${ isOver ? 'accept' : '' }\`}
+      className={\`droppable circle orange shadow-inner \${ isOver ? 'accept' : '' }\`}
     />
   )}
 </Droppable>

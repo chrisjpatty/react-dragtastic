@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 313 250">
+  <defs>
+    <radialGradient id="radial-gradient" cx="263" cy="202" r="43" gradientUnits="userSpaceOnUse">
+      <stop offset="0.81" stop-color="#f59636"/>
+      <stop offset="0.84" stop-color="#f59636" stop-opacity="0.99"/>
+      <stop offset="0.86" stop-color="#f59636" stop-opacity="0.94"/>
+      <stop offset="0.89" stop-color="#f59636" stop-opacity="0.87"/>
+      <stop offset="0.91" stop-color="#f59636" stop-opacity="0.76"/>
+      <stop offset="0.93" stop-color="#f59636" stop-opacity="0.62"/>
+      <stop offset="0.95" stop-color="#f59636" stop-opacity="0.46"/>
+      <stop offset="0.98" stop-color="#f59636" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#f59636" stop-opacity="0.03"/>
+      <stop offset="1" stop-color="#f59636" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="radial-gradient-2" cx="263" cy="52" r="43" gradientUnits="userSpaceOnUse">
+      <stop offset="0.81" stop-color="#297afb"/>
+      <stop offset="0.84" stop-color="#297afb" stop-opacity="0.99"/>
+      <stop offset="0.86" stop-color="#297afb" stop-opacity="0.94"/>
+      <stop offset="0.89" stop-color="#297afb" stop-opacity="0.87"/>
+      <stop offset="0.91" stop-color="#297afb" stop-opacity="0.77"/>
+      <stop offset="0.93" stop-color="#297afb" stop-opacity="0.63"/>
+      <stop offset="0.95" stop-color="#297afb" stop-opacity="0.47"/>
+      <stop offset="0.97" stop-color="#297afb" stop-opacity="0.27"/>
+      <stop offset="1" stop-color="#297afb" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#297afb" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <title>basic-img</title>
+  <g id="Layer_2" data-name="Layer 2">
+    <g id="Layer_1-2" data-name="Layer 1">
+      <circle cx="30" cy="50" r="30" style="fill: #297afb"/>
+      <circle cx="30" cy="200" r="30" style="fill: #f59636"/>
+      <polygon points="188 50 145 25 145 40 85 40 85 60 145 60 145 75 188 50" style="fill: #fbec61"/>
+      <polygon points="188 200 145 175 145 190 85 190 85 210 145 210 145 225 188 200" style="fill: #fbec61"/>
+      <g>
+        <circle cx="263" cy="200" r="41" style="fill: #ab6925"/>
+        <circle cx="263" cy="202" r="43" style="fill: url(#radial-gradient)"/>
+        <path d="M263,150a50,50,0,1,0,50,50A50,50,0,0,0,263,150Zm0,91a41,41,0,1,1,41-41A41,41,0,0,1,263,241Z" style="fill: #f7ac5e"/>
+      </g>
+      <g>
+        <circle cx="263" cy="50" r="41" style="fill: #1b54af"/>
+        <circle cx="263" cy="52" r="43" style="fill: url(#radial-gradient-2)"/>
+        <path d="M263,0a50,50,0,1,0,50,50A50,50,0,0,0,263,0Zm0,91a41,41,0,1,1,41-41A41,41,0,0,1,263,91Z" style="fill: #5396fc"/>
+      </g>
+    </g>
+  </g>
+</svg>
