@@ -1,6 +1,6 @@
-import React from 'react'
-import store from './store'
+import * as React from 'react'
 import PropTypes from 'prop-types'
+import store from './store'
 
 class DragComponent extends React.Component {
   static defaultProps = {
