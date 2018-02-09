@@ -1,5 +1,6 @@
 import * as React from 'react'
 import store from './store'
+import PropTypes from 'prop-types'
 
 class DragState extends React.Component {
   dragId = store.getId()
