@@ -49,6 +49,8 @@ test('listen drag state', async () => {
   await page.mouse.down(50, 50)
   await page.mouse.move(60, 60)
 
+  await delay(50)
+
   expect(renderFn).lastCalledWith({
     currentlyDraggingId: 'draggable',
     currentlyHoveredDroppableAccepts: null,
