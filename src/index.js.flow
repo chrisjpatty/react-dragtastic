@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 
-type Id = string
+type Id = string | number
 type Type = string | number
 type Accepts = string | $ReadOnlyArray<string>
 
@@ -19,15 +19,16 @@ type State = {|
   type: ?Type
 |}
 
-type DragComponentProps = {
+type DragComponentProps = {|
   for?: Id,
+  alwaysRender?: boolean,
   children: ({
     ...State,
     isOverAccepted: boolean
   }) => React.Node
-}
+|}
 
-type DraggableProps = {
+type DraggableProps = {|
   id: Id,
   type?: Type,
   data?: any,
@@ -42,9 +43,9 @@ type DraggableProps = {
       onTouchStart: (SyntheticTouchEvent<*>) => void
     }
   }) => React.Node
-}
+|}
 
-type DroppableProps = {
+type DroppableProps = {|
   accepts?: Accepts,
   onDragEnter?: () => void,
   onDrop?: (data: any) => void,
@@ -58,11 +59,11 @@ type DroppableProps = {
       onMouseUp: () => void
     }
   }) => React.Node
-}
+|}
 
-type DragStateProps = {
+type DragStateProps = {|
   children: State => React.Node
-}
+|}
 
 declare export var DragComponent: React.ComponentType<DragComponentProps>
 
