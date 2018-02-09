@@ -6,7 +6,7 @@ import Orbit from '../components/Animations/Orbit'
 import CodeBox from '../components/CodeBox/CodeBox'
 import { Title } from '../components/Shell/Shell'
 import { simple, moving, multi } from './Basic.code.js'
-import './Basic.css'
+import './styles.css'
 
 export default class Basic extends React.Component {
   render() {
@@ -35,7 +35,7 @@ class BasicDND extends React.Component {
     return (
       <div className="example-wrapper">
         <Title color="blue">Basic</Title>
-        <div className="basic-wrapper">
+        <div className="block-wrapper">
           <Draggable id="basic-blue" type="circle">
             {({ isDragging, events }) => (
               <div
@@ -101,7 +101,7 @@ class BasicMoveDrag extends React.Component {
     return (
       <div className="example-wrapper">
         <Title color="blue">Moving</Title>
-        <div className="basic-wrapper">
+        <div className="block-wrapper">
           <Draggable id="move-blue" type="circle">
             {({ isDragging, currentlyDraggingId, events }) => (
               <div
@@ -171,7 +171,7 @@ class Multiple extends React.Component {
     return (
       <div className="example-wrapper">
         <Title color="blue">Multiple Draggables & Droppables</Title>
-        <div className="basic-wrapper">
+        <div className="block-wrapper">
           <Draggable id="multi-blue" type="blue">
             {({ isDragging, events, currentlyDraggingId }) => (
               <div
@@ -235,7 +235,7 @@ class Multiple extends React.Component {
             )}
           </Droppable>
         </div>
-        <div className="basic-wrapper">
+        <div className="block-wrapper">
           <Draggable id="multi-orange" type="orange">
             {({ isDragging, events, currentlyDraggingId }) => (
               <div

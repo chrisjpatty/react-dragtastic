@@ -44,7 +44,7 @@ class App extends Component {
             />
           )}
         </Draggable>
-        <DragComponent for="red">
+        <DragComponent for="red" alwaysRender>
           {dragState => (
             <div
               style={{
