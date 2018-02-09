@@ -8,6 +8,7 @@ import { DragComponent, Draggable, Droppable, DragState } from './'
     <DragComponent>{() => null}</DragComponent>,
     <DragComponent for={1}>{() => null}</DragComponent>,
     <DragComponent for={''}>{() => null}</DragComponent>,
+    <DragComponent alwaysRender={true}>{() => null}</DragComponent>,
     <DragComponent for={''}>
       {params => {
         ;(params.isOverAccepted: boolean)
@@ -19,6 +20,8 @@ import { DragComponent, Draggable, Droppable, DragState } from './'
         return null
       }}
     </DragComponent>,
+    // $FlowFixMe
+    <DragComponent alwaysRender={5}>{() => null}</DragComponent>,
     // $FlowFixMe
     <DragComponent for={true}>{() => null}</DragComponent>,
     // $FlowFixMe
@@ -39,7 +42,7 @@ import { DragComponent, Draggable, Droppable, DragState } from './'
       }}
     </Draggable>,
     // $FlowFixMe
-    <Draggable id={5}>{() => null}</Draggable>,
+    <Draggable id={false}>{() => null}</Draggable>,
     // $FlowFixMe
     <Draggable />
   ]
