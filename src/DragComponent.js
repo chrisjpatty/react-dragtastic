@@ -4,7 +4,8 @@ import store from './store'
 
 class DragComponent extends React.Component {
   static defaultProps = {
-    for: ''
+    for: '',
+    alwaysRender: false
   }
 
   dragId = store.getId()
@@ -26,9 +27,10 @@ class DragComponent extends React.Component {
     const accepts = state.currentlyHoveredDroppableAccepts
     const isOverDroppable =
       typeof state.currentlyHoveredDroppableId === 'string'
+
     return (
-      state.isDragging &&
-      state.currentlyDraggingId === this.props.for &&
+      (this.props.alwaysRender ||
+        (state.isDragging && state.currentlyDraggingId === this.props.for)) &&
       this.props.children({
         ...state,
         isOverAccepted: isOverDroppable
@@ -45,7 +47,8 @@ class DragComponent extends React.Component {
 
 DragComponent.propTypes = {
   children: PropTypes.func.isRequired,
-  for: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+  for: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  alwaysRender: PropTypes.bool
 }
 
 export default DragComponent

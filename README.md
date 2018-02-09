@@ -107,10 +107,11 @@ class DroppableZone extends React.Component {
 
 ### DragComponent
 
-By default, children passed to this component will only render if the user is currently dragging.
+By default, children passed to this component will only render if the user is currently dragging, but this can be overridden.
 
 * `for`: A string corresponding to the `id` property of the `<Draggable/>` zone that should trigger this component to start rendering.
 * `onDrag`: A function which will be called every time a user drags.
+* `alwaysRender`: A boolean determining whether or not the DragComponent should always render. Defaults to `false`.
 
 Properties available from `dragState`:
 
