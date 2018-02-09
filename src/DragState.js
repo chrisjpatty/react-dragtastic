@@ -4,9 +4,11 @@ import store from './store'
 class DragState extends React.Component {
   dragId = store.getId()
 
+  state = store.getState()
+
   componentDidMount() {
     this.unsubscribe = store.subscribe(this.dragId, () => {
-      this.forceUpdate()
+      this.setState(store.getState())
     })
   }
 
@@ -17,7 +19,7 @@ class DragState extends React.Component {
   render() {
     const { children } = this.props
     return children({
-      ...store.getState()
+      ...this.state
     })
   }
 }

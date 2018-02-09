@@ -9,9 +9,11 @@ class DragComponent extends React.Component {
 
   dragId = store.getId()
 
+  state = store.getState()
+
   componentDidMount() {
     this.unsubscribe = store.subscribe(this.dragId, () => {
-      this.forceUpdate()
+      this.setState(store.getState())
     })
   }
 
@@ -20,7 +22,7 @@ class DragComponent extends React.Component {
   }
 
   render() {
-    const state = store.getState()
+    const state = this.state
     const accepts = state.currentlyHoveredDroppableAccepts
     const isOverDroppable =
       typeof state.currentlyHoveredDroppableId === 'string'

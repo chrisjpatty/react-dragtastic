@@ -14,7 +14,7 @@ class Draggable extends React.Component {
 
   dragId = store.getId()
 
-  state = { startCoordinate: null }
+  state = { startCoordinate: null, storeState: store.getState() }
 
   startDragDelay = e => {
     let x
@@ -132,7 +132,9 @@ class Draggable extends React.Component {
 
   componentDidMount() {
     this.unsubscribe = store.subscribe(this.dragId, () => {
-      this.forceUpdate()
+      this.setState({
+        storeState: store.getState()
+      })
     })
   }
 
@@ -141,7 +143,7 @@ class Draggable extends React.Component {
   }
 
   render() {
-    const state = store.getState()
+    const state = this.state.storeState
     return this.props.children({
       ...state,
       events: {

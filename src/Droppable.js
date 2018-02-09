@@ -12,6 +12,8 @@ class Droppable extends React.Component {
 
   dragId = store.getId()
 
+  state = store.getState()
+
   setOver = () => {
     if (store.getState().isDragging) {
       store.update({
@@ -49,7 +51,7 @@ class Droppable extends React.Component {
 
   componentDidMount() {
     this.unsubscribe = store.subscribe(this.dragId, () => {
-      this.forceUpdate()
+      this.setState(store.getState())
     })
   }
 
@@ -58,7 +60,7 @@ class Droppable extends React.Component {
   }
 
   render() {
-    const state = store.getState()
+    const state = this.state
     return this.props.children({
       ...state,
       isOver: state.currentlyHoveredDroppableId === this.dragId,
