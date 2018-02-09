@@ -1,6 +1,6 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import store from './store'
+import store, { getId } from './store'
 
 class Draggable extends React.Component {
   static defaultProps = {
@@ -12,7 +12,7 @@ class Draggable extends React.Component {
     onDragEnd: () => {}
   }
 
-  dragId = store.getId()
+  dragId = getId()
 
   state = { startCoordinate: null, storeState: store.getState() }
 
@@ -131,7 +131,7 @@ class Draggable extends React.Component {
   }
 
   componentDidMount() {
-    this.unsubscribe = store.subscribe(this.dragId, () => {
+    this.unsubscribe = store.subscribe(() => {
       this.setState({
         storeState: store.getState()
       })
