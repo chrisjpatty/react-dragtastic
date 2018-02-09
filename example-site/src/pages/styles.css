@@ -19,9 +19,20 @@
   height: 40px;
   background: #2176FF;
   color: #fff;
-  margin-bottom: 5px;
+  margin: 4px 0px;
   border-radius: 5px;
   display: flex;
   align-items: center;
   cursor: pointer;
+  max-width: 250px;
+}
+.row.dragging{
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.row-placeholder{
+  max-width: 250px;
+  width: 100%;
+  height: 40px;
+  flex: 0 0 auto;
+  transition: height 100ms;
 }

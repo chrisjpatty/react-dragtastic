@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Draggable, DragComponent, Droppable } from 'react-dragtastic'
 import { Portal } from 'react-portal'
 import Arrow from '../components/Arrow/Arrow'
-import Orbit from '../components/Animations/Orbit'
 import CodeBox from '../components/CodeBox/CodeBox'
 import { Title } from '../components/Shell/Shell'
 import { simple, moving, multi } from './Basic.code.js'
@@ -207,7 +206,6 @@ class Multiple extends React.Component {
             </DragComponent>
           </Portal>
           <Droppable
-            accepts="circle"
             id="multi-blue-drop"
             onDrop={() => {
               this.onDrop('Blue')
@@ -271,7 +269,6 @@ class Multiple extends React.Component {
             </DragComponent>
           </Portal>
           <Droppable
-            accepts="circle"
             onDrop={() => {
               this.onDrop('Orange')
             }}
