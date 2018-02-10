@@ -1,6 +1,6 @@
 {
   "name": "react-dragtastic",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "A simple drag and drop library for React which uses the more stable mouseDown mouseUp architecture instead of the problematic HTML5 drag and drop API.",
   "main": "build/index.js",
   "module": "build/index.es.js",
