@@ -91,7 +91,8 @@ This defines a droppable zone. At a minimum, spread the events over the element 
 Properties available from `dragState`:
 
 * All the properties listed in the dragState section.
-* `isOver`: a boolean representing whether the user is currently hovering the `<Droppable/>`
+* `isOver`: A boolean representing if the user is currently hovering the `<Droppable/>`.
+* `willAccept`: A boolean representing if this droppable will accept the currently dragging `<DragComponent/>`.
 
 ```jsx
 class DroppableZone extends React.Component {
