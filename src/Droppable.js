@@ -61,9 +61,13 @@ class Droppable extends React.Component {
 
   render() {
     const state = this.state
+    const isOver = state.currentlyHoveredDroppableId === this.dragId
     return this.props.children({
       ...state,
-      isOver: state.currentlyHoveredDroppableId === this.dragId,
+      isOver,
+      willAccept: Array.isArray(this.props.accepts)
+        ? this.props.accepts.includes(state.type)
+        : this.props.accepts === state.type,
       events: {
         onMouseEnter: this.setOver,
         onMouseLeave: this.setOut,
