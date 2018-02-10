@@ -274,18 +274,20 @@ class Multiple extends React.Component {
             }}
             accepts="orange"
           >
-            {({ events, isOver, currentlyHoveredDroppableAccepts, type }) => (
+            {({
+              events,
+              isOver,
+              currentlyHoveredDroppableAccepts,
+              type,
+              willAccept
+            }) => (
               <div
                 {...events}
                 className={`droppable circle orange shadow-inner ${
-                  currentlyHoveredDroppableAccepts === 'orange'
-                    ? 'depth-2 accept'
-                    : ''
-                } ${
-                  currentlyHoveredDroppableAccepts !== type && isOver
-                    ? 'reject'
-                    : ''
-                } ${this.state.droppedOrange ? 'implode' : ''}`}
+                  willAccept && isOver ? 'depth-2 accept' : ''
+                } ${!willAccept && isOver ? 'reject' : ''} ${
+                  this.state.droppedOrange ? 'implode' : ''
+                }`}
                 onAnimationEnd={() => {
                   this.onAnimationEnd('Orange')
                 }}

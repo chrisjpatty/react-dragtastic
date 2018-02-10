@@ -116,7 +116,8 @@ class App extends Component {
               <div
                 {...dragState.events}
                 style={{
-                  background: dragState.willAccept ? 'pink' : 'teal',
+                  background:
+                    dragState.willAccept && dragState.isOver ? 'pink' : 'teal',
                   width: 200,
                   height: 200
                 }}
