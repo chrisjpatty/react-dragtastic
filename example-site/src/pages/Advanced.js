@@ -1,6 +1,9 @@
 import React from 'react'
 import { Draggable, DragComponent, Droppable } from 'react-dragtastic'
 import { Title } from '../components/Shell/Shell'
+import { sortable } from './Advanced.code.js'
+import CodeBox from '../components/CodeBox/CodeBox'
+import { colorTween } from '../utilities'
 
 export default class Advanced extends React.Component {
   render() {
@@ -8,6 +11,7 @@ export default class Advanced extends React.Component {
       <div className="content-wrapper">
         <Title color="blue">Sortable List</Title>
         <SortableList />
+        <CodeBox code={sortable} />
       </div>
     )
   }
@@ -48,16 +52,43 @@ class SortableList extends React.Component {
   render() {
     return (
       <div className="block-wrapper">
-        <div className="rows">
+        <div
+          className="rows"
+          style={{
+            height: this.state.rows.length * 50
+          }}
+        >
           {this.state.rows.map((row, i) => (
             <Row
               value={row}
               index={i}
               setFromIndex={this.setFromIndex}
               reorder={this.reorder}
+              color={colorTween(
+                { r: 247, g: 152, b: 36 },
+                { r: 252, g: 236, b: 86 },
+                i,
+                this.state.rows.length - 1
+              )}
               key={row}
             />
           ))}
+          <Droppable
+            onDrop={() => {
+              this.reorder(this.state.rows.length)
+            }}
+            accepts="row"
+          >
+            {({ events }) => (
+              <div
+                className="row-placeholder"
+                style={{
+                  height: 50
+                }}
+                {...events}
+              />
+            )}
+          </Droppable>
         </div>
       </div>
     )
@@ -65,6 +96,10 @@ class SortableList extends React.Component {
 }
 
 class Row extends React.Component {
+  constructor(props) {
+    super()
+    this.state = { color: props.color }
+  }
   reorder = () => {
     this.props.reorder(this.props.index)
   }
@@ -74,19 +109,21 @@ class Row extends React.Component {
   render() {
     const { value } = this.props
     return (
-      <Draggable type="row" id={value} onDragStart={this.setFromIndex}>
-        {({ events }) => (
+      <Draggable
+        type="row"
+        id={value}
+        delay={0}
+        onDragStart={this.setFromIndex}
+      >
+        {({ events, isActive }) => (
           <DragComponent for={value} alwaysRender>
-            {({ x, y, isDragging, currentlyDraggingId }) => (
+            {({ x, y, isDragging }) => (
               <Droppable accepts="row" onDrop={this.reorder}>
                 {({ events: dropEvents, isOver }) => (
                   <div
                     {...dropEvents}
                     style={{
-                      pointerEvents:
-                        isDragging && currentlyDraggingId === value
-                          ? 'none'
-                          : ''
+                      pointerEvents: isDragging && isActive ? 'none' : ''
                     }}
                   >
                     {isDragging && (
@@ -99,27 +136,17 @@ class Row extends React.Component {
                     )}
                     <div
                       style={{
-                        position:
-                          isDragging && currentlyDraggingId === value
-                            ? 'fixed'
-                            : '',
-                        left:
-                          isDragging && currentlyDraggingId === value
-                            ? x - 100
-                            : '',
-                        top:
-                          isDragging && currentlyDraggingId === value
-                            ? y - 20
-                            : ''
+                        position: isDragging && isActive ? 'fixed' : '',
+                        left: isDragging && isActive ? x - 100 : '',
+                        top: isDragging && isActive ? y - 20 : '',
+                        background: this.state.color
                       }}
                       {...events}
                       className={`row ${
-                        isDragging && currentlyDraggingId === value
-                          ? 'dragging'
-                          : ''
+                        isDragging && isActive ? 'dragging' : ''
                       }`}
                     >
-                      {value}
+                      {/* {value} */}
                     </div>
                   </div>
                 )}

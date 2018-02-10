@@ -232,7 +232,7 @@ h3.title{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
 }
 .demo-link{
@@ -243,6 +243,7 @@ h3.title{
   width: 100%;
   max-width: 300px;
   text-decoration: none;
+  margin: 10px;
 }
 .demo-img{
   width: 100%;

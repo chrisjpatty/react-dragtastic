@@ -1,6 +1,7 @@
 import Basic from './pages/Basic'
 import Advanced from './pages/Advanced'
 import basicImg from './common/img/basic-demo.svg'
+import advancedImg from './common/img/advanced-demo.svg'
 
 const demos = [
   {
@@ -10,10 +11,10 @@ const demos = [
     img: basicImg
   },
   {
-    title: 'Advanced Examples',
+    title: 'Sortable Examples',
     page: Advanced,
-    path: 'advanced',
-    img: ''
+    path: 'sortable',
+    img: advancedImg
   }
 ]
 export default demos

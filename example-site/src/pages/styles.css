@@ -18,7 +18,6 @@
   width: 100%;
   height: 40px;
   background: #2176FF;
-  color: #fff;
   margin: 4px 0px;
   border-radius: 5px;
   display: flex;
@@ -35,4 +34,5 @@
   height: 40px;
   flex: 0 0 auto;
   transition: height 100ms;
+  cursor: pointer;
 }

@@ -5162,9 +5162,9 @@ react-dom@^16.2.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-dragtastic@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/react-dragtastic/-/react-dragtastic-2.2.1.tgz#e8b37483477ac3a2b9892575e554f11b5cd033da"
+react-dragtastic@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-dragtastic/-/react-dragtastic-2.3.0.tgz#b30cf7451def2c4b1671056fa46c7d87bbf3ad0f"
   dependencies:
     prop-types "^15.6.0"
 

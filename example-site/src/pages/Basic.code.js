@@ -87,10 +87,12 @@ export const multi = `<Draggable id="blue" type="blue">
 </DragComponent>
 
 <Droppable accepts="blue" onDrop={this.animateDrop}>
-  {({ events, isOver }) => (
+  {({ events, isOver, willAccept }) => (
     <div
       {...events}
-      className={\`droppable circle blue shadow-inner \${ isOver ? 'accept' : '' }\`}
+      className={\`droppable circle blue shadow-inner \${
+        isOver && willAccept ? 'accept' : ''
+      }\`}
     />
   )}
 </Droppable>
@@ -120,14 +122,17 @@ export const multi = `<Draggable id="blue" type="blue">
 </DragComponent>
 
 <Droppable accepts="orange" onDrop={this.animateDrop}>
-  {({ events, isOver }) => (
+  {({ events, isOver, willAccept }) => (
     <div
       {...events}
-      className={\`droppable circle orange shadow-inner \${ isOver ? 'accept' : '' }\`}
+      className={\`droppable circle orange shadow-inner \${
+        isOver && willAccept ? 'accept' : ''
+      }\`}
     />
   )}
 </Droppable>
 `
+
 // const test = () => (
 // 	<div>
 // 		<Draggable id="basic-orange" type="circle">
