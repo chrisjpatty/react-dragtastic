@@ -3,12 +3,10 @@ import store from './store'
 import PropTypes from 'prop-types'
 
 class DragState extends React.Component {
-  dragId = store.getId()
-
   state = store.getState()
 
   componentDidMount() {
-    this.unsubscribe = store.subscribe(this.dragId, () => {
+    this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState())
     })
   }

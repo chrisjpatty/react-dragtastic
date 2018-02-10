@@ -11,47 +11,44 @@ const initialState = {
   type: null
 }
 
-class store {
-  constructor() {
-    this.state = initialState
-    this.onUpdate = {}
-  }
+class Store {
+  _state = initialState
+
+  _callbacks = []
+
   update(payload) {
-    this.state = { ...this.state, ...payload }
-    Object.keys(this.onUpdate).forEach(funcId => {
-      if (this.onUpdate[funcId]) {
-        this.onUpdate[funcId]()
-      }
-    })
+    this._state = { ...this._state, ...payload }
+    this._callbacks.forEach(callback => callback())
   }
-  subscribe(id, func) {
-    this.onUpdate = { ...this.onUpdate, [id]: func }
-    return () => {
-      this.unsubscribe(id)
-    }
-  }
-  unsubscribe(id) {
-    let { [id]: deleted, ...remainder } = this.onUpdate
-    this.onUpdate = remainder
-  }
-  getState() {
-    return { ...this.state }
-  }
-  getId = () => {
-    var text = ''
-    var possible =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
-    for (var i = 0; i < 5; i++)
-      text += possible.charAt(Math.floor(Math.random() * possible.length))
-
-    return text
-  }
   reset() {
     this.update(initialState)
   }
+
+  subscribe(callback) {
+    this._callbacks = [...this._callbacks, callback]
+    return () => {
+      this._callbacks = this._callbacks.filter(f => f !== callback)
+    }
+  }
+
+  getState() {
+    return this._state
+  }
 }
 
-const dndStore = new store()
+const dndStore = new Store()
 
 export default dndStore
+
+export const getId = () => {
+  var text = ''
+  var possible =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+  for (var i = 0; i < 5; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length))
+  }
+
+  return text
+}

@@ -8,12 +8,10 @@ class DragComponent extends React.Component {
     alwaysRender: false
   }
 
-  dragId = store.getId()
-
   state = store.getState()
 
   componentDidMount() {
-    this.unsubscribe = store.subscribe(this.dragId, () => {
+    this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState())
     })
   }
