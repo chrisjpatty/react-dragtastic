@@ -67,6 +67,11 @@ This defines a draggable zone. At a minimum, spread the events over the element 
 * `onDrag`: A function which will be called every time the user's cursor moves while dragging.
 * `delay`: An optional int representing the distance in pixels the user's pointer must travel to activate the draggable. Defaults to `8`
 
+Properties available from `dragState`:
+
+* All the properties listed in the dragState section.
+* `isActive`: A boolean representing if the draggable is currently active.
+
 ```jsx
 class DraggableZone extends React.Component {
   render() {

@@ -16,6 +16,8 @@ class Draggable extends React.Component {
 
   state = { startCoordinate: null, storeState: store.getState() }
 
+  resolveId = () => this.props.id || this.dragId
+
   startDragDelay = e => {
     let x
     let y
@@ -78,7 +80,7 @@ class Draggable extends React.Component {
       startingY: e.clientY,
       x: e.clientX,
       y: e.clientY,
-      currentlyDraggingId: this.props.id || this.dragId,
+      currentlyDraggingId: this.resolveId(),
       data: this.props.data,
       type: this.props.type
     })
@@ -96,7 +98,7 @@ class Draggable extends React.Component {
       startingY: touch.clientY,
       x: touch.clientX,
       y: touch.clientY,
-      currentlyDraggingId: this.props.id || this.dragId,
+      currentlyDraggingId: this.resolveId(),
       data: this.props.data,
       type: this.props.type
     })
@@ -146,6 +148,7 @@ class Draggable extends React.Component {
     const state = this.state.storeState
     return this.props.children({
       ...state,
+      isActive: state.currentlyDraggingId === this.resolveId(),
       events: {
         onMouseDown: this.startDragDelay,
         onTouchStart: this.startDragDelay

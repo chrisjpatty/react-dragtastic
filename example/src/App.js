@@ -85,13 +85,13 @@ class App extends Component {
         </div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <Draggable id="red2" data="Some Data" type="purple">
-            {dragState => (
+            {({ events, isActive }) => (
               <div
-                {...dragState.events}
+                {...events}
                 style={{
                   width: 200,
                   height: 200,
-                  background: 'orange'
+                  background: isActive ? 'yellow' : 'orange'
                 }}
               />
             )}
