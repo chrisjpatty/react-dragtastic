@@ -38,6 +38,7 @@ type DraggableProps = {|
   onDragEnd?: (data: any) => void,
   children: ({
     ...State,
+    isActive: boolean,
     events: {
       onMouseDown: (SyntheticMouseEvent<*>) => void,
       onTouchStart: (SyntheticTouchEvent<*>) => void
@@ -53,6 +54,7 @@ type DroppableProps = {|
   children: ({
     ...State,
     isOver: boolean,
+    willAccept: boolean,
     events: {
       onMouseEnter: () => void,
       onMouseLeave: () => void,
