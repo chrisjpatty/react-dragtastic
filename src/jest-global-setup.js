@@ -2,7 +2,7 @@ const os = require('os')
 const util = require('util')
 const fs = require('fs')
 const path = require('path')
-const makeDir = require('mkdirp')
+const makeDir = require('make-dir')
 const puppeteer = require('puppeteer')
 
 const writeFile = util.promisify(fs.writeFile)
