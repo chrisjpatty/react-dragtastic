@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "build:flow": "cpy src/index.js.flow build",
-    "typecheck:flow": "flow check && [[ $(flow check) == 'Found 0 errors' ]]",
+    "typecheck:flow": "flow check --max-warnings=0",
     "pretest": "yarn build",
     "test": "jest",
     "posttest": "prettier --list-different \"**/*.js\" --ignore-path .gitignore",
@@ -56,7 +56,7 @@
     "cpy-cli": "^1.0.1",
     "cross-env": "^5.1.3",
     "del": "^3.0.0",
-    "flow-bin": "^0.65.0",
+    "flow-bin": "^0.66.0",
     "husky": "^0.14.3",
     "jest": "^22.1.4",
     "jest-environment-node": "^22.1.4",
