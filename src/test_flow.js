@@ -34,6 +34,7 @@ import { DragComponent, Draggable, Droppable, DragState } from './'
     <Draggable id={''}>
       {params => {
         ;(params.x: number)
+        ;(params.isActive: boolean)
         ;(params.events: Object)
         // $FlowFixMe
         ;(params.events: null)
@@ -54,6 +55,7 @@ import { DragComponent, Draggable, Droppable, DragState } from './'
       {params => {
         ;(params.x: number)
         ;(params.isOver: boolean)
+        ;(params.willAccept: boolean)
         ;(params.events: Object)
         // $FlowFixMe
         ;(params.events: null)
