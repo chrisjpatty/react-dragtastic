@@ -1,13 +1,13 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import store, { getId } from './store'
+import store, { getId, noop } from './store'
 
 class Droppable extends React.Component {
   static defaultProps = {
     accepts: null,
-    onDragEnter: () => {},
-    onDragLeave: () => {},
-    onDrop: () => {}
+    onDragEnter: noop,
+    onDragLeave: noop,
+    onDrop: noop
   }
 
   dragId = getId()

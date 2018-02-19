@@ -1,15 +1,15 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import store, { getId } from './store'
+import store, { getId, noop } from './store'
 
 class Draggable extends React.Component {
   static defaultProps = {
     data: null,
     type: null,
     delay: 8,
-    onDragStart: () => {},
-    onDrag: () => {},
-    onDragEnd: () => {}
+    onDragStart: noop,
+    onDrag: noop,
+    onDragEnd: noop
   }
 
   dragId = getId()
