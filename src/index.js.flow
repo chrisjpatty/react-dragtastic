@@ -47,6 +47,7 @@ type DraggableProps = {|
 |}
 
 type DroppableProps = {|
+  id?: Id,
   accepts?: Accepts,
   onDragEnter?: () => void,
   onDrop?: (data: any) => void,

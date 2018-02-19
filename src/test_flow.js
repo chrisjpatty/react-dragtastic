@@ -51,6 +51,7 @@ import { DragComponent, Draggable, Droppable, DragState } from './'
 
 {
   ;[
+    <Droppable id="">{() => null}</Droppable>,
     <Droppable>
       {params => {
         ;(params.x: number)
