@@ -17,22 +17,37 @@ export default class Advanced extends React.Component {
   }
 }
 
+const rows = [
+  'Walter',
+  'Skyler',
+  'Jesse',
+  'Hank',
+  'Marie',
+  'Gustavo',
+  'Saul',
+  'Mike',
+  'Jane',
+  'Tuco'
+]
+
 class SortableList extends React.Component {
   state = {
-    rows: [
-      'Walter',
-      'Skyler',
-      'Jesse',
-      'Hank',
-      'Marie',
-      'Gustavo',
-      'Saul',
-      'Mike',
-      'Jane',
-      'Tuco'
-    ],
+    rows,
+    colors: rows.reduce(
+      (acc, row, i) => ({
+        ...acc,
+        [row]: colorTween(
+          { r: 247, g: 152, b: 36 },
+          { r: 252, g: 236, b: 86 },
+          i,
+          rows.length - 1
+        )
+      }),
+      {}
+    ),
     fromIndex: null
   }
+
   reorder = toIndex => {
     const target = this.state.rows[this.state.fromIndex]
     let rows = [
@@ -46,9 +61,11 @@ class SortableList extends React.Component {
     ]
     this.setState({ rows })
   }
+
   setFromIndex = i => {
     this.setState({ fromIndex: i })
   }
+
   render() {
     return (
       <div className="block-wrapper">
@@ -64,12 +81,7 @@ class SortableList extends React.Component {
               index={i}
               setFromIndex={this.setFromIndex}
               reorder={this.reorder}
-              color={colorTween(
-                { r: 247, g: 152, b: 36 },
-                { r: 252, g: 236, b: 86 },
-                i,
-                this.state.rows.length - 1
-              )}
+              color={this.state.colors[row]}
               key={row}
             />
           ))}
@@ -96,65 +108,59 @@ class SortableList extends React.Component {
 }
 
 class Row extends React.Component {
-  constructor(props) {
-    super()
-    this.state = { color: props.color }
-  }
   reorder = () => {
     this.props.reorder(this.props.index)
   }
+
   setFromIndex = () => {
     this.props.setFromIndex(this.props.index)
   }
+
   render() {
     const { value } = this.props
     return (
-      <Draggable
-        type="row"
-        id={value}
-        delay={0}
-        onDragStart={this.setFromIndex}
-      >
-        {({ events, isActive }) => (
-          <DragComponent for={value} alwaysRender>
-            {({ x, y, isDragging }) => (
-              <Droppable accepts="row" onDrop={this.reorder}>
-                {({ events: dropEvents, isOver }) => (
+      <React.Fragment>
+        <Draggable id={value} delay={0} onDragStart={this.setFromIndex}>
+          {({ events, isDragging, isActive }) => (
+            <Droppable onDrop={this.reorder}>
+              {({ events: dropEvents, isOver }) => (
+                <div {...dropEvents}>
                   <div
-                    {...dropEvents}
+                    className="row-placeholder"
+                    style={{ display: isOver ? '' : 'none' }}
+                  />
+                  <div
+                    {...events}
                     style={{
-                      pointerEvents: isDragging && isActive ? 'none' : ''
+                      display: isActive ? 'none' : '',
+                      background: this.props.color
                     }}
+                    className="row"
                   >
-                    {isDragging && (
-                      <div
-                        className="row-placeholder"
-                        style={{
-                          height: isOver ? 40 : 0
-                        }}
-                      />
-                    )}
-                    <div
-                      style={{
-                        position: isDragging && isActive ? 'fixed' : '',
-                        left: isDragging && isActive ? x - 100 : '',
-                        top: isDragging && isActive ? y - 20 : '',
-                        background: this.state.color
-                      }}
-                      {...events}
-                      className={`row ${
-                        isDragging && isActive ? 'dragging' : ''
-                      }`}
-                    >
-                      {/* {value} */}
-                    </div>
+                    {/* {value} */}
                   </div>
-                )}
-              </Droppable>
-            )}
-          </DragComponent>
-        )}
-      </Draggable>
+                </div>
+              )}
+            </Droppable>
+          )}
+        </Draggable>
+        <DragComponent for={value}>
+          {({ x, y }) => (
+            <div
+              style={{
+                pointerEvents: 'none',
+                position: 'fixed',
+                left: x - 100,
+                top: y - 20,
+                background: this.props.color
+              }}
+              className="row dragging"
+            >
+              {/* {value} */}
+            </div>
+          )}
+        </DragComponent>
+      </React.Fragment>
     )
   }
 }
