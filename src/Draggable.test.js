@@ -73,6 +73,7 @@ test('pass props to render prop', async () => {
 
   await page.mouse.down(39, 59)
   await page.mouse.move(40, 60)
+  await delay(50)
 
   expect(renderFn).lastCalledWith(
     expect.objectContaining({
@@ -88,6 +89,7 @@ test('pass props to render prop', async () => {
   )
 
   await page.mouse.move(80, 90)
+  await delay(50)
 
   expect(renderFn).lastCalledWith(
     expect.objectContaining({
@@ -99,6 +101,7 @@ test('pass props to render prop', async () => {
   )
 
   await page.mouse.up()
+  await delay(50)
 
   expect(renderFn).lastCalledWith(
     expect.objectContaining({
