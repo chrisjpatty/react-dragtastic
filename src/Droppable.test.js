@@ -29,6 +29,7 @@ test('call onDragEnter, onDragLeave callbacks', async () => {
   })
 
   await page.mouse.down(50, 50)
+  await delay(50)
 
   expect(onDragEnterFn).toHaveBeenCalledTimes(0)
 
@@ -71,6 +72,7 @@ test('call onDrop callback with default accepts', async () => {
   await page.mouse.down(50, 50)
   await page.mouse.move(150, 50)
   await page.mouse.up()
+  await delay(50)
 
   expect(onDropFn).toHaveBeenCalledTimes(0)
 
@@ -78,6 +80,7 @@ test('call onDrop callback with default accepts', async () => {
   await page.mouse.down(50, 50)
   await page.mouse.move(50, 150)
   await page.mouse.up()
+  await delay(50)
 
   expect(onDropFn).toHaveBeenCalledTimes(1)
 })
@@ -109,6 +112,7 @@ test('pass isOver: true when drag is over droppable', async () => {
 
   await page.mouse.down(50, 50)
   await page.mouse.move(50, 150, { steps: 2 })
+  await delay(50)
 
   expect(renderFn).lastCalledWith(expect.objectContaining({ isOver: true }))
 
