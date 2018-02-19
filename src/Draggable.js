@@ -4,6 +4,7 @@ import store, { getId } from './store'
 
 class Draggable extends React.Component {
   static defaultProps = {
+    id: getId(),
     data: null,
     type: null,
     delay: 8,
@@ -12,11 +13,7 @@ class Draggable extends React.Component {
     onDragEnd: () => {}
   }
 
-  dragId = getId()
-
   state = { startCoordinate: null, storeState: store.getState() }
-
-  resolveId = () => this.props.id || this.dragId
 
   startDragDelay = e => {
     let x
@@ -80,7 +77,7 @@ class Draggable extends React.Component {
       startingY: e.clientY,
       x: e.clientX,
       y: e.clientY,
-      currentlyDraggingId: this.resolveId(),
+      currentlyDraggingId: this.props.id,
       data: this.props.data,
       type: this.props.type
     })
@@ -98,7 +95,7 @@ class Draggable extends React.Component {
       startingY: touch.clientY,
       x: touch.clientX,
       y: touch.clientY,
-      currentlyDraggingId: this.resolveId(),
+      currentlyDraggingId: this.props.id,
       data: this.props.data,
       type: this.props.type
     })
@@ -148,7 +145,7 @@ class Draggable extends React.Component {
     const state = this.state.storeState
     return this.props.children({
       ...state,
-      isActive: state.currentlyDraggingId === this.resolveId(),
+      isActive: state.currentlyDraggingId === this.props.id,
       events: {
         onMouseDown: this.startDragDelay,
         onTouchStart: this.startDragDelay
