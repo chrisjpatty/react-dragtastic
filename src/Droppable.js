@@ -4,20 +4,19 @@ import store, { getId, noop } from './store'
 
 class Droppable extends React.Component {
   static defaultProps = {
+    id: getId(),
     accepts: null,
     onDragEnter: noop,
     onDragLeave: noop,
     onDrop: noop
   }
 
-  dragId = getId()
-
   state = store.getState()
 
   setOver = () => {
     if (store.getState().isDragging) {
       store.update({
-        currentlyHoveredDroppableId: this.dragId,
+        currentlyHoveredDroppableId: this.props.id,
         currentlyHoveredDroppableAccepts: this.props.accepts
       })
       this.props.onDragEnter()
@@ -61,7 +60,7 @@ class Droppable extends React.Component {
 
   render() {
     const state = this.state
-    const isOver = state.currentlyHoveredDroppableId === this.dragId
+    const isOver = state.currentlyHoveredDroppableId === this.props.id
     return this.props.children({
       ...state,
       isOver,
@@ -78,6 +77,7 @@ class Droppable extends React.Component {
 }
 
 Droppable.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   children: PropTypes.func.isRequired,
   accepts: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   onDrop: PropTypes.func,

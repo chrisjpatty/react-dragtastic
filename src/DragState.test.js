@@ -16,7 +16,7 @@ test('listen drag state', async () => {
             <div style={{ width: 100, height: 100 }} {...events} />
           )}
         </Draggable>
-        <Droppable>
+        <Droppable id="droppable">
           {({ events }) => (
             <div style={{ width: 100, height: 100 }} {...events} />
           )}
@@ -70,7 +70,7 @@ test('listen drag state', async () => {
   expect(renderFn).lastCalledWith({
     currentlyDraggingId: 'draggable',
     currentlyHoveredDroppableAccepts: null,
-    currentlyHoveredDroppableId: expect.any(String),
+    currentlyHoveredDroppableId: 'droppable',
     data: 'data',
     isDragging: true,
     startingX: 60,
