@@ -31,7 +31,7 @@ import { DragComponent, Draggable, Droppable, DragState } from './'
 
 {
   ;[
-    <Draggable id={''}>
+    <Draggable>
       {params => {
         ;(params.x: number)
         ;(params.isActive: boolean)

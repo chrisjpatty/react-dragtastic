@@ -29,7 +29,7 @@ type DragComponentProps = {|
 |}
 
 type DraggableProps = {|
-  id: Id,
+  id?: Id,
   type?: Type,
   data?: any,
   delay?: number,
