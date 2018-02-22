@@ -52,3 +52,5 @@ export const getId = () => {
 
   return text
 }
+
+export const noop = () => {}
