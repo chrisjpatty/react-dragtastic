@@ -10,7 +10,7 @@
     },
     "build": {
       "presets": [
-        ["env", { "modules": false }]
+        ["env", { "modules": false, "loose": true }]
       ],
       plugins: [
         "transform-class-properties",
