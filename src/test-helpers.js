@@ -1,5 +1,5 @@
 const bootstrap = async () => {
-  const page = await global.__BROWSER__.newPage()
+  const page = await global.browser.newPage()
 
   const scripts = [
     './node_modules/react/umd/react.development.js',
