@@ -1,11 +1,11 @@
-const { bootstrap, delay } = require('./test-helpers.js')
+const { bootstrap, delay } = require("./test-helpers.js")
 
-test('call onDragEnter, onDragLeave callbacks', async () => {
+test("call onDragEnter, onDragLeave callbacks", async () => {
   const page = await bootstrap()
   const onDragEnterFn = jest.fn()
   const onDragLeaveFn = jest.fn()
-  await page.exposeFunction('onDragEnterFn', onDragEnterFn)
-  await page.exposeFunction('onDragLeaveFn', onDragLeaveFn)
+  await page.exposeFunction("onDragEnterFn", onDragEnterFn)
+  await page.exposeFunction("onDragLeaveFn", onDragLeaveFn)
 
   await page.evaluate(() => {
     const React = window.React
@@ -46,10 +46,10 @@ test('call onDragEnter, onDragLeave callbacks', async () => {
   expect(onDragLeaveFn).toHaveBeenCalledTimes(1)
 })
 
-test('call onDrop callback with default accepts', async () => {
+test("call onDrop callback with default accepts", async () => {
   const page = await bootstrap()
   const onDropFn = jest.fn()
-  await page.exposeFunction('onDropFn', onDropFn)
+  await page.exposeFunction("onDropFn", onDropFn)
 
   await page.evaluate(() => {
     const React = window.React
@@ -85,10 +85,10 @@ test('call onDrop callback with default accepts', async () => {
   expect(onDropFn).toHaveBeenCalledTimes(1)
 })
 
-test('pass isOver: true when drag is over droppable', async () => {
+test("pass isOver: true when drag is over droppable", async () => {
   const page = await bootstrap()
   const renderFn = jest.fn()
-  await page.exposeFunction('renderFn', renderFn)
+  await page.exposeFunction("renderFn", renderFn)
 
   await page.evaluate(() => {
     const React = window.React
@@ -99,7 +99,7 @@ test('pass isOver: true when drag is over droppable', async () => {
         <Draggable id="draggable" type="type1">
           {({ events }) => window.div100(events)}
         </Draggable>>
-        <Droppable accepts="type2">
+        <Droppable id="uniqueId" accepts="type2">
           {params => window.renderFn(params) && window.div100(params.events)}
         </Droppable>
       </React.Fragment>

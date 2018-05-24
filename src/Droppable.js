@@ -12,7 +12,7 @@ class Droppable extends React.Component {
     subscribeTo: null
   }
 
-  state = store.getState()
+  state = { ...store.getState(), isOver: false }
 
   setOver = () => {
     if (store.getState().isDragging) {
