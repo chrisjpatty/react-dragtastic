@@ -1,36 +1,48 @@
-import * as React from 'react'
-import PropTypes from 'prop-types'
-import store from './store'
+import * as React from "react"
+import PropTypes from "prop-types"
+import store from "./store"
 
 class DragComponent extends React.Component {
   static defaultProps = {
-    for: '',
+    for: "",
     alwaysRender: false,
     subscribeTo: null
   }
 
   state = store.getState()
 
+  shouldComponentUpdate = (nextProps, nextState) => {
+    if (nextProps !== this.props) {
+      return true
+    } else {
+      if (nextProps.subscribeTo) {
+        let shouldUpdate = false
+        let i = 0
+        while (i < nextProps.subscribeTo.length - 1) {
+          if (
+            this.state[nextProps.subscribeTo[i]] !==
+            nextState[nextProps.subscribeTo[i]]
+          ) {
+            shouldUpdate = true
+            i = nextProps.length
+          } else {
+            i++
+          }
+        }
+        return shouldUpdate
+      } else {
+        if (nextState !== this.state) {
+          return true
+        } else {
+          return false
+        }
+      }
+    }
+  }
+
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
-			if(this.props.watch){
-				const state = store.getState()
-				let shouldUpdate = false;
-				let i = 0;
-				while(i < this.props.watch.length - 1){
-					if(this.state[this.props.watch[i]] !== state[this.props.watch[i]]){
-						shouldUpdate === true;
-						i = this.props.length;
-					}else{
-						i++
-					}
-				}
-				if(shouldUpdate){
-					this.setState(state)
-				}
-			}else{
-				this.setState(store.getState())
-			}
+      this.setState(store.getState())
     })
   }
 
@@ -42,7 +54,7 @@ class DragComponent extends React.Component {
     const state = this.state
     const accepts = state.currentlyHoveredDroppableAccepts
     const isOverDroppable =
-      typeof state.currentlyHoveredDroppableId === 'string'
+      typeof state.currentlyHoveredDroppableId === "string"
 
     return (
       (this.props.alwaysRender ||

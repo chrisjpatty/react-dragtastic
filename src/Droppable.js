@@ -1,6 +1,6 @@
-import * as React from 'react'
-import PropTypes from 'prop-types'
-import store, { getId, noop } from './store'
+import * as React from "react"
+import PropTypes from "prop-types"
+import store, { getId, noop } from "./store"
 
 class Droppable extends React.Component {
   static defaultProps = {
@@ -9,7 +9,7 @@ class Droppable extends React.Component {
     onDragEnter: noop,
     onDragLeave: noop,
     onDrop: noop,
-		subscribeTo: null
+    subscribeTo: null
   }
 
   state = store.getState()
@@ -49,26 +49,45 @@ class Droppable extends React.Component {
     }
   }
 
+  shouldComponentUpdate = (nextProps, nextState) => {
+    if (nextProps !== this.props) {
+      return true
+    } else {
+      if (nextProps.subscribeTo) {
+        let shouldUpdate = false
+        let i = 0
+        while (i < nextProps.subscribeTo.length - 1) {
+          if (
+            this.state[nextProps.subscribeTo[i]] !==
+            nextState[nextProps.subscribeTo[i]]
+          ) {
+            shouldUpdate = true
+            i = nextProps.length
+          } else {
+            i++
+          }
+        }
+        return shouldUpdate
+      } else {
+        if (nextState !== this.state) {
+          return true
+        } else {
+          return false
+        }
+      }
+    }
+  }
+
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
-			if(this.props.watch){
-				const state = store.getState()
-				let shouldUpdate = false;
-				let i = 0;
-				while(i < this.props.watch.length - 1){
-					if(this.state[this.props.watch[i]] !== state[this.props.watch[i]]){
-						shouldUpdate === true;
-						i = this.props.length;
-					}else{
-						i++
-					}
-				}
-				if(shouldUpdate){
-					this.setState(state)
-				}
-			}else{
-				this.setState(store.getState())
-			}
+      const state = store.getState()
+      this.setState({
+        ...state,
+        isOver: state.currentlyHoveredDroppableId === this.props.id,
+        willAccept: Array.isArray(this.props.accepts)
+          ? this.props.accepts.includes(state.type)
+          : this.props.accepts === state.type
+      })
     })
   }
 
@@ -78,13 +97,8 @@ class Droppable extends React.Component {
 
   render() {
     const state = this.state
-    const isOver = state.currentlyHoveredDroppableId === this.props.id
     return this.props.children({
       ...state,
-      isOver,
-      willAccept: Array.isArray(this.props.accepts)
-        ? this.props.accepts.includes(state.type)
-        : this.props.accepts === state.type,
       events: {
         onMouseEnter: this.setOver,
         onMouseLeave: this.setOut,
@@ -101,7 +115,7 @@ Droppable.propTypes = {
   onDrop: PropTypes.func,
   onDragEnter: PropTypes.func,
   onDragLeave: PropTypes.func,
-	watch: PropTypes.array
+  subscribeTo: PropTypes.array
 }
 
 export default Droppable
