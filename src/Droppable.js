@@ -8,7 +8,8 @@ class Droppable extends React.Component {
     accepts: null,
     onDragEnter: noop,
     onDragLeave: noop,
-    onDrop: noop
+    onDrop: noop,
+		subscribeTo: null
   }
 
   state = store.getState()
@@ -50,7 +51,24 @@ class Droppable extends React.Component {
 
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
-      this.setState(store.getState())
+			if(this.props.watch){
+				const state = store.getState()
+				let shouldUpdate = false;
+				let i = 0;
+				while(i < this.props.watch.length - 1){
+					if(this.state[this.props.watch[i]] !== state[this.props.watch[i]]){
+						shouldUpdate === true;
+						i = this.props.length;
+					}else{
+						i++
+					}
+				}
+				if(shouldUpdate){
+					this.setState(state)
+				}
+			}else{
+				this.setState(store.getState())
+			}
     })
   }
 
@@ -82,7 +100,8 @@ Droppable.propTypes = {
   accepts: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   onDrop: PropTypes.func,
   onDragEnter: PropTypes.func,
-  onDragLeave: PropTypes.func
+  onDragLeave: PropTypes.func,
+	watch: PropTypes.array
 }
 
 export default Droppable

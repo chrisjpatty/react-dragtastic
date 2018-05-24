@@ -5,14 +5,32 @@ import store from './store'
 class DragComponent extends React.Component {
   static defaultProps = {
     for: '',
-    alwaysRender: false
+    alwaysRender: false,
+    subscribeTo: null
   }
 
   state = store.getState()
 
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
-      this.setState(store.getState())
+			if(this.props.watch){
+				const state = store.getState()
+				let shouldUpdate = false;
+				let i = 0;
+				while(i < this.props.watch.length - 1){
+					if(this.state[this.props.watch[i]] !== state[this.props.watch[i]]){
+						shouldUpdate === true;
+						i = this.props.length;
+					}else{
+						i++
+					}
+				}
+				if(shouldUpdate){
+					this.setState(state)
+				}
+			}else{
+				this.setState(store.getState())
+			}
     })
   }
 
@@ -46,7 +64,8 @@ class DragComponent extends React.Component {
 DragComponent.propTypes = {
   children: PropTypes.func.isRequired,
   for: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  alwaysRender: PropTypes.bool
+  alwaysRender: PropTypes.bool,
+  subscribeTo: PropTypes.array
 }
 
 export default DragComponent

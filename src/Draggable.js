@@ -10,7 +10,8 @@ class Draggable extends React.Component {
     delay: 8,
     onDragStart: noop,
     onDrag: noop,
-    onDragEnd: noop
+    onDragEnd: noop,
+    subscribeTo: null
   }
 
   state = { startCoordinate: null, storeState: store.getState() }
@@ -131,9 +132,28 @@ class Draggable extends React.Component {
 
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
-      this.setState({
-        storeState: store.getState()
-      })
+			if(this.props.subscribeTo){
+				const state = store.getState()
+				let shouldUpdate = false;
+				let i = 0;
+				while(i < this.props.subscribeTo.length - 1){
+					if(this.state.storeState[this.props.subscribeTo[i]] !== state[this.props.subscribeTo[i]]){
+						shouldUpdate === true;
+						i = this.props.length;
+					}else{
+						i++
+					}
+				}
+				if(shouldUpdate){
+          this.setState({
+            storeState: state
+          })
+				}
+			}else{
+        this.setState({
+          storeState: store.getState()
+        })
+			}
     })
   }
 
@@ -161,7 +181,8 @@ Draggable.propTypes = {
   type: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onDragStart: PropTypes.func,
   onDrag: PropTypes.func,
-  onDragEnd: PropTypes.func
+  onDragEnd: PropTypes.func,
+  subscribeTo: PropTypes.array
 }
 
 export default Draggable
