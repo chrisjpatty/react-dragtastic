@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
+import * as React from "react"
 import {
   Draggable,
   Droppable,
   DragComponent,
   DragState
-} from 'react-dragtastic'
-import './App.css'
+} from "react-dragtastic"
+import "./App.css"
 
-class App extends Component {
+class App extends React.Component {
   render() {
     return (
       <div className="App">
@@ -15,14 +15,14 @@ class App extends Component {
           {dragState => (
             <div
               style={{
-                background: 'yellow',
+                background: "yellow",
                 padding: 10
               }}
             >
               {Object.keys(dragState).map(key => (
                 <span
                   style={{
-                    display: 'block'
+                    display: "block"
                   }}
                   key={key}
                 >
@@ -32,7 +32,7 @@ class App extends Component {
             </div>
           )}
         </DragState>
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div style={{ display: "flex", flexDirection: "row" }}>
           <Draggable id="red" data="Some Data" type="red">
             {dragState => (
               <div
@@ -40,7 +40,7 @@ class App extends Component {
                 style={{
                   width: 200,
                   height: 200,
-                  background: 'red'
+                  background: "red"
                 }}
               />
             )}
@@ -49,41 +49,50 @@ class App extends Component {
             {dragState => (
               <div
                 style={{
-                  position: 'fixed',
+                  position: "fixed",
                   left: dragState.x - 25,
                   top: dragState.y - 25,
                   width: 50,
                   height: 50,
-                  background: 'lime',
-                  pointerEvents: 'none'
+                  background: "lime",
+                  pointerEvents: "none"
                 }}
               />
             )}
           </DragComponent>
-          <Droppable accepts={['red', 'blue']}>
-            {dragState => (
-              <div
-                {...dragState.events}
-                style={{
-                  background:
-                    dragState.type === 'red' && dragState.isOver
-                      ? 'red'
-                      : 'blue',
-                  width: 200,
-                  height: 200
-                }}
-              >
-                isOver: {dragState.isOver ? 'true' : 'false'}
-                <br />
-                accepts:{' '}
-                {dragState.type === 'red' && dragState.isOver
-                  ? 'true'
-                  : 'false'}
-              </div>
-            )}
+          <Droppable
+            id="redDrop"
+            accepts={["red", "blue"]}
+            subscribeTo={["isOver", "type"]}
+          >
+            {dragState => {
+              console.log("I rendered")
+              return (
+                <div
+                  {...dragState.events}
+                  style={{
+                    background:
+                      dragState.type === "red" && dragState.isOver
+                        ? "red"
+                        : "blue",
+                    width: 200,
+                    height: 200
+                  }}
+                >
+                  isOver: {dragState.isOver ? "true" : "false"}
+                  <br />
+                  accepts:{" "}
+                  {dragState.type === "red" && dragState.isOver
+                    ? "true"
+                    : "false"}
+                  <br />
+                  I should only rerender if I{"'"}m hovered.
+                </div>
+              )
+            }}
           </Droppable>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div style={{ display: "flex", flexDirection: "row" }}>
           <Draggable id="red2" data="Some Data" type="purple">
             {({ events, isActive }) => (
               <div
@@ -91,7 +100,7 @@ class App extends Component {
                 style={{
                   width: 200,
                   height: 200,
-                  background: isActive ? 'yellow' : 'orange'
+                  background: isActive ? "yellow" : "orange"
                 }}
               />
             )}
@@ -100,31 +109,31 @@ class App extends Component {
             {dragState => (
               <div
                 style={{
-                  position: 'fixed',
+                  position: "fixed",
                   left: dragState.x - 25,
                   top: dragState.y - 25,
                   width: 50,
                   height: 50,
-                  background: 'purple',
-                  pointerEvents: 'none'
+                  background: "purple",
+                  pointerEvents: "none"
                 }}
               />
             )}
           </DragComponent>
-          <Droppable accepts="purple">
+          <Droppable id="purpleDrop" accepts="purple">
             {dragState => (
               <div
                 {...dragState.events}
                 style={{
                   background:
-                    dragState.willAccept && dragState.isOver ? 'pink' : 'teal',
+                    dragState.willAccept && dragState.isOver ? "pink" : "teal",
                   width: 200,
                   height: 200
                 }}
               >
-                isOver: {dragState.isOver ? 'true' : 'false'}
+                isOver: {dragState.isOver ? "true" : "false"}
                 <br />
-                accepts: {dragState.willAccept ? 'true' : 'false'}
+                accepts: {dragState.willAccept ? "true" : "false"}
               </div>
             )}
           </Droppable>

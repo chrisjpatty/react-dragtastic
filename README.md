@@ -37,13 +37,13 @@ import {
   Droppable,
   DragComponent,
   DragState
-} from 'react-dragtastic'
+} from "react-dragtastic"
 ```
 
 ###### For ES5
 
 ```javascript
-var dnd = require('react-dragtastic')
+var dnd = require("react-dragtastic")
 var Draggable = dnd.Draggable
 var Droppable = dnd.Droppable
 var DragComponent = dnd.DragComponent
@@ -66,6 +66,7 @@ This defines a draggable zone. At a minimum, spread the events over the element 
 * `onDragEnd`: A function which will be called when the `<Draggable/>` zone is deactivated (The user stopped dragging).
 * `onDrag`: A function which will be called every time the user's cursor moves while dragging.
 * `delay`: An optional int representing the distance in pixels the user's pointer must travel to activate the draggable. Defaults to `8`
+* `subscribeTo`: An optional array of strings. For performance reasons you can limit which keys in the dragState your component subscribes to. For example, you may pass ['type', 'data'] to only rerender if these keys change.
 
 Properties available from `dragState`:
 
@@ -92,6 +93,7 @@ This defines a droppable zone. At a minimum, spread the events over the element 
 * `onDrop`: A function which will be called when a user drops a `<DragComponent/>` on this `<Droppable/>` with an accepted type.
 * `onDragEnter`: A function which will be called when the user's cursor enters the `<Droppable/>` while dragging. This function will be called regardless of whether the droppable accepts the draggable currently being dragged.
 * `onDragLeave`: A function which will be called when the user's cursor leaves the `<Droppable/>` while dragging. This function will be called regardless of whether the droppable accepts the draggable currently being dragged.
+* `subscribeTo`: An optional array of strings. For performance reasons you can limit which keys in the dragState your component subscribes to. For example, you may pass ['type', 'data'] to only rerender if these keys change.
 
 Properties available from `dragState`:
 
@@ -118,6 +120,7 @@ By default, children passed to this component will only render if the user is cu
 * `for`: A string corresponding to the `id` property of the `<Draggable/>` zone that should trigger this component to start rendering.
 * `onDrag`: A function which will be called every time a user drags.
 * `alwaysRender`: A boolean determining whether or not the DragComponent should always render. Defaults to `false`.
+* `subscribeTo`: An optional array of strings. For performance reasons you can limit which keys in the dragState your component subscribes to. For example, you may pass ['type', 'data'] to only rerender if these keys change.
 
 Properties available from `dragState`:
 
@@ -132,10 +135,10 @@ class DragComponentWrapper extends React.Component {
         {dragState => (
           <div
             style={{
-              position: 'fixed',
+              position: "fixed",
               left: dragState.x,
               top: dragState.y,
-              pointerEvents: 'none'
+              pointerEvents: "none"
             }}
           >
             I will render when my Draggable zone is activated
@@ -161,8 +164,9 @@ All components imported from `react-dragtastic` have access the global dragState
 * `currentlyHoveredDroppableAccepts`: The `accepts` property of the `<Droppable/>` currently being hovered.
 * `data`: Data from the `data` property of the `<Draggable/>` which is currently active. `null` if not dragging.
 * `type`: The type of the component being currently dragged. `null` if not dragging.
+* `subscribeTo`: An optional array of strings. For performance reasons you can limit which keys in the dragState your component subscribes to. For example, you may pass ['type', 'data'] to only rerender if these keys change.
 
-Occasionally you may need to notify a component about changes in the dragging state without making that component a draggable or droppable zone. For these cases there is a fourth component available called `<DragState/>`. This component is used just like a draggable or droppable, but does not accept or trigger any drag events.
+Occasionally you may need to notify a component about changes in the dragState without making that component a draggable or droppable zone. For these cases there is a fourth component available called `<DragState/>`. This component is used just like a draggable or droppable, but does not accept or trigger any drag events.
 
 ```jsx
 class CompWithDragState extends React.Component {
@@ -170,7 +174,7 @@ class CompWithDragState extends React.Component {
     return (
       <DragState>
         {dragState => (
-          <div style={{ background: dragState.isDragging ? 'red' : 'blue' }}>
+          <div style={{ background: dragState.isDragging ? "red" : "blue" }}>
             I always render, and have access to the global dragState.
           </div>
         )}
@@ -185,6 +189,10 @@ class CompWithDragState extends React.Component {
 #### My Droppables aren't working!
 
 * You most likely need to set `pointer-events: none` in the css of your `DragComponent`. This allows droppables to receive drop events when the user's pointer is directly on top of the DragComponent as it is being dragged. This property is [well supported](https://caniuse.com/#feat=pointer-events).
+
+#### My app is slow when I have a lot of Draggables or Droppables
+
+* In this case the easiest fix is to use the `subscribeTo` prop to pass an array of dragState keys you want to subscribe to.
 
 ## Coming Soon
 
