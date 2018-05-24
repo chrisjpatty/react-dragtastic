@@ -14,7 +14,10 @@ class Draggable extends React.Component {
     subscribeTo: null
   }
 
-  state = { startCoordinate: null, storeState: store.getState() }
+  state = {
+    startCoordinate: null,
+    storeState: { ...store.getState(), isActive: false }
+  }
 
   startDragDelay = e => {
     let x
@@ -161,8 +164,12 @@ class Draggable extends React.Component {
 
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
+      const state = store.getState()
       this.setState({
-        storeState: store.getState()
+        storeState: {
+          ...state,
+          isActive: state.currentlyDraggingId === this.props.id
+        }
       })
     })
   }
@@ -175,7 +182,6 @@ class Draggable extends React.Component {
     const state = this.state.storeState
     return this.props.children({
       ...state,
-      isActive: state.currentlyDraggingId === this.props.id,
       events: {
         onMouseDown: this.startDragDelay,
         onTouchStart: this.startDragDelay
