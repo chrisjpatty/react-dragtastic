@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import * as React from "react"
 import {
   Draggable,
   Droppable,
@@ -7,7 +7,7 @@ import {
 } from "react-dragtastic"
 import "./App.css"
 
-class App extends Component {
+class App extends React.Component {
   render() {
     return (
       <div className="App">
@@ -86,7 +86,7 @@ class App extends Component {
                     ? "true"
                     : "false"}
                   <br />
-                  I should only rerender if I'm hovered.
+                  I should only rerender if I{"'"}m hovered.
                 </div>
               )
             }}
