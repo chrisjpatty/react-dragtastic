@@ -22,6 +22,7 @@ type State = {|
 type DragComponentProps = {|
   for?: Id,
   alwaysRender?: boolean,
+  subscribeTo?: $ReadOnlyArray<string> | null,
   children: ({
     ...State,
     isOverAccepted: boolean
@@ -36,6 +37,7 @@ type DraggableProps = {|
   onDragStart?: (data: any) => void,
   onDrag?: () => void,
   onDragEnd?: (data: any) => void,
+  subscribeTo?: $ReadOnlyArray<string> | null,
   children: ({
     ...State,
     isActive: boolean,
@@ -52,10 +54,9 @@ type DroppableProps = {|
   onDragEnter?: () => void,
   onDrop?: (data: any) => void,
   onDragLeave?: () => void,
+  subscribeTo?: $ReadOnlyArray<string> | null,
   children: ({
     ...State,
-    isOver: boolean,
-    willAccept: boolean,
     events: {
       onMouseEnter: () => void,
       onMouseLeave: () => void,
@@ -65,6 +66,7 @@ type DroppableProps = {|
 |}
 
 type DragStateProps = {|
+  subscribeTo?: $ReadOnlyArray<string> | null,
   children: State => React.Node
 |}
 
