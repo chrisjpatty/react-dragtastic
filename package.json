@@ -9,13 +9,14 @@
   ],
   "scripts": {
     "build:flow": "cpy src/index.js.flow build",
+    "build:ts": "cpy src/index.d.ts build",
     "typecheck:flow": "flow check --max-warnings=0",
     "pretest": "yarn build",
     "test": "jest",
     "posttest": "prettier --list-different \"**/*.js\" --ignore-path .gitignore",
     "start": "cross-env NODE_ENV=build rollup --config --watch",
     "build": "cross-env NODE_ENV=build rollup --config",
-    "postbuild": "yarn build:flow",
+    "postbuild": "yarn build:flow && yarn build:ts",
     "precommit": "lint-staged"
   },
   "prettier": {
