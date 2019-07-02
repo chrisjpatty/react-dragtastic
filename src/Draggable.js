@@ -85,13 +85,13 @@ class Draggable extends React.Component {
       data: this.props.data,
       type: this.props.type
     })
-    this.props.onDragStart(store.getState().data)
+    this.props.onDragStart(store.getState().data, store.getState())
     window.addEventListener("mouseup", this.stopDrag)
     window.addEventListener("mousemove", this.updateCoordinates)
   }
 
   startMobileDrag = e => {
-    this.props.onDragStart(store.getState().data)
+    this.props.onDragStart(store.getState().data, store.getState())
     const touch = e.touches[0]
     store.update({
       isDragging: true,
@@ -108,7 +108,7 @@ class Draggable extends React.Component {
   }
 
   stopDrag = e => {
-    this.props.onDragEnd(store.getState().data)
+    this.props.onDragEnd(store.getState().data, store.getState())
     store.reset()
     window.removeEventListener("mouseup", this.stopDrag)
     window.removeEventListener("mousemove", this.updateCoordinates)
@@ -121,7 +121,7 @@ class Draggable extends React.Component {
       x: e.clientX,
       y: e.clientY
     })
-    this.props.onDrag()
+    this.props.onDrag(null, store.getState())
   }
 
   updateMobileCoordinates = e => {
@@ -130,7 +130,7 @@ class Draggable extends React.Component {
       x: touch.clientX,
       y: touch.clientY
     })
-    this.props.onDrag()
+    this.props.onDrag(null, store.getState())
   }
 
   shouldComponentUpdate = (nextProps, nextState) => {
