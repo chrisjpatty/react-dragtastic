@@ -13,7 +13,7 @@
     "shortid": "^2.2.8"
   },
   "devDependencies": {
-    "react-scripts": "1.0.7"
+    "react-scripts": "1.1.5"
   },
   "scripts": {
     "start": "react-scripts start",
